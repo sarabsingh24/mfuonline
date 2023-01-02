@@ -11,7 +11,6 @@ export const natureOptions = [
     value: "AS",
     label: "Anyone or Survivor",
   },
-
 ];
 
 export const singleOptions = [
@@ -28,7 +27,6 @@ export const singleOptions = [
     label: "Sole-proprietor",
   },
 ];
-
 
 export const jointOptions = [
   {
@@ -64,8 +62,6 @@ export const singleIndividualOptions = [
   },
 ];
 
-
-
 export const singleMinorOptions = [
   {
     value: "RM",
@@ -92,10 +88,6 @@ export const singleMinorOptions = [
     label: "05-PIO (Minor) NRO",
   },
 ];
-
-
-
-
 
 export const singleSoleProprietorOptions = [
   {

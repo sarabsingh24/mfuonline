@@ -1,5 +1,4 @@
-import React, { usaState, useEffect } from "react";
-import Container from "react-bootstrap/Container";
+import React from "react";
 
 //component
 
@@ -15,14 +14,16 @@ import ThirdHolder from "./third-holder/ThirdHolder";
 function RegistrationForm() {
   return (
     <>
-      <BankAccounts />
-      <CanCriteria />
+      {/* <CanCriteria /> */}
+      <PrimaryHolder />
+      {/* <BankAccounts />
+
       <GuardianHolder />
       <Nominees />
-      <PrimaryHolder />
+    
       <ProofUpload />
       <SecondHolder />
-      <ThirdHolder />
+      <ThirdHolder /> */}
     </>
   );
 }

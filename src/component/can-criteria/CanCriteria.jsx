@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form} from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -18,52 +18,53 @@ import {
   singleMinorOptions,
   singleSoleProprietorOptions,
   holderOptions,
-} from "./accountData";
+} from "./canCriteriaData";
 
-function BankAccounts() {
-  const [form, setForm] = useState({
-    nature: "",
-    investor: "",
-    textStatus: "",
-    holders: "",
-  });
 
-  const [taxList, setTaxList] = useState([]);
-  const [investorList, setInvestorList] = useState([]);
 
-  const { nature, investor} = form;
+function CanCriteria() {
+   const [form, setForm] = useState({
+     nature: "",
+     investor: "",
+     textStatus: "",
+     holders: "",
+   });
 
-  const formHandeler = (e) => {
-    let name = e.target.name;
-    let val = e.target.value;
+   const [taxList, setTaxList] = useState([]);
+   const [investorList, setInvestorList] = useState([]);
 
-    setForm({ ...form, [name]: val });
-  };
+   const { nature, investor } = form;
 
-  useEffect(() => {
-    if (nature === "SI") {
-      setInvestorList(singleOptions);
-    } else if (nature === "JO") {
-      setInvestorList(jointOptions);
-    } else if (nature === "AS") {
-      setInvestorList(jointOptions);
-    } else {
-      setInvestorList([]);
-    }
-  }, [nature]);
+   const formHandeler = (e) => {
+     let name = e.target.name;
+     let val = e.target.value;
 
-  useEffect(() => {
-    if (investor === "I") {
-      setTaxList(singleIndividualOptions);
-    } else if (investor === "M") {
-      setTaxList(singleMinorOptions);
-    } else if (investor === "S") {
-      setTaxList(singleSoleProprietorOptions);
-    } else {
-      setTaxList([]);
-    }
-  }, [investor]);
+     setForm({ ...form, [name]: val });
+   };
 
+   useEffect(() => {
+     if (nature === "SI") {
+       setInvestorList(singleOptions);
+     } else if (nature === "JO") {
+       setInvestorList(jointOptions);
+     } else if (nature === "AS") {
+       setInvestorList(jointOptions);
+     } else {
+       setInvestorList([]);
+     }
+   }, [nature]);
+
+   useEffect(() => {
+     if (investor === "I") {
+       setTaxList(singleIndividualOptions);
+     } else if (investor === "M") {
+       setTaxList(singleMinorOptions);
+     } else if (investor === "S") {
+       setTaxList(singleSoleProprietorOptions);
+     } else {
+       setTaxList([]);
+     }
+   }, [investor]);
   return (
     <Section heading="Account Type">
       <Form>
@@ -119,4 +120,4 @@ function BankAccounts() {
   );
 }
 
-export default BankAccounts;
+export default CanCriteria;

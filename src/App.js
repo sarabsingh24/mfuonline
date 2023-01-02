@@ -1,6 +1,6 @@
 
 import React from "react";
-import RegistrationForm from "./pages/RegistrationForm";
+import RegistrationForm from "./component/RegistrationForm";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import {Container} from "react-bootstrap";
 
