@@ -16,7 +16,7 @@ export const stepsList = [
   },
   {
     text: "Sole / Primary Holder",
-    status: true,
+    status: false,
     icon: <FaUserAlt />,
   },
   {

@@ -2,7 +2,7 @@ import React from "react";
 import { StepperContainer, StepperLine, Steps } from "./CommonTab-style";
 import Tab from "./Tab";
 //component
-import {stepsList} from '../../data/Data' 
+import {stepsList} from './Data' 
 
 function Tabs() {
 
