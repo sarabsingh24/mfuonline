@@ -1,9 +1,13 @@
 import React from 'react'
+//component
+import StakeHolder from "../../common/stake-holder/StakeHolder";
 
 function GuardianHolder() {
   return (
-    <div>GuardianHolder</div>
-  )
+    <React.Fragment>
+      <StakeHolder />
+    </React.Fragment>
+  );
 }
 
 export default GuardianHolder

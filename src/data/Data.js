@@ -1,45 +1,47 @@
+
+import { FaBriefcase } from "react-icons/fa";// CAN
+import { FaUserAlt } from "react-icons/fa";//Primary holder
+import { RiBankLine } from "react-icons/ri";//bank account
+import { FaStreetView } from "react-icons/fa";//nomaniee
+import { MdPhotoLibrary } from "react-icons/md";//proofe
+import { HiUsers } from "react-icons/hi";//second holder
+import { RiParentFill } from "react-icons/ri";//gurdian holder
+
+
 export const stepsList = [
   {
-    text: "Bank Accounts",
-    status: false,
-    sty: "tab-active",
+    text: "CAN Criteria",
+    status: true,
+    icon: <FaBriefcase />,
   },
   {
-    text: "Can Criteria",
-    status: false,
-    sty: "tab-disable",
-  },
-  {
-    text: "Guardian Holder",
-    status: false,
-    sty: "tab-disable",
-  },
-  {
-    text: "Nominees",
-    status: false,
-    sty: "tab-disable",
-  },
-  {
-    text: "Primary Holder",
-    status: false,
-    sty: "tab-disable",
+    text: "Sole / Primary Holder",
+    status: true,
+    icon: <FaUserAlt />,
   },
   {
     text: "Second Holder",
     status: false,
-    sty: "tab-disable",
+    icon: <HiUsers />,
   },
   {
-    text: "Third Holder",
+    text: "Guardian Holder",
     status: false,
-    sty: "tab-disable",
+    icon: <RiParentFill />,
+  },
+  {
+    text: "Bank Accounts",
+    status: false,
+    icon: <RiBankLine />,
+  },
+  {
+    text: "Nominees",
+    status: false,
+    icon: <FaStreetView />,
   },
   {
     text: "Proof Upload",
     status: false,
-    sty: "tab-disable",
+    icon: <MdPhotoLibrary />,
   },
 ];
-
-
-

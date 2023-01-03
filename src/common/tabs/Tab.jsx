@@ -1,12 +1,14 @@
 import React from "react";
 import { StepBox, StepCount, StepText } from "./CommonTab-style";
 
+
+
 function Tab({ step, count }) {
-  const { sty, text } = step;
+  const { status, text,icon } = step;
 
   return (
-    <StepBox className={sty}>
-      <StepCount className={sty}>{count + 1}</StepCount>
+    <StepBox className={status ? "tab-active" : ""}>
+      <StepCount className={status ? "tab-active" : ""}>{icon}</StepCount>
       <StepText>{text}</StepText>
     </StepBox>
   );

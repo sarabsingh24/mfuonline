@@ -16,11 +16,11 @@ function RegistrationForm() {
     <>
       {/* <CanCriteria /> */}
       <PrimaryHolder />
-      {/* <BankAccounts />
+      {/* <BankAccounts /> 
 
-      <GuardianHolder />
+      <GuardianHolder /> 
       <Nominees />
-    
+
       <ProofUpload />
       <SecondHolder />
       <ThirdHolder /> */}

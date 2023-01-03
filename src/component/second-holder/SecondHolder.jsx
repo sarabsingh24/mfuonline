@@ -1,9 +1,12 @@
 import React from 'react'
-
+//component
+import StakeHolder from "../../common/stake-holder/StakeHolder";
 function SecondHolder() {
   return (
-    <div>SecondHolder</div>
-  )
+    <React.Fragment>
+      <StakeHolder />
+    </React.Fragment>
+  );
 }
 
 export default SecondHolder

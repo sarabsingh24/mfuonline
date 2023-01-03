@@ -23,7 +23,7 @@ export const StepBox = styled.div`
   color: rgba(0, 0, 0, 0.3);
 
   &.tab-active {
-    color: #222222;
+  color: #01579b;
   }
 `;
 
@@ -32,11 +32,11 @@ export const StepCount = styled.div`
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  border: 6px solid #ffffff;
+  border: 2px solid #b3e5fc;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 12px;
+  font-size: 20px;
   color: #eeeeee;
   background: #bdbdbd;
 
@@ -47,7 +47,8 @@ export const StepCount = styled.div`
 `;
 export const StepText = styled.div`
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
+  /* font-weight:600; */
 
   @media (max-width: 768px) {
     display: none;
