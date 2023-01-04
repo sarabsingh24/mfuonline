@@ -5,18 +5,28 @@ import Row from "react-bootstrap/Row";
 import "../Style.css";
 
 //component
+
 import Section from "../../common/section/Section";
-import ButtonCustom from "../../common/button/ButtonCustom";
 import GridCustom from "../../common/grid-custom/GridCustom";
 import SelectOption from "../../common/form-elements/SelectOption";
 import {  accountCount,} from "./accountData";
 import BankAccountSection from './BankAccountSection'
+import FooterSection from "../../common/footerSection/FooterSection";
+import { btnHandeler } from "../../common/helper/Helper";
+import useReducerLinked from "../../common/customComp/useReducerLinked";
+import { tabUpdate, pageCount } from "../../reducer/Action";
+
+
 
 function BankAccounts() {
   const [form, setForm] = useState({
     accounts: "1",
   });
+    const [btnFun, setBtnFun] = useState({});
+
   const [counts, setCounts] = useState([]);
+
+ const { stepsCount, tabsCreater, dispatch } = useReducerLinked();
 
   const formHandeler = (e) => {
     let name = e.target.name;
@@ -30,10 +40,14 @@ function BankAccounts() {
     setCounts(dummyArray);
   }, [form.accounts]);
 
+  useEffect(() => {
+    setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
+  }, [dispatch, stepsCount]);
+
   return (
     <React.Fragment>
-      <Section heading="Number of bank account">
-        <Form>
+      <Form>
+        <Section heading="Number of bank account">
           <GridCustom>
             <Row>
               <Col xs={12} md={4}>
@@ -47,12 +61,13 @@ function BankAccounts() {
               </Col>
             </Row>
           </GridCustom>
-        </Form>
-      </Section>
+        </Section>
 
-      {counts.map(() => {
-        return <BankAccountSection />;
-      })}
+        {counts.map((__, index) => {
+          return <BankAccountSection key={index} count={index} />;
+        })}
+        <FooterSection backBtn={true} nextBtn={true} btnFun={btnFun} />
+      </Form>
     </React.Fragment>
   );
 }

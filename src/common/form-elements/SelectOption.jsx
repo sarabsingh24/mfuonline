@@ -9,7 +9,7 @@ function SelectOption({ name, label, select, options, changeFun }) {
         {select && <option>{select}</option>}
         {options.map((item) => {
           return (
-            <option value={item.value ? item?.value : item}>
+            <option key={item.value} value={item.value ? item?.value : item}>
               {item.label ? item.label : item}
             </option>
           );

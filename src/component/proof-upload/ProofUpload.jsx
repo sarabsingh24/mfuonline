@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { Form } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -11,11 +11,22 @@ import "../Style.css";
 import GridCustom from "../../common/grid-custom/GridCustom";
 import Section from "../../common/section/Section";
 import ButtonCustom from "../../common/button/ButtonCustom";
+import FooterSection from "../../common/footerSection/FooterSection";
+import { btnHandeler } from "../../common/helper/Helper";
+import useReducerLinked from "../../common/customComp/useReducerLinked";
+import { tabUpdate, pageCount } from "../../reducer/Action";
 
 function ProofUpload() {
+   const [btnFun, setBtnFun] = useState({});
+   const { stepsCount, tabsCreater, dispatch } = useReducerLinked();
+
+    useEffect(() => {
+      setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
+    }, [dispatch, stepsCount]);
+
   return (
-    <Section heading="Proof Upload">
-      <Form>
+    <Form>
+      <Section heading="Proof Upload">
         <GridCustom>
           <Row>
             <Col xs={12}>
@@ -50,9 +61,9 @@ function ProofUpload() {
             </Col>
             <Col xs={12}>
               <div className="proof-table-row">
-                {[1, 2].map((i) => {
+                {[1, 2].map((i, index) => {
                   return (
-                    <>
+                    <div key={index}>
                       <div>Image Preview</div>
                       <div>Image Name</div>
                       <div>Image Size</div>
@@ -63,7 +74,7 @@ function ProofUpload() {
                           Remove
                         </Button>
                       </div>
-                    </>
+                    </div>
                   );
                 })}
               </div>
@@ -119,8 +130,9 @@ function ProofUpload() {
             </Col>
           </Row>
         </GridCustom>
-      </Form>
-    </Section>
+      </Section>
+      <FooterSection backBtn={true} nextBtn={false} btnFun={btnFun} />
+    </Form>
   );
 }
 

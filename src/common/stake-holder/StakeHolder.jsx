@@ -3,7 +3,6 @@ import { Form } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-// import Country from 'react-bootstrap/c'
 
 //components
 import Section from "../section/Section";
@@ -11,6 +10,10 @@ import InputText from "../form-elements/InputText";
 import GridCustom from "../grid-custom/GridCustom";
 import DatePicker from "../form-elements/DatePicker";
 import SelectOption from "../form-elements/SelectOption";
+import FooterSection from "../footerSection/FooterSection";
+import { btnHandeler } from "../helper/Helper";
+import { pageCount } from "../../reducer/Action";
+import useReducerLinked from "../customComp/useReducerLinked";
 import {
   sourceOfWealth,
   occupation,
@@ -24,6 +27,10 @@ import {
 function StakeHolder() {
   const [grossIncome, setGrossIncome] = useState(false);
   const [networth, setNetworth] = useState(false);
+  const [btnFun, setBtnFun] = useState({});
+
+  const { stepsCount, dispatch } = useReducerLinked();
+
   const incomeStatus = (e) => {
     let status = e.target.dataset.name;
     if (status === "GAI") {
@@ -35,10 +42,14 @@ function StakeHolder() {
     }
   };
 
+  useEffect(() => {
+    setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
+  }, [dispatch, stepsCount]);
+
   return (
     <React.Fragment>
-      <Section heading="Basic Details">
-        <Form>
+      <Form>
+        <Section heading="Basic Details">
           <GridCustom>
             <Row>
               <Col xs={12} md={4}>
@@ -84,11 +95,9 @@ function StakeHolder() {
               <Col xs={12} md={6}></Col>
             </Row>
           </GridCustom>
-        </Form>
-      </Section>
+        </Section>
 
-      <Section heading="Additional KYC Details">
-        <Form>
+        <Section heading="Additional KYC Details">
           <GridCustom>
             <Row className="justify-content-md-center">
               <Col xs={12} md={2} className="m-4">
@@ -176,11 +185,9 @@ function StakeHolder() {
               </Col>
             </Row>
           </GridCustom>
-        </Form>
-      </Section>
+        </Section>
 
-      <Section heading="FATCA Details">
-        <Form>
+        <Section heading="FATCA Details">
           <GridCustom>
             <Row>
               <Col xs={12} md={4}>
@@ -226,8 +233,9 @@ function StakeHolder() {
               </Col>
             </Row>
           </GridCustom>
-        </Form>
-      </Section>
+        </Section>
+        <FooterSection backBtn={true} nextBtn={true} btnFun={btnFun} />
+      </Form>
     </React.Fragment>
   );
 }
