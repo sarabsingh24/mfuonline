@@ -18,10 +18,18 @@ function BankAccountSection({ count }) {
       <GridCustom>
         <Row>
           <Col xs={12} md={4}>
-            <InputText name="bankAccount" label="Bank A/c No" />
+            <InputText
+              name="bankAccount"
+              label="Bank A/c No"
+              mandatory={true}
+            />
           </Col>
           <Col xs={12} md={4}>
-            <InputText name="reBankAccount" label="Re-Enter Bank A/c No" />
+            <InputText
+              name="reBankAccount"
+              label="Re-Enter Bank A/c No"
+              mandatory={true}
+            />
           </Col>
           <Col xs={12} md={4}>
             <SelectOption
@@ -30,18 +38,19 @@ function BankAccountSection({ count }) {
               select="Select"
               options={accountType}
               // changeFun={formHandeler}
+              mandatory={true}
             />
           </Col>
         </Row>
         <Row>
           <Col xs={12} md={4}>
-            <InputText name="bank" label="Bank" />
+            <InputText name="bank" label="Bank" mandatory={true} />
           </Col>
           <Col xs={12} md={4}>
-            <InputText name="micr" label="MICR" />
+            <InputText name="micr" label="MICR" mandatory={true} />
           </Col>
           <Col xs={12} md={4}>
-            <InputText name="ifce" label="IFSC" />
+            <InputText name="ifce" label="IFSC" mandatory={true} />
           </Col>
         </Row>
         <Row>
@@ -52,6 +61,7 @@ function BankAccountSection({ count }) {
               select="Select"
               options={bankProof}
               // changeFun={formHandeler}
+              mandatory={true}
             />
           </Col>
         </Row>

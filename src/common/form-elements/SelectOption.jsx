@@ -1,10 +1,15 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-
-function SelectOption({ name, label, select, options, changeFun }) {
+const redColor = {
+  color: "red",
+};
+function SelectOption({ name, label, select, options, changeFun, mandatory }) {
   return (
     <Form.Group className="mb-3">
-      <Form.Label>{label}</Form.Label>
+      <Form.Label>
+        {label}
+        {mandatory && <span style={redColor}>*</span>}
+      </Form.Label>
       <Form.Select onChange={changeFun} name={name}>
         {select && <option>{select}</option>}
         {options.map((item) => {

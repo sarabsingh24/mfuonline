@@ -8,6 +8,7 @@ import "../Style.css";
 //component
 import GridCustom from "../../common/grid-custom/GridCustom";
 import Section from "../../common/section/Section";
+import InputText from "../../common/form-elements/InputText";
 import SelectOption from "../../common/form-elements/SelectOption";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
@@ -37,7 +38,7 @@ function CanCriteria() {
 
   const { stepsCount, tabsCreater, dispatch } = useReducerLinked();
 
-  const { nature, investor } = form;
+  const { nature, investor, holders } = form;
 
   const formHandeler = (e) => {
     let name = e.target.name;
@@ -45,27 +46,32 @@ function CanCriteria() {
     setForm({ ...form, [name]: val });
   };
 
+  const tabShoHideHandeler = (tabList, listName) => {
+    let tabArray = ["CRI", "PRIM", "BANK", ...listName, "PROO"];
+
+    let updateArray = tabList.map((tab) => {
+      if (tabArray.includes(tab.short)) {
+        return { ...tab, show: true };
+      }
+      return { ...tab, show: false };
+    });
+
+    dispatch(tabUpdate(updateArray));
+  };
+
+  useEffect(() => {
+    tabShoHideHandeler(tabsCreater, ["NOMI"]);
+  }, []);
+
   useEffect(() => {
     if (nature === "SI") {
-      let updateArray = tabsCreater.map((tab) => {
-        if (tab.short === "SEC" || tab.short === "NOMi") {
-          return { ...tab, show: false };
-        }
-        return tab;
-      });
       setInvestorList(singleOptions);
-
-      dispatch(tabUpdate(updateArray));
+      tabShoHideHandeler(tabsCreater, ["NOMI"]);
+      setForm({ ...form, holders: 1 });
     } else if (nature === "JO") {
       setInvestorList(jointOptions);
-      let updateArray = tabsCreater.map((tab) => {
-        if (tab.short === "SEC" || tab.short === "NOMi") {
-          return { ...tab, show: true };
-        }
-        return tab;
-      });
-
-      dispatch(tabUpdate(updateArray));
+      tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
+      setForm({ ...form, holders: 2 });
     } else if (nature === "AS") {
       setInvestorList(jointOptions);
     } else {
@@ -76,14 +82,41 @@ function CanCriteria() {
   useEffect(() => {
     if (investor === "I") {
       setTaxList(singleIndividualOptions);
+      tabShoHideHandeler(tabsCreater, ["NOMI"]);
     } else if (investor === "M") {
       setTaxList(singleMinorOptions);
+      tabShoHideHandeler(tabsCreater, ["GUAR"]);
     } else if (investor === "S") {
       setTaxList(singleSoleProprietorOptions);
+      tabShoHideHandeler(tabsCreater, ["NOMI"]);
     } else {
       setTaxList([]);
     }
   }, [investor]);
+
+  useEffect(() => {
+    if (holders === "3") {
+      setTaxList(singleIndividualOptions);
+      tabShoHideHandeler(tabsCreater, ["SEC", "THIR", "NOMI"]);
+    }
+    if (holders === "2") {
+      setTaxList(singleIndividualOptions);
+      tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
+    }
+    if (holders === "1") {
+      setTaxList(singleIndividualOptions);
+      tabShoHideHandeler(tabsCreater, ["NOMI"]);
+    }
+  }, [holders]);
+
+  const formSubmitHandeler = (e) => {
+    e.preventDefault();
+    console.log(e.target.dataset.value);
+    console.log("can Criteria");
+    if (true) {
+      dispatch(pageCount(stepsCount + 1));
+    }
+  };
 
   useEffect(() => {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
@@ -91,7 +124,7 @@ function CanCriteria() {
 
   return (
     <React.Fragment>
-      <Form>
+      <Form onSubmit={formSubmitHandeler}>
         <Section heading="Account Type">
           <GridCustom>
             <Row>
@@ -102,6 +135,7 @@ function CanCriteria() {
                   select="Select"
                   options={natureOptions}
                   changeFun={formHandeler}
+                  mandatory={true}
                 />
               </Col>
               <Col xs={12} md={6}>
@@ -111,6 +145,7 @@ function CanCriteria() {
                   select="Select"
                   options={investorList}
                   changeFun={formHandeler}
+                  mandatory={true}
                 />
               </Col>
             </Row>
@@ -122,20 +157,28 @@ function CanCriteria() {
                   select="Select"
                   options={taxList}
                   changeFun={formHandeler}
+                  mandatory={true}
                 />
               </Col>
               <Col xs={12} md={6}>
-                <SelectOption
+                {/* <SelectOption
                   name="holders"
                   label="Holders"
-                  select="Select"
+                  select={form.holders}
                   options={holderOptions}
                   changeFun={formHandeler}
+                /> */}
+                <InputText
+                  name="holders"
+                  label="Holders"
+                  value={form.holders}
+                  disabled={true}
                 />
               </Col>
             </Row>
           </GridCustom>
         </Section>
+
         <FooterSection backBtn={false} nextBtn={true} btnFun={btnFun} />
       </Form>
     </React.Fragment>

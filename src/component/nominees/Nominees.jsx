@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -7,19 +7,37 @@ import Alert from "react-bootstrap/Alert";
 // component
 import GridCustom from "../../common/grid-custom/GridCustom";
 import Section from "../../common/section/Section";
-import ButtonCustom from "../../common/button/ButtonCustom";
 import SelectOption from "../../common/form-elements/SelectOption";
-
+import FooterSection from "../../common/footerSection/FooterSection";
+import { btnHandeler } from "../../common/helper/Helper";
+import { pageCount } from "../../reducer/Action";
+import useReducerLinked from "../../common/customComp/useReducerLinked";
 
 const nominee = [
-  {value:"N",label:"No - I/We declare to Opt out"},
-  {value:"Y",label:"Yes - I/We wish to nominate"},
-]
+  { value: "N", label: "No - I/We declare to Opt out" },
+  { value: "Y", label: "Yes - I/We wish to nominate" },
+];
 
 function Nominees() {
+  const [btnFun, setBtnFun] = useState({});
+
+  const { stepsCount, tabsCreater, dispatch } = useReducerLinked();
+
+  const formSubmitHandeler = (e) => {
+    e.preventDefault();
+    console.log("Nominees");
+    if (true) {
+      dispatch(pageCount(stepsCount + 1));
+    }
+  };
+
+  useEffect(() => {
+    setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
+  }, [dispatch, stepsCount]);
+
   return (
-    <Section heading="Nominee details">
-      <Form>
+    <Form onSubmit={formSubmitHandeler}>
+      <Section heading="Nominee details">
         <GridCustom>
           <Row>
             <Col xs={12}>
@@ -40,12 +58,14 @@ function Nominees() {
                 select={false}
                 options={nominee}
                 // changeFun={formHandeler}
+                mandatory={true}
               />
             </Col>
           </Row>
         </GridCustom>
-      </Form>
-    </Section>
+      </Section>
+      <FooterSection backBtn={true} nextBtn={true} btnFun={btnFun} />
+    </Form>
   );
 }
 

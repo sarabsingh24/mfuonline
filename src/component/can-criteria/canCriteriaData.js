@@ -27,7 +27,7 @@ export const singleOptions = [
     label: "Sole-proprietor",
   },
 ];
-
+ 
 export const jointOptions = [
   {
     value: "I",

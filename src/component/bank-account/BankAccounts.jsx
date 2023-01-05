@@ -9,24 +9,22 @@ import "../Style.css";
 import Section from "../../common/section/Section";
 import GridCustom from "../../common/grid-custom/GridCustom";
 import SelectOption from "../../common/form-elements/SelectOption";
-import {  accountCount,} from "./accountData";
-import BankAccountSection from './BankAccountSection'
+import { accountCount } from "./accountData";
+import BankAccountSection from "./BankAccountSection";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useReducerLinked from "../../common/customComp/useReducerLinked";
 import { tabUpdate, pageCount } from "../../reducer/Action";
 
-
-
 function BankAccounts() {
   const [form, setForm] = useState({
     accounts: "1",
   });
-    const [btnFun, setBtnFun] = useState({});
+  const [btnFun, setBtnFun] = useState({});
 
   const [counts, setCounts] = useState([]);
 
- const { stepsCount, tabsCreater, dispatch } = useReducerLinked();
+  const { stepsCount, tabsCreater, dispatch } = useReducerLinked();
 
   const formHandeler = (e) => {
     let name = e.target.name;
@@ -40,13 +38,21 @@ function BankAccounts() {
     setCounts(dummyArray);
   }, [form.accounts]);
 
+  const formSubmitHandeler = (e) => {
+    e.preventDefault();
+    console.log("bank account");
+    if (true) {
+      dispatch(pageCount(stepsCount + 1));
+    }
+  };
+
   useEffect(() => {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 
   return (
     <React.Fragment>
-      <Form>
+      <Form onSubmit={formSubmitHandeler}>
         <Section heading="Number of bank account">
           <GridCustom>
             <Row>
@@ -57,6 +63,7 @@ function BankAccounts() {
                   select={false}
                   options={accountCount}
                   changeFun={formHandeler}
+                  mandatory={true}
                 />
               </Col>
             </Row>

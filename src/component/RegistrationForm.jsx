@@ -30,6 +30,7 @@ function RegistrationForm() {
   }, [displayedTab, stepsCount, tabsCreater]);
 
   if (str === "CRI") {
+    // return <ProofUpload />;
     return <CanCriteria />;
   }
   if (str === "PRIM") {
@@ -44,7 +45,7 @@ function RegistrationForm() {
   if (str === "BANK") {
     return <BankAccounts />;
   }
-  if (str === "NOMi") {
+  if (str === "NOMI") {
     return <Nominees />;
   }
   if (str === "PROO") {

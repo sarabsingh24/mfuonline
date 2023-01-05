@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -10,22 +10,43 @@ import "../Style.css";
 // component
 import GridCustom from "../../common/grid-custom/GridCustom";
 import Section from "../../common/section/Section";
-import ButtonCustom from "../../common/button/ButtonCustom";
+import InputText from "../../common/form-elements/InputText";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useReducerLinked from "../../common/customComp/useReducerLinked";
-import { tabUpdate, pageCount } from "../../reducer/Action";
+import { pageCount } from "../../reducer/Action";
 
 function ProofUpload() {
-   const [btnFun, setBtnFun] = useState({});
-   const { stepsCount, tabsCreater, dispatch } = useReducerLinked();
+  const [btnFun, setBtnFun] = useState({});
+  const [imagesList, setImagesList] = useState([]);
 
-    useEffect(() => {
-      setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
-    }, [dispatch, stepsCount]);
+  const { stepsCount, tabsCreater, dispatch } = useReducerLinked();
+
+  const getImageHandeler = (e) => {
+    e.preventDefault();
+    console.log(e.target.files[0]);
+    const { name, size, type } = e.target.files[0];
+    const id = +new Date();
+    setImagesList([
+      ...imagesList,
+      { id, name, size, type, status: "pending..." },
+    ]);
+  };
+
+   const formSubmitHandeler = (e) => {
+     e.preventDefault();
+     console.log("bank account");
+     if (true) {
+       dispatch(pageCount(stepsCount + 1));
+     }
+   };
+
+  useEffect(() => {
+    setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
+  }, [dispatch, stepsCount]);
 
   return (
-    <Form>
+    <Form onSubmit={formSubmitHandeler}>
       <Section heading="Proof Upload">
         <GridCustom>
           <Row>
@@ -38,20 +59,28 @@ function ProofUpload() {
             </Col>
           </Row>
           <Row className="mb-3">
-            <Col xs={12}>
-              <Button variant="success">
+            <Col xs={12} md={6}>
+              <InputText
+                type="file"
+                name="addFile"
+                label="Add Files..."
+                changeFunc={getImageHandeler}
+              />
+            </Col>
+            <Col xs={12} md={2}>
+              <Button variant="success" type="input">
                 <Badge
                   bg="success"
                   style={{ fontSize: "20px", padding: "2px" }}
                 >
                   +
                 </Badge>
-                Add Files...
+                Upload File
                 <span className="visually-hidden">unread messages</span>
               </Button>
             </Col>
           </Row>
-          <Row className="mb-3">
+          <Row>
             <Col xs={12}>
               <div className="proof-table-header">
                 <div>Image Preview</div> <div>Image Name</div>
@@ -59,28 +88,28 @@ function ProofUpload() {
                 <div> Status</div> <div>Options</div>
               </div>
             </Col>
-            <Col xs={12}>
-              <div className="proof-table-row">
-                {[1, 2].map((i, index) => {
-                  return (
-                    <div key={index}>
-                      <div>Image Preview</div>
-                      <div>Image Name</div>
-                      <div>Image Size</div>
-                      <div>Proof Type</div>
-                      <div>Status</div>
-                      <div>
-                        <Button variant="warning" size="sm">
-                          Remove
-                        </Button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </Col>
           </Row>
-          <Row>
+
+          {imagesList?.map((image, index) => {
+            return (
+              <Row key={index}>
+                <Col xs={12} className="proof-table-row">
+                  <div>Image Preview</div>
+                  <div>{image.name}</div>
+                  <div>{image.size}</div>
+                  <div>{image.type}</div>
+                  <div>{image.status}</div>
+                  <div>
+                    <Button variant="warning" size="sm">
+                      Remove
+                    </Button>
+                  </div>
+                </Col>
+              </Row>
+            );
+          })}
+
+          <Row className="mt-3">
             <Col xs={12}>
               <Alert variant="warning">
                 <p>

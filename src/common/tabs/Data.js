@@ -29,6 +29,13 @@ export const stepsList = [
     show: false,
   },
   {
+    text: "Third Holder",
+    short: "THIR",
+    active: false,
+    icon: <HiUsers />,
+    show: false,
+  },
+  {
     text: "Guardian Holder",
     short: "GUAR",
     active: false,
@@ -47,7 +54,7 @@ export const stepsList = [
     short: "NOMI",
     active: false,
     icon: <FaStreetView />,
-    show: false,
+    show: true,
   },
   {
     text: "Proof Upload",
