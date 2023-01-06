@@ -1,18 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
 //components
 import StakeHolder from "../../common/stake-holder/StakeHolder";
 import { pageCount } from "../../reducer/Action";
-import useReducerLinked from "../../common/customComp/useReducerLinked";
+import useTabReducer from "../../common/customComp/useTabReducer";
 
 function PrimaryHolder() {
-
-  const { stepsCount, dispatch } = useReducerLinked();
+  const [form, setForm] = useState({
+    name: "",
+    dateOfBirth: "",
+    panPekrnNo: "",
+    contactDetail: {
+      residenceIsd: "",
+      mobileIsdCode: "",
+      primaryEmail: "",
+    },
+    otherDetail: {
+      grossIncome: "",
+      netWorth: "",
+      netWorthDate: "",
+      sourceOfWealth: "",
+      sourceOfWealthOthers: "",
+      occupation: "",
+      occupationOthers: "",
+      kraAddressType: "",
+    },
+    fatcaDetail: {
+      taxResidencyFlag: "",
+      birthCity: "",
+      birthCountry: "",
+      citizenshipCountry: "",
+      nationalityCountry: "",
+    },
+  });
+  const { stepsCount, dispatch } = useTabReducer();
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
-    
+
     console.log("Primary Holder");
     if (true) {
       dispatch(pageCount(stepsCount + 1));

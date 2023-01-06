@@ -2,13 +2,13 @@ import React from "react";
 import RegistrationForm from "./component/RegistrationForm";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
 
 //
 import Tabs from "./common/tabs/Tabs";
+import useTabReducer from "./common/customComp/useTabReducer";
 
 function App() {
-  const { stepsCount } = useSelector((state) => state.createReducer);
+  const { stepsCount } = useTabReducer();
 
   return (
     <Container>

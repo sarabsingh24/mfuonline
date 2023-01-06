@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 
-function useReducerLinked() {
+function useTabReducer() {
   const { tabsCreater, stepsCount, openForm } = useSelector(
-    (state) => state.createReducer
+    (state) => state.tabReducer
   );
 
   const dispatch = useDispatch();
@@ -10,4 +10,5 @@ function useReducerLinked() {
   return { tabsCreater, stepsCount, openForm, dispatch };
 }
 
-export default useReducerLinked;
+export default useTabReducer;
+// useReducerLinked

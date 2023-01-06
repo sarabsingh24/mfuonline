@@ -4,11 +4,11 @@ import { Form } from "react-bootstrap";
 //components
 import StakeHolder from "../../common/stake-holder/StakeHolder";
 import { pageCount } from "../../reducer/Action";
-import useReducerLinked from "../../common/customComp/useReducerLinked";
+import useTabReducer from "../../common/customComp/useTabReducer";
 
 function SecondHolder() {
 
-  const { stepsCount, dispatch } = useReducerLinked();
+  const { stepsCount, dispatch } = useTabReducer();
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();

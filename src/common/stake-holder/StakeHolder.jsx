@@ -13,7 +13,7 @@ import SelectOption from "../form-elements/SelectOption";
 import FooterSection from "../footerSection/FooterSection";
 import { btnHandeler } from "../helper/Helper";
 import { pageCount } from "../../reducer/Action";
-import useReducerLinked from "../customComp/useReducerLinked";
+import useTabReducer from "../customComp/useTabReducer";
 import {
   sourceOfWealth,
   occupation,
@@ -29,7 +29,7 @@ function StakeHolder() {
   const [networth, setNetworth] = useState(false);
   const [btnFun, setBtnFun] = useState({});
 
-  const { stepsCount, dispatch } = useReducerLinked();
+  const { stepsCount, dispatch } = useTabReducer();
 
   const incomeStatus = (e) => {
     let status = e.target.dataset.name;
@@ -52,16 +52,16 @@ function StakeHolder() {
         <GridCustom>
           <Row>
             <Col xs={12} md={4}>
-              <InputText label="Name" mandatory={true} />
+              <InputText label="Name" mandatory="*" />
             </Col>
             <Col xs={12} md={4}>
-              <DatePicker label="Date of Birth" mandatory={true} />
+              <DatePicker label="Date of Birth" mandatory="*" />
             </Col>
             <Col xs={12} md={4}>
-              <InputText label="PAN / PEKRN" mandatory={true} />
+              <InputText label="PAN / PEKRN" mandatory="*" />
             </Col>
             <Col xs={12} md={{ span: 4, offset: 8 }}>
-              <InputText label="Re-Enter PAN / PEKRN" mandatory={true} />
+              <InputText label="Re-Enter PAN / PEKRN" mandatory="*" />
             </Col>
           </Row>
 
@@ -86,7 +86,7 @@ function StakeHolder() {
               </Form.Group>
             </Col>
             <Col xs={12} md={4}>
-              <InputText label="Email" mandatory={true} />
+              <InputText label="Email" mandatory="*" />
             </Col>
           </Row>
 
@@ -106,7 +106,7 @@ function StakeHolder() {
                 name="income"
                 data-name="GAI"
                 onChange={incomeStatus}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
             <Col xs={12} md={2} className="m-4">
@@ -116,7 +116,7 @@ function StakeHolder() {
                 name="income"
                 data-name="NW"
                 onChange={incomeStatus}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
           </Row>
@@ -128,7 +128,7 @@ function StakeHolder() {
                 select="Select"
                 options={grossAnnualIncome}
                 // changeFun={formHandeler}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
           </Row>
@@ -137,11 +137,11 @@ function StakeHolder() {
               <InputText
                 name="networth"
                 label="Networth (in Rs.)"
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
-              <DatePicker label="As on date" mandatory={true} />
+              <DatePicker label="As on date" mandatory="*" />
             </Col>
           </Row>
           <Row>
@@ -152,7 +152,7 @@ function StakeHolder() {
                 select="Select"
                 options={sourceOfWealth}
                 // changeFun={formHandeler}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
@@ -162,7 +162,7 @@ function StakeHolder() {
                 select="Select"
                 options={occupation}
                 // changeFun={formHandeler}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
@@ -172,7 +172,7 @@ function StakeHolder() {
                 select="Select"
                 options={politicalExposure}
                 // changeFun={formHandeler}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
@@ -182,7 +182,7 @@ function StakeHolder() {
                 select="Select"
                 options={addressType}
                 // changeFun={formHandeler}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
           </Row>
@@ -192,7 +192,7 @@ function StakeHolder() {
                 name="other1"
                 label="Other"
                 disabled={true}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
@@ -200,7 +200,7 @@ function StakeHolder() {
                 name="other2"
                 label="Other"
                 disabled={true}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
           </Row>
@@ -217,7 +217,7 @@ function StakeHolder() {
                 select="Select"
                 options={taxResidency}
                 // changeFun={formHandeler}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
           </Row>
@@ -232,7 +232,7 @@ function StakeHolder() {
                 select="Select"
                 options={countryList}
                 // changeFun={formHandeler}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
@@ -242,7 +242,7 @@ function StakeHolder() {
                 select="Select"
                 options={countryList}
                 // changeFun={formHandeler}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
@@ -252,7 +252,7 @@ function StakeHolder() {
                 select="Select"
                 options={countryList}
                 // changeFun={formHandeler}
-                mandatory={true}
+                mandatory="*"
               />
             </Col>
           </Row>

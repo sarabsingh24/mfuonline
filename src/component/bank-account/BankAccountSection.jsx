@@ -21,14 +21,14 @@ function BankAccountSection({ count }) {
             <InputText
               name="bankAccount"
               label="Bank A/c No"
-              mandatory={true}
+              mandatory="*"
             />
           </Col>
           <Col xs={12} md={4}>
             <InputText
               name="reBankAccount"
               label="Re-Enter Bank A/c No"
-              mandatory={true}
+              mandatory="*"
             />
           </Col>
           <Col xs={12} md={4}>
@@ -38,19 +38,19 @@ function BankAccountSection({ count }) {
               select="Select"
               options={accountType}
               // changeFun={formHandeler}
-              mandatory={true}
+              mandatory="*"
             />
           </Col>
         </Row>
         <Row>
           <Col xs={12} md={4}>
-            <InputText name="bank" label="Bank" mandatory={true} />
+            <InputText name="bank" label="Bank" mandatory="*" />
           </Col>
           <Col xs={12} md={4}>
-            <InputText name="micr" label="MICR" mandatory={true} />
+            <InputText name="micr" label="MICR" mandatory="*" />
           </Col>
           <Col xs={12} md={4}>
-            <InputText name="ifce" label="IFSC" mandatory={true} />
+            <InputText name="ifce" label="IFSC" mandatory="*" />
           </Col>
         </Row>
         <Row>
@@ -61,7 +61,7 @@ function BankAccountSection({ count }) {
               select="Select"
               options={bankProof}
               // changeFun={formHandeler}
-              mandatory={true}
+              mandatory="*"
             />
           </Col>
         </Row>

@@ -13,7 +13,7 @@ import { accountCount } from "./accountData";
 import BankAccountSection from "./BankAccountSection";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
-import useReducerLinked from "../../common/customComp/useReducerLinked";
+import useTabReducer from "../../common/customComp/useTabReducer";
 import { tabUpdate, pageCount } from "../../reducer/Action";
 
 function BankAccounts() {
@@ -24,7 +24,7 @@ function BankAccounts() {
 
   const [counts, setCounts] = useState([]);
 
-  const { stepsCount, tabsCreater, dispatch } = useReducerLinked();
+  const { stepsCount, tabsCreater, dispatch } = useTabReducer();
 
   const formHandeler = (e) => {
     let name = e.target.name;
@@ -63,7 +63,7 @@ function BankAccounts() {
                   select={false}
                   options={accountCount}
                   changeFun={formHandeler}
-                  mandatory={true}
+                  mandatory="*"
                 />
               </Col>
             </Row>

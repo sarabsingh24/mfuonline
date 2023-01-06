@@ -8,13 +8,13 @@ import Nominees from "./nominees/Nominees";
 import PrimaryHolder from "./primary-holder/PrimaryHolder";
 import ProofUpload from "./proof-upload/ProofUpload";
 import SecondHolder from "./second-holder/SecondHolder";
-import useReducerLinked from "../common/customComp/useReducerLinked";
+import useTabReducer from "../common/customComp/useTabReducer";
 
 function RegistrationForm() {
   const [str, setStr] = useState("CRI");
   const [displayedTab, setDisplayedTab] = useState([]);
 
-  const { stepsCount, tabsCreater } = useReducerLinked();
+  const { stepsCount, tabsCreater } = useTabReducer();
 
   useEffect(() => {
     let filterTabs = tabsCreater.filter((tab) => tab.show === true);

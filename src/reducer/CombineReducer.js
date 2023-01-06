@@ -1,6 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import createReducer from "./Reducer";
+import tabReducer from "./TabReducer";
+import formReducer from "./FormReducer";
 
-const rootReducer = combineReducers({ createReducer });
+const rootReducer = combineReducers({ tabReducer, formReducer });
 
 export { rootReducer };

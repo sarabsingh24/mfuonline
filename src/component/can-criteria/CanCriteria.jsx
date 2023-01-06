@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import "../Style.css";
+import InputGroup from "react-bootstrap/InputGroup";
 
 //component
 import GridCustom from "../../common/grid-custom/GridCustom";
@@ -12,8 +13,9 @@ import InputText from "../../common/form-elements/InputText";
 import SelectOption from "../../common/form-elements/SelectOption";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
-import useReducerLinked from "../../common/customComp/useReducerLinked";
-import { tabUpdate, pageCount } from "../../reducer/Action";
+import useTabReducer from "../../common/customComp/useTabReducer";
+import { tabUpdate, pageCount, criteriaForm } from "../../reducer/Action";
+import { validateForm } from "./CanCriteriaValidation";
 import {
   natureOptions,
   singleOptions,
@@ -26,24 +28,32 @@ import {
 
 function CanCriteria() {
   const [form, setForm] = useState({
-    nature: "",
-    investor: "",
-    textStatus: "",
-    holders: "",
+    holdingNature: "",
+    investorCategory: "",
+    taxStatus: "",
+    holderCount: "",
   });
+  const [errors, setErrors] = useState({});
 
   const [taxList, setTaxList] = useState([]);
   const [investorList, setInvestorList] = useState([]);
   const [btnFun, setBtnFun] = useState({});
 
-  const { stepsCount, tabsCreater, dispatch } = useReducerLinked();
+  const { stepsCount, tabsCreater, dispatch } = useTabReducer();
 
-  const { nature, investor, holders } = form;
+  const { holdingNature, investorCategory, taxStatus, holderCount } = form;
 
   const formHandeler = (e) => {
     let name = e.target.name;
     let val = e.target.value;
+
+    console.log(e.target);
+
     setForm({ ...form, [name]: val });
+
+    if (!!errors[name]) {
+      setErrors({ ...errors, [name]: null });
+    }
   };
 
   const tabShoHideHandeler = (tabList, listName) => {
@@ -64,56 +74,60 @@ function CanCriteria() {
   }, []);
 
   useEffect(() => {
-    if (nature === "SI") {
+    if (holdingNature === "SI") {
       setInvestorList(singleOptions);
       tabShoHideHandeler(tabsCreater, ["NOMI"]);
-      setForm({ ...form, holders: 1 });
-    } else if (nature === "JO") {
+      setForm({ ...form, holderCount: 1 });
+    } else if (holdingNature === "JO") {
       setInvestorList(jointOptions);
       tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
-      setForm({ ...form, holders: 2 });
-    } else if (nature === "AS") {
+      setForm({ ...form, holderCount: 2 });
+    } else if (holdingNature === "AS") {
       setInvestorList(jointOptions);
     } else {
       setInvestorList([]);
     }
-  }, [nature]);
+  }, [holdingNature]);
 
   useEffect(() => {
-    if (investor === "I") {
+    if (investorCategory === "I") {
       setTaxList(singleIndividualOptions);
       tabShoHideHandeler(tabsCreater, ["NOMI"]);
-    } else if (investor === "M") {
+    } else if (investorCategory === "M") {
       setTaxList(singleMinorOptions);
       tabShoHideHandeler(tabsCreater, ["GUAR"]);
-    } else if (investor === "S") {
+    } else if (investorCategory === "S") {
       setTaxList(singleSoleProprietorOptions);
       tabShoHideHandeler(tabsCreater, ["NOMI"]);
     } else {
       setTaxList([]);
     }
-  }, [investor]);
+  }, [investorCategory]);
 
-  useEffect(() => {
-    if (holders === "3") {
-      setTaxList(singleIndividualOptions);
-      tabShoHideHandeler(tabsCreater, ["SEC", "THIR", "NOMI"]);
-    }
-    if (holders === "2") {
-      setTaxList(singleIndividualOptions);
-      tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
-    }
-    if (holders === "1") {
-      setTaxList(singleIndividualOptions);
-      tabShoHideHandeler(tabsCreater, ["NOMI"]);
-    }
-  }, [holders]);
+  // useEffect(() => {
+  //   if (holderCount === "3") {
+  //     setTaxList(singleIndividualOptions);
+  //     tabShoHideHandeler(tabsCreater, ["SEC", "THIR", "NOMI"]);
+  //   }
+  //   if (holderCount === "2") {
+  //     setTaxList(singleIndividualOptions);
+  //     tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
+  //   }
+  //   if (holderCount === "1") {
+  //     setTaxList(singleIndividualOptions);
+  //     tabShoHideHandeler(tabsCreater, ["NOMI"]);
+  //   }
+  // }, [holderCount]);
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
-    console.log(e.target.dataset.value);
-    console.log("can Criteria");
-    if (true) {
+    console.log(form);
+    const formErrors = validateForm(form);
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+    } else {
+      console.log(form);
+      dispatch(criteriaForm());
       dispatch(pageCount(stepsCount + 1));
     }
   };
@@ -130,50 +144,58 @@ function CanCriteria() {
             <Row>
               <Col xs={12} md={6}>
                 <SelectOption
-                  name="nature"
+                  name="holdingNature"
                   label="Holding Nature"
-                  select="Select"
+                  value={holdingNature || "Select"}
                   options={natureOptions}
                   changeFun={formHandeler}
-                  mandatory={true}
+                  mandatory="*"
+                  errors={errors}
                 />
               </Col>
               <Col xs={12} md={6}>
                 <SelectOption
-                  name="investor"
+                  name="investorCategory"
                   label="Investor Category"
-                  select="Select"
+                  value={investorCategory || "Select"}
                   options={investorList}
                   changeFun={formHandeler}
-                  mandatory={true}
+                  mandatory="*"
+                  errors={errors}
                 />
               </Col>
             </Row>
             <Row>
               <Col xs={12} md={6}>
                 <SelectOption
-                  name="textStatus"
+                  name="taxStatus"
                   label="Tax Status"
-                  select="Select"
+                  value={taxStatus || "Select"}
                   options={taxList}
                   changeFun={formHandeler}
-                  mandatory={true}
+                  mandatory="*"
+                  errors={errors}
                 />
               </Col>
               <Col xs={12} md={6}>
-                {/* <SelectOption
-                  name="holders"
+                <SelectOption
+                  name="holderCount"
                   label="Holders"
-                  select={form.holders}
+                  value={holderCount || ""}
                   options={holderOptions}
                   changeFun={formHandeler}
-                /> */}
-                <InputText
-                  name="holders"
-                  label="Holders"
-                  value={form.holders}
-                  disabled={true}
+                  mandatory="*"
+                  errors={errors}
                 />
+                {/* <InputText
+                  name="holderCount"
+                  label="Holders"
+                  value={holderCount || ""}
+                  changeFun={formHandeler}
+                  disabled={false}
+                  mandatory="*"
+                  errors={errors}
+                /> */}
               </Col>
             </Row>
           </GridCustom>
