@@ -10,11 +10,8 @@ function SelectOption({
   mandatory,
   errors,
   value,
-}){
-
-// const selectedValue = options.find((i) => i.value === value);
-// console.log(selectedValue);
-console.log(value);
+}) {
+ 
 
   return (
     <Form.Group className="mb-3">
@@ -24,21 +21,22 @@ console.log(value);
       </Form.Label>
 
       <Form.Select
-        // value={"ddd"}
+       
         onChange={changeFun}
         name={name}
         className={!!errors?.[name] && "redBorder"}
+        value={ value }
         // required
       >
-        {value && <option>{value}</option>}
+        {/* {!options.label && <option selected>{value}</option>} */}
         {options.map((item) => {
           return (
             <option
               key={item.value}
-              value={item.value ? item?.value : item}
               label={item.label}
+              value={item.value }
             >
-              {item.label ? item.label : item}
+              {item.label }
             </option>
           );
         })}

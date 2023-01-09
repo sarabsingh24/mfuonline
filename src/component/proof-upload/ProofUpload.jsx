@@ -13,14 +13,14 @@ import Section from "../../common/section/Section";
 import InputText from "../../common/form-elements/InputText";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
-import useTabReducer from "../../common/customComp/useTabReducer";
+import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { pageCount } from "../../reducer/Action";
 
 function ProofUpload() {
   const [btnFun, setBtnFun] = useState({});
   const [imagesList, setImagesList] = useState([]);
 
-  const { stepsCount, tabsCreater, dispatch } = useTabReducer();
+  const { stepsCount, tabsCreater, dispatch } = useCommonReducer();
 
   const getImageHandeler = (e) => {
     e.preventDefault();

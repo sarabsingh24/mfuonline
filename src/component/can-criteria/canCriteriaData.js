@@ -1,5 +1,9 @@
 export const natureOptions = [
   {
+    value: "",
+    label: "search",
+  },
+  {
     value: "SI",
     label: "Single",
   },
@@ -13,7 +17,18 @@ export const natureOptions = [
   },
 ];
 
+export const investorOptions = [
+  {
+    value: "",
+    label: "search",
+  },
+];
+
 export const singleOptions = [
+  {
+    value: "",
+    label: "search",
+  },
   {
     value: "I",
     label: "Individual",
@@ -29,6 +44,7 @@ export const singleOptions = [
 ];
  
 export const jointOptions = [
+  
   {
     value: "I",
     label: "Individual",
@@ -36,6 +52,10 @@ export const jointOptions = [
 ];
 
 export const singleIndividualOptions = [
+  {
+    value: "",
+    label: "search",
+  },
   {
     value: "RE",
     label: "01-RES.IND",
@@ -64,6 +84,10 @@ export const singleIndividualOptions = [
 
 export const singleMinorOptions = [
   {
+    value: "",
+    label: "search",
+  },
+  {
     value: "RM",
     label: "01-RES.IND (Minor)",
   },
@@ -90,6 +114,10 @@ export const singleMinorOptions = [
 ];
 
 export const singleSoleProprietorOptions = [
+  {
+    value: "",
+    label: "search",
+  },
   {
     value: "RS",
     label: "01-RES.IND (Sole-Proprietor)",

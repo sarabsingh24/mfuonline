@@ -3,4 +3,5 @@ export const TAB_UPDATE = "TAB_UPDATE";
 export const PAGE_COUNT = "PAGE_COUNT";
 export const NEXT_SEC = "NEXT_SEC";
 export const CAN_CRITERIA = "CAN_CRITERIA";
+export const PRIME_HOLDER = "PRIME_HOLDER";
 ;

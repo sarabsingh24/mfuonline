@@ -5,10 +5,10 @@ import { Container } from "react-bootstrap";
 
 //
 import Tabs from "./common/tabs/Tabs";
-import useTabReducer from "./common/customComp/useTabReducer";
+import useCommonReducer from "./common/customComp/useCommonReducer";
 
 function App() {
-  const { stepsCount } = useTabReducer();
+  const { stepsCount } = useCommonReducer();
 
   return (
     <Container>

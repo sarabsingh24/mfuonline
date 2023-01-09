@@ -8,13 +8,13 @@ import Nominees from "./nominees/Nominees";
 import PrimaryHolder from "./primary-holder/PrimaryHolder";
 import ProofUpload from "./proof-upload/ProofUpload";
 import SecondHolder from "./second-holder/SecondHolder";
-import useTabReducer from "../common/customComp/useTabReducer";
+import useCommonReducer from "../common/customComp/useCommonReducer";
 
 function RegistrationForm() {
   const [str, setStr] = useState("CRI");
   const [displayedTab, setDisplayedTab] = useState([]);
 
-  const { stepsCount, tabsCreater } = useTabReducer();
+  const { stepsCount, tabsCreater } = useCommonReducer();
 
   useEffect(() => {
     let filterTabs = tabsCreater.filter((tab) => tab.show === true);
@@ -30,7 +30,7 @@ function RegistrationForm() {
   }, [displayedTab, stepsCount, tabsCreater]);
 
   if (str === "CRI") {
-    // return <ProofUpload />;
+    // return <PrimaryHolder />;
     return <CanCriteria />;
   }
   if (str === "PRIM") {

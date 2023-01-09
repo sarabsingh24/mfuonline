@@ -1,4 +1,41 @@
-export const sourceOfWealth = [
+
+export const commonFormField = {
+  name: "",
+  dateOfBirth: "",
+  panPekrnNo: "",
+  confirmpanPekrnNo: "",
+  contactDetail: {
+    residenceIsd:'',
+    residenceStd:"",
+    residencePhoneNo:"",
+    mobileIsdCode: "",
+    primaryMobileNo:"",
+    primaryEmail: "",
+  },
+  otherDetail: {
+    grossIncome: "",
+    netWorth: "",
+    netWorthDate: "",
+    sourceOfWealth: "",
+    sourceOfWealthOthers: "",
+    occupation: "",
+    occupationOthers: "",
+    kraAddressType: "",
+    pep: "",
+  },
+  fatcaDetail: {
+    taxResidencyFlag: "",
+    birthCity: "",
+    birthCountry: "",
+    citizenshipCountry: "",
+    nationalityCountry: "",
+  },
+};
+
+
+
+
+export const sourceOfWealthOptions = [
   {
     value: "01",
     label: "Salary",
@@ -33,7 +70,7 @@ export const sourceOfWealth = [
   },
 ];
 
-export const occupation = [
+export const occupationOptions = [
   { value: "01", label: "Private Sector Service" },
   { value: "02", label: "Public Sector" },
   { value: "03", label: "Business" },
@@ -47,20 +84,20 @@ export const occupation = [
   { value: "99", label: "Others" },
 ];
 
-export const politicalExposure = [
+export const politicalExposureOptions = [
   { value: "NA", label: "Not Applicable" },
   { value: "PEP", label: "Politically Exposed Person" },
   { value: "RPEP", label: "Related to Politically Exposed Person" },
 ];
 
-export const addressType = [
+export const addressTypeOptions = [
   { value: "1", label: "Residential or Business" },
   { value: "2", label: "Residential" },
   { value: "3", label: "Business" },
   { value: "4", label: "Registered Office" },
 ];
 
-export const taxResidency = [
+export const taxResidencyOptions = [
   {
     value: "N",
     label: "No - Not a Tax Resident in a Country other than India",
@@ -68,7 +105,7 @@ export const taxResidency = [
   { value: "Y", label: "Yes - Tax Resident in a Country other than India" },
 ];
 
-export const grossAnnualIncome = [
+export const grossAnnualIncomeOptions = [
   { value: "01", label: "BELOW 1 LAC" },
   { value: "02", label: "1-5 LAC" },
   { value: "03", label: "5-10 LAC" },
@@ -77,7 +114,8 @@ export const grossAnnualIncome = [
   { value: "06", label: "Greater than 1 CR" },
 ];
 
-export const countryList = [
+export const countryListOptions = [
+  { value: "0", label: "Select Country" },
   { value: "001", label: "Afghanistan" },
   { value: "002", label: "Aland Islands" },
   { value: "003", label: "Albania" },

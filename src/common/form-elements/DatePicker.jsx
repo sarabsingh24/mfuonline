@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 
-const redColor ={
-  color:'red'
-}
+function DatePicker({ name, label, mandatory, changeFun }) {
+  const [todayDate, setTodayDate] = useState("");
+  useEffect(() => {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
 
-function DatePicker({ label, mandatory }) {
+    if (month < 10) month = "0" + month.toString();
+    if (day < 10) day = "0" + day.toString();
+
+    setTodayDate(`${year}-${month}-${day}`);
+  }, []);
+
   return (
     <Form.Group className="mb-3">
       <Form.Label>
         {label}
-        {mandatory && <span style={redColor}>*</span>}
+        <span className="red">{mandatory}</span>
       </Form.Label>
-      <Form.Control type="date" />
+      <Form.Control
+        type="date"
+        name={name}
+        onChange={changeFun}
+        max={todayDate}
+      />
     </Form.Group>
   );
 }

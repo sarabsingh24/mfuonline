@@ -11,7 +11,7 @@ import SelectOption from "../../common/form-elements/SelectOption";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import { pageCount } from "../../reducer/Action";
-import useTabReducer from "../../common/customComp/useTabReducer";
+import useCommonReducer from "../../common/customComp/useCommonReducer";
 
 const nominee = [
   { value: "N", label: "No - I/We declare to Opt out" },
@@ -21,7 +21,7 @@ const nominee = [
 function Nominees() {
   const [btnFun, setBtnFun] = useState({});
 
-  const { stepsCount, tabsCreater, dispatch } = useTabReducer();
+  const { stepsCount, tabsCreater, dispatch } = useCommonReducer();
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();

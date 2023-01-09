@@ -4,16 +4,14 @@ import { Form } from "react-bootstrap";
 //components
 import StakeHolder from "../../common/stake-holder/StakeHolder";
 import { pageCount } from "../../reducer/Action";
-import useTabReducer from "../../common/customComp/useTabReducer";
+import useCommonReducer from "../../common/customComp/useCommonReducer";
 
 function ThirdHolder() {
-
-  const { stepsCount, dispatch } = useTabReducer();
+  const { stepsCount, dispatch } = useCommonReducer();
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
 
-    
     console.log("Third holder");
     if (true) {
       dispatch(pageCount(stepsCount + 1));

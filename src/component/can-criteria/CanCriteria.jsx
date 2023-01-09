@@ -13,11 +13,12 @@ import InputText from "../../common/form-elements/InputText";
 import SelectOption from "../../common/form-elements/SelectOption";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
-import useTabReducer from "../../common/customComp/useTabReducer";
+import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { tabUpdate, pageCount, criteriaForm } from "../../reducer/Action";
 import { validateForm } from "./CanCriteriaValidation";
 import {
   natureOptions,
+  investorOptions,
   singleOptions,
   jointOptions,
   singleIndividualOptions,
@@ -26,20 +27,23 @@ import {
   holderOptions,
 } from "./canCriteriaData";
 
+const defaultValue = {
+  holdingNature: "",
+  investorCategory: "",
+  taxStatus: "",
+  holderCount: "",
+};
+
 function CanCriteria() {
-  const [form, setForm] = useState({
-    holdingNature: "",
-    investorCategory: "",
-    taxStatus: "",
-    holderCount: "",
-  });
+  const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
 
   const [taxList, setTaxList] = useState([]);
   const [investorList, setInvestorList] = useState([]);
   const [btnFun, setBtnFun] = useState({});
 
-  const { stepsCount, tabsCreater, dispatch } = useTabReducer();
+  const { stepsCount, tabsCreater, canCriteriaObj, dispatch } =
+    useCommonReducer();
 
   const { holdingNature, investorCategory, taxStatus, holderCount } = form;
 
@@ -47,12 +51,14 @@ function CanCriteria() {
     let name = e.target.name;
     let val = e.target.value;
 
-    console.log(e.target);
-
     setForm({ ...form, [name]: val });
 
     if (!!errors[name]) {
       setErrors({ ...errors, [name]: null });
+    }
+    if (name === 'holdingNature') {
+  //     setForm({...defaultValue,investorCategory: "",
+  // taxStatus: "",});
     }
   };
 
@@ -70,19 +76,37 @@ function CanCriteria() {
   };
 
   useEffect(() => {
+    if (Object.keys(canCriteriaObj).length > 0) {
+      setForm(canCriteriaObj.form);
+    } else {
+      setForm(defaultValue);
+    }
+  }, [canCriteriaObj]);
+
+  useEffect(() => {
     tabShoHideHandeler(tabsCreater, ["NOMI"]);
   }, []);
 
   useEffect(() => {
     if (holdingNature === "SI") {
+
+      
+      setForm({
+        ...form,
+        holdingNature: "SI",
+        investorCategory: canCriteriaObj?.form?.investorCategory || "",
+        // investorCategory: canCriteriaObj?.form?.investorCategory || "",
+      });
       setInvestorList(singleOptions);
       tabShoHideHandeler(tabsCreater, ["NOMI"]);
-      setForm({ ...form, holderCount: 1 });
     } else if (holdingNature === "JO") {
+      setForm({ ...form, holdingNature: "JO", investorCategory: "I" });
       setInvestorList(jointOptions);
+
+      setTaxList(singleIndividualOptions);
       tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
-      setForm({ ...form, holderCount: 2 });
     } else if (holdingNature === "AS") {
+      setForm({ ...form, holdingNature: "AS", investorCategory: "I" });
       setInvestorList(jointOptions);
     } else {
       setInvestorList([]);
@@ -121,21 +145,23 @@ function CanCriteria() {
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
-    console.log(form);
+
     const formErrors = validateForm(form);
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
-      console.log(form);
-      dispatch(criteriaForm());
+      dispatch(criteriaForm({ ...canCriteriaObj, form }));
       dispatch(pageCount(stepsCount + 1));
     }
   };
 
   useEffect(() => {
+  
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 
+  // console.log(form);
+  // console.log({ ...canCriteriaObj });
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
@@ -146,7 +172,7 @@ function CanCriteria() {
                 <SelectOption
                   name="holdingNature"
                   label="Holding Nature"
-                  value={holdingNature || "Select"}
+                  value={holdingNature}
                   options={natureOptions}
                   changeFun={formHandeler}
                   mandatory="*"
@@ -158,7 +184,7 @@ function CanCriteria() {
                   name="investorCategory"
                   label="Investor Category"
                   value={investorCategory || "Select"}
-                  options={investorList}
+                  options={investorList.length ? investorList : investorOptions}
                   changeFun={formHandeler}
                   mandatory="*"
                   errors={errors}
@@ -171,7 +197,7 @@ function CanCriteria() {
                   name="taxStatus"
                   label="Tax Status"
                   value={taxStatus || "Select"}
-                  options={taxList}
+                  options={taxList.length ? taxList : singleIndividualOptions}
                   changeFun={formHandeler}
                   mandatory="*"
                   errors={errors}

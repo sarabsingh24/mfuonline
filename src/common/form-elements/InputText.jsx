@@ -8,8 +8,8 @@ function InputText({
   disabled,
   value,
   type,
-  changeFunc,
-  mandatory,
+  changeFun,
+  mandatory, 
   errors,
   name,
 }) {
@@ -20,11 +20,12 @@ function InputText({
         <span className="red">{mandatory}</span>
       </Form.Label>
       <Form.Control
-        placeholder={placeholder ? placeholder : ""}
+      name={name}
+        // placeholder={placeholder ? placeholder : ""}
         disabled={disabled ? disabled : false}
-        value={value && value}
+        value={value}
         type={type ? type : "text"}
-        onChange={changeFunc && changeFunc}
+        onChange={changeFun}
         className={!!errors?.[name] && "redBorder"}
         isInvalid={!!errors?.name}
       />

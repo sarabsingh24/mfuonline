@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
 //components
 import StakeHolder from "../../common/stake-holder/StakeHolder";
 import { pageCount } from "../../reducer/Action";
-import useTabReducer from "../../common/customComp/useTabReducer";
+import useCommonReducer from "../../common/customComp/useCommonReducer";
 
 function SecondHolder() {
-
-  const { stepsCount, dispatch } = useTabReducer();
+const [form, setForm] = useState({});
+  const { stepsCount, dispatch } = useCommonReducer();
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ function SecondHolder() {
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
-        <StakeHolder />
+        <StakeHolder form={form} setForm={setForm} />
       </Form>
     </React.Fragment>
   );

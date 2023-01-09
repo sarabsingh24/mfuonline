@@ -10,8 +10,8 @@ export const validateForm = (form) => {
   if (!form.taxStatus || form.taxStatus === "")
     newErrors.taxStatus = "please select Tax Status";
 
-  if (!form.holderCount || form.holderCount === "")
-    newErrors.holderCount = "please select Holders";
+  // if (!form.holderCount || form.holderCount === "")
+  //   newErrors.holderCount = "please select Holders";
 
   return newErrors;
 };

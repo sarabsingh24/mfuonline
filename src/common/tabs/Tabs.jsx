@@ -5,12 +5,12 @@ import Tab from "./Tab";
 //component
 import { stepsList } from "./Data";
 import { tabUpdate } from "../../reducer/Action";
-import useTabReducer from "../../common/customComp/useTabReducer";
+import useCommonReducer from "../customComp/useCommonReducer";
 
 function Tabs() {
   const [tabs, setTabs] = useState([]);
 
-  const { stepsCount, tabsCreater, dispatch } = useTabReducer();
+  const { stepsCount, tabsCreater, dispatch } = useCommonReducer();
 
   useEffect(() => {
     let copyTab = tabsCreater.filter((tab) => tab.show === true);

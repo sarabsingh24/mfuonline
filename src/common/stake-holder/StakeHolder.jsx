@@ -13,32 +13,132 @@ import SelectOption from "../form-elements/SelectOption";
 import FooterSection from "../footerSection/FooterSection";
 import { btnHandeler } from "../helper/Helper";
 import { pageCount } from "../../reducer/Action";
-import useTabReducer from "../customComp/useTabReducer";
+import useCommonReducer from "../customComp/useCommonReducer";
 import {
-  sourceOfWealth,
-  occupation,
-  politicalExposure,
-  addressType,
-  taxResidency,
-  countryList,
-  grossAnnualIncome,
+  sourceOfWealthOptions,
+  occupationOptions,
+  politicalExposureOptions,
+  addressTypeOptions,
+  taxResidencyOptions,
+  countryListOptions,
+  grossAnnualIncomeOptions,
 } from "./stakeHolderData";
 
-function StakeHolder() {
-  const [grossIncome, setGrossIncome] = useState(false);
-  const [networth, setNetworth] = useState(false);
+function StakeHolder({ form, setForm, holderType }) {
+  const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
+  const [networthRadio, setNetworthRadio] = useState(false);
   const [btnFun, setBtnFun] = useState({});
+  const [isOtherSourceOfWealth, setIsOtherSourceOfWealth] = useState(true);
+  const [isOtherOccupation, setIsOtherOccupation] = useState(true);
 
-  const { stepsCount, dispatch } = useTabReducer();
+  const { stepsCount, dispatch } = useCommonReducer();
 
+  const { name, dateOfBirth, panPekrnNo, confirmpanPekrnNo } = form;
+
+  const {
+    residenceIsd,
+    residenceStd,
+    residencePhoneNo,
+    mobileIsdCode,
+    primaryMobileNo,
+    primaryEmail,
+  } = form.contactDetail;
+  const {
+    grossIncome,
+    netWorth,
+    netWorthDate,
+    sourceOfWealth,
+    sourceOfWealthOthers,
+    occupation,
+    occupationOthers,
+    kraAddressType,
+    pep,
+  } = form.otherDetail;
+
+  const {
+    taxResidencyFlag,
+    birthCity,
+    birthCountry,
+    citizenshipCountry,
+    nationalityCountry,
+  } = form.fatcaDetail;
+
+  // on change handeler
+  const formHandeler = (e) => {
+    let name = e.target.name;
+    let val = e.target.value;
+
+    console.log(name, val);
+
+    if (
+      name === "residenceIsd" ||
+      name === "residenceStd" ||
+      name === "residencePhoneNo" ||
+      name === "mobileIsdCode" ||
+      name === "primaryMobileNo" ||
+      name === "primaryEmail"
+    ) {
+      setForm({
+        ...form,
+        contactDetail: { ...form.contactDetail, [name]: val },
+      });
+    } else if (
+      name === "grossIncome" ||
+      name === "netWorth" ||
+      name === "netWorthDate" ||
+      name === "sourceOfWealth" ||
+      name === "sourceOfWealthOthers" ||
+      name === "occupation" ||
+      name === "occupationOthers" ||
+      name === "kraAddressType" ||
+      name === "pep"
+    ) {
+      console.log(name, val, "=========================");
+      setForm({
+        ...form,
+        otherDetail: { ...form.otherDetail, [name]: val },
+      });
+    } else if (
+      name === "taxResidencyFlag" ||
+      name === "birthCity" ||
+      name === "birthCountry" ||
+      name === "citizenshipCountry" ||
+      name === "nationalityCountry"
+    ) {
+      setForm({
+        ...form,
+        fatcaDetail: { ...form.fatcaDetail, [name]: val },
+      });
+    } else {
+      setForm({ ...form, [name]: val });
+    }
+
+    // if (!!errors[name]) {
+    //   setErrors({ ...errors, [name]: null });
+    // }
+
+    if (name === "sourceOfWealth" && val === "08") {
+      setIsOtherSourceOfWealth(false);
+    } else {
+      setIsOtherSourceOfWealth(true);
+    }
+
+    if (name === "occupation" && val === "99") {
+      setIsOtherOccupation(false);
+    } else {
+      setIsOtherOccupation(true);
+    }
+  };
+
+  // radio btn show hide
   const incomeStatus = (e) => {
     let status = e.target.dataset.name;
     if (status === "GAI") {
-      setGrossIncome(true);
-      setNetworth(false);
+      setGrossIncomeRadio(true);
+      setNetworthRadio(false);
     } else {
-      setGrossIncome(false);
-      setNetworth(true);
+      setGrossIncomeRadio(false);
+      setNetworthRadio(true);
     }
   };
 
@@ -46,22 +146,48 @@ function StakeHolder() {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 
+  console.log(holderType);
+
   return (
     <React.Fragment>
       <Section heading="Basic Details">
         <GridCustom>
           <Row>
             <Col xs={12} md={4}>
-              <InputText label="Name" mandatory="*" />
+              <InputText
+                name="name"
+                label="Name"
+                mandatory="*"
+                value={holderType.name || name}
+                changeFun={formHandeler}
+              />
             </Col>
             <Col xs={12} md={4}>
-              <DatePicker label="Date of Birth" mandatory="*" />
+              <DatePicker
+                name="dateOfBirth"
+                label="Date of Birth"
+                value={dateOfBirth}
+                mandatory="*"
+                changeFun={formHandeler}
+              />
             </Col>
             <Col xs={12} md={4}>
-              <InputText label="PAN / PEKRN" mandatory="*" />
+              <InputText
+                name="panPekrnNo"
+                label="PAN / PEKRN"
+                value={holderType.panPekrnNo || panPekrnNo}
+                mandatory=""
+                changeFun={formHandeler}
+              />
             </Col>
             <Col xs={12} md={{ span: 4, offset: 8 }}>
-              <InputText label="Re-Enter PAN / PEKRN" mandatory="*" />
+              <InputText
+                name="confirmpanPekrnNo"
+                label="Re-Enter PAN / PEKRN"
+                value={holderType.confirmpanPekrnNo || confirmpanPekrnNo}
+                mandatory=""
+                changeFun={formHandeler}
+              />
             </Col>
           </Row>
 
@@ -70,23 +196,69 @@ function StakeHolder() {
               <Form.Group className="mb-4">
                 <Form.Label>Res. (ISD-STD-Phone)</Form.Label>
                 <InputGroup>
-                  <Form.Control maxLength={2} placeholder="91" />
-                  <Form.Control style={{ flex: "2" }} maxLength={3} />
-                  <Form.Control style={{ flex: "8" }} />
+                  <Form.Control
+                    name="residenceIsd"
+                    maxLength={2}
+                    value={
+                      holderType.contactDetail?.residenceIsd || residenceIsd
+                    }
+                    onChange={formHandeler}
+                  />
+                  <Form.Control
+                    name="residenceStd"
+                    style={{ flex: "2" }}
+                    maxLength={3}
+                    value={
+                      holderType.contactDetail?.residenceStd || residenceStd
+                    }
+                    onChange={formHandeler}
+                  />
+                  <Form.Control
+                    name="residencePhoneNo"
+                    style={{ flex: "8" }}
+                    value={
+                      holderType.contactDetail?.residencePhoneNo ||
+                      residencePhoneNo
+                    }
+                    onChange={formHandeler}
+                  />
                 </InputGroup>
               </Form.Group>
             </Col>
             <Col xs={12} md={4}>
               <Form.Group className="mb-4">
-                <Form.Label>Mobile (ISD-Mobile)</Form.Label>
+                <Form.Label>
+                  Mobile (ISD-Mobile)<span className="red">*</span>
+                </Form.Label>
                 <InputGroup>
-                  <Form.Control maxLength={2} />
-                  <Form.Control style={{ flex: "8" }} />
+                  <Form.Control
+                    name="mobileIsdCode"
+                    maxLength={2}
+                    value={
+                      holderType.contactDetail?.mobileIsdCode || mobileIsdCode
+                    }
+                    onChange={formHandeler}
+                  />
+                  <Form.Control
+                    name="primaryMobileNo"
+                    style={{ flex: "8" }}
+                    value={
+                      holderType.contactDetail?.primaryMobileNo ||
+                      primaryMobileNo
+                    }
+                    onChange={formHandeler}
+                  />
                 </InputGroup>
               </Form.Group>
             </Col>
             <Col xs={12} md={4}>
-              <InputText label="Email" mandatory="*" />
+              <InputText
+                name="primaryEmail"
+                label="Email"
+                value={holderType.contactDetail?.primaryEmail || primaryEmail}
+                mandatory="*"
+                changeFun={formHandeler}
+              />
             </Col>
           </Row>
 
@@ -120,68 +292,75 @@ function StakeHolder() {
               />
             </Col>
           </Row>
-          <Row style={{ display: grossIncome ? "flex" : "none" }}>
+          <Row style={{ display: grossIncomeRadio ? "flex" : "none" }}>
             <Col xs={12} md={3}>
               <SelectOption
-                name="grossAnnualIncome"
+                name="grossIncome"
                 label="Gross Annual Income"
-                select="Select"
-                options={grossAnnualIncome}
-                // changeFun={formHandeler}
+                value={holderType.otherDetail?.grossIncome || grossIncome}
+                options={grossAnnualIncomeOptions}
+                changeFun={formHandeler}
                 mandatory="*"
               />
             </Col>
           </Row>
-          <Row style={{ display: networth ? "flex" : "none" }}>
+          <Row style={{ display: networthRadio ? "flex" : "none" }}>
             <Col xs={12} md={3}>
               <InputText
-                name="networth"
+                name="netWorth"
                 label="Networth (in Rs.)"
+                value={holderType.otherDetail?.netWorth || netWorth}
                 mandatory="*"
+                changeFun={formHandeler}
               />
             </Col>
             <Col xs={12} md={3}>
-              <DatePicker label="As on date" mandatory="*" />
+              <DatePicker
+                name="netWorthDate"
+                label="As on date"
+                value={netWorthDate}
+                mandatory="*"
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={12} md={3}>
               <SelectOption
-                name="wealthSource"
+                name="sourceOfWealth"
                 label="Source of Wealth"
-                select="Select"
-                options={sourceOfWealth}
-                // changeFun={formHandeler}
+                value={holderType.otherDetail?.sourceOfWealth || sourceOfWealth}
+                options={sourceOfWealthOptions}
+                changeFun={formHandeler}
                 mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
               <SelectOption
-                name="Occupation"
+                name="occupation"
                 label="Occupation"
-                select="Select"
-                options={occupation}
-                // changeFun={formHandeler}
+                value={holderType.otherDetail?.occupation || occupation}
+                options={occupationOptions}
+                changeFun={formHandeler}
                 mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
               <SelectOption
-                name="politicalExposure"
+                name="pep"
                 label="Political Exposure"
-                select="Select"
-                options={politicalExposure}
-                // changeFun={formHandeler}
+                value={holderType.otherDetail?.pep || pep}
+                options={politicalExposureOptions}
+                changeFun={formHandeler}
                 mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
               <SelectOption
-                name="addressType"
+                name="kraAddressType"
                 label="KRA Address Type"
-                select="Select"
-                options={addressType}
-                // changeFun={formHandeler}
+                value={holderType.otherDetail?.kraAddressType || kraAddressType}
+                options={addressTypeOptions}
+                changeFun={formHandeler}
                 mandatory="*"
               />
             </Col>
@@ -189,18 +368,27 @@ function StakeHolder() {
           <Row>
             <Col xs={12} md={3}>
               <InputText
-                name="other1"
+                name="sourceOfWealthOthers"
                 label="Other"
-                disabled={true}
+                value={
+                  holderType.otherDetail?.sourceOfWealthOthers ||
+                  sourceOfWealthOthers
+                }
+                disabled={isOtherSourceOfWealth}
                 mandatory="*"
+                changeFun={formHandeler}
               />
             </Col>
             <Col xs={12} md={3}>
               <InputText
-                name="other2"
+                name="occupationOthers"
                 label="Other"
-                disabled={true}
+                value={
+                  holderType.otherDetail?.occupationOthers || occupationOthers
+                }
+                disabled={isOtherOccupation}
                 mandatory="*"
+                changeFun={formHandeler}
               />
             </Col>
           </Row>
@@ -212,46 +400,59 @@ function StakeHolder() {
           <Row>
             <Col xs={12} md={4}>
               <SelectOption
-                name="addressType"
+                name="taxResidencyFlag"
                 label="Tax Residency in a country other than India? "
-                select="Select"
-                options={taxResidency}
-                // changeFun={formHandeler}
+                value={
+                  holderType.fatcaDetail?.taxResidencyFlag || taxResidencyFlag
+                }
+                options={taxResidencyOptions}
+                changeFun={formHandeler}
                 mandatory="*"
               />
             </Col>
           </Row>
           <Row>
             <Col xs={12} md={3}>
-              <InputText name="placeOfBirth" label="Place of Birth" />
+              <InputText
+                name="birthCity"
+                label="Place of Birth"
+                value={holderType.fatcaDetail?.birthCity || birthCity}
+                changeFun={formHandeler}
+                mandatory="*"
+              />
             </Col>
             <Col xs={12} md={3}>
               <SelectOption
-                name="addressType"
+                name="birthCountry"
                 label="Country of Birth "
-                select="Select"
-                options={countryList}
-                // changeFun={formHandeler}
+                value={holderType.fatcaDetail?.birthCountry || birthCountry}
+                options={countryListOptions}
+                changeFun={formHandeler}
                 mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
               <SelectOption
-                name="addressType"
+                name="citizenshipCountry"
                 label="Country of Citizenship "
-                select="Select"
-                options={countryList}
-                // changeFun={formHandeler}
+                value={
+                  holderType.fatcaDetail?.citizenshipCountry ||
+                  citizenshipCountry
+                }
+                options={countryListOptions}
+                changeFun={formHandeler}
                 mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
               <SelectOption
-                name="addressType"
+                name="nationalityCountry"
                 label="Country of Nationality"
-                select="Select"
-                options={countryList}
-                // changeFun={formHandeler}
+                value={
+                  holderType.fatcaDetail?.nationalityCountry || nationalityCountry
+                }
+                options={countryListOptions}
+                changeFun={formHandeler}
                 mandatory="*"
               />
             </Col>
