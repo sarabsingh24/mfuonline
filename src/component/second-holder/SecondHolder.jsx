@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 
 //components
 import StakeHolder from "../../common/stake-holder/StakeHolder";
-import { pageCount } from "../../reducer/Action";
+import { pageCount, secondHolderForm } from "../../reducer/Action";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
+import { commonFormField } from "../../common/stake-holder/stakeHolderData";
 
 function SecondHolder() {
-const [form, setForm] = useState({});
-  const { stepsCount, dispatch } = useCommonReducer();
+const [form, setForm] = useState( commonFormField );
+  const { stepsCount,secondHolderObj, dispatch } = useCommonReducer();
+
+
+
+ useEffect(() => {
+   if (Object.keys(secondHolderObj).length) {
+     setForm(secondHolderObj);
+   }
+ }, [secondHolderObj]);
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
     console.log("second Holder");
     if (true) {
+      dispatch(secondHolderForm({ ...secondHolderObj, ...form }));
       dispatch(pageCount(stepsCount + 1));
     }
   };

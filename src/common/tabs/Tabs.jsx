@@ -17,7 +17,7 @@ function Tabs() {
     let currentTab = copyTab.slice(0, stepsCount + 1);
 
     let getVal = currentTab.map((val) => val.short);
-  
+
     let heilightedTab = tabsCreater.map((tab) => {
       if (getVal.includes(tab.short)) {
         return { ...tab, active: true };
@@ -31,7 +31,7 @@ function Tabs() {
   useEffect(() => {
     setTabs(tabsCreater);
   }, [tabsCreater]);
-
+ 
   return (
     <StepperContainer>
       <StepperLine />

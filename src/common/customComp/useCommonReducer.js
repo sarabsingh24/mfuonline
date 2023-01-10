@@ -5,12 +5,26 @@ function useCommonReducer() {
     (state) => state.tabReducer
   );
 
-  const { canCriteriaObj, primeHolderObj } = useSelector(
-    (state) => state.formReducer
-  );
+  const {
+    canCriteriaObj,
+    primeHolderObj,
+    secondHolderObj,
+    thirdHolderObj,
+    guardianHolderObj,
+  } = useSelector((state) => state.formReducer);
   const dispatch = useDispatch();
   
-  return { tabsCreater, stepsCount, openForm, canCriteriaObj,primeHolderObj, dispatch };
+  return {
+    tabsCreater,
+    stepsCount,
+    openForm,
+    canCriteriaObj,
+    primeHolderObj,
+    secondHolderObj,
+    thirdHolderObj,
+    guardianHolderObj,
+    dispatch,
+  };
 }
 
 export default useCommonReducer;

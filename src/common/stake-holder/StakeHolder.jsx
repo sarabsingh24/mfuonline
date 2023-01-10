@@ -24,7 +24,7 @@ import {
   grossAnnualIncomeOptions,
 } from "./stakeHolderData";
 
-function StakeHolder({ form, setForm, holderType }) {
+function StakeHolder({ form, setForm}) {
   const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
   const [networthRadio, setNetworthRadio] = useState(false);
   const [btnFun, setBtnFun] = useState({});
@@ -146,7 +146,7 @@ function StakeHolder({ form, setForm, holderType }) {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 
-  console.log(holderType);
+  // console.log(form);
 
   return (
     <React.Fragment>
@@ -158,7 +158,7 @@ function StakeHolder({ form, setForm, holderType }) {
                 name="name"
                 label="Name"
                 mandatory="*"
-                value={holderType.name || name}
+                value={form.name || name}
                 changeFun={formHandeler}
               />
             </Col>
@@ -175,7 +175,7 @@ function StakeHolder({ form, setForm, holderType }) {
               <InputText
                 name="panPekrnNo"
                 label="PAN / PEKRN"
-                value={holderType.panPekrnNo || panPekrnNo}
+                value={form.panPekrnNo || panPekrnNo}
                 mandatory=""
                 changeFun={formHandeler}
               />
@@ -184,7 +184,7 @@ function StakeHolder({ form, setForm, holderType }) {
               <InputText
                 name="confirmpanPekrnNo"
                 label="Re-Enter PAN / PEKRN"
-                value={holderType.confirmpanPekrnNo || confirmpanPekrnNo}
+                value={form.confirmpanPekrnNo || confirmpanPekrnNo}
                 mandatory=""
                 changeFun={formHandeler}
               />
@@ -200,7 +200,7 @@ function StakeHolder({ form, setForm, holderType }) {
                     name="residenceIsd"
                     maxLength={2}
                     value={
-                      holderType.contactDetail?.residenceIsd || residenceIsd
+                      form.contactDetail?.residenceIsd || residenceIsd
                     }
                     onChange={formHandeler}
                   />
@@ -209,7 +209,7 @@ function StakeHolder({ form, setForm, holderType }) {
                     style={{ flex: "2" }}
                     maxLength={3}
                     value={
-                      holderType.contactDetail?.residenceStd || residenceStd
+                      form.contactDetail?.residenceStd || residenceStd
                     }
                     onChange={formHandeler}
                   />
@@ -217,7 +217,7 @@ function StakeHolder({ form, setForm, holderType }) {
                     name="residencePhoneNo"
                     style={{ flex: "8" }}
                     value={
-                      holderType.contactDetail?.residencePhoneNo ||
+                      form.contactDetail?.residencePhoneNo ||
                       residencePhoneNo
                     }
                     onChange={formHandeler}
@@ -235,7 +235,7 @@ function StakeHolder({ form, setForm, holderType }) {
                     name="mobileIsdCode"
                     maxLength={2}
                     value={
-                      holderType.contactDetail?.mobileIsdCode || mobileIsdCode
+                      form.contactDetail?.mobileIsdCode || mobileIsdCode
                     }
                     onChange={formHandeler}
                   />
@@ -243,7 +243,7 @@ function StakeHolder({ form, setForm, holderType }) {
                     name="primaryMobileNo"
                     style={{ flex: "8" }}
                     value={
-                      holderType.contactDetail?.primaryMobileNo ||
+                      form.contactDetail?.primaryMobileNo ||
                       primaryMobileNo
                     }
                     onChange={formHandeler}
@@ -255,7 +255,7 @@ function StakeHolder({ form, setForm, holderType }) {
               <InputText
                 name="primaryEmail"
                 label="Email"
-                value={holderType.contactDetail?.primaryEmail || primaryEmail}
+                value={form.contactDetail?.primaryEmail || primaryEmail}
                 mandatory="*"
                 changeFun={formHandeler}
               />
@@ -297,7 +297,7 @@ function StakeHolder({ form, setForm, holderType }) {
               <SelectOption
                 name="grossIncome"
                 label="Gross Annual Income"
-                value={holderType.otherDetail?.grossIncome || grossIncome}
+                value={form.otherDetail?.grossIncome || grossIncome}
                 options={grossAnnualIncomeOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -309,7 +309,7 @@ function StakeHolder({ form, setForm, holderType }) {
               <InputText
                 name="netWorth"
                 label="Networth (in Rs.)"
-                value={holderType.otherDetail?.netWorth || netWorth}
+                value={form.otherDetail?.netWorth || netWorth}
                 mandatory="*"
                 changeFun={formHandeler}
               />
@@ -328,7 +328,7 @@ function StakeHolder({ form, setForm, holderType }) {
               <SelectOption
                 name="sourceOfWealth"
                 label="Source of Wealth"
-                value={holderType.otherDetail?.sourceOfWealth || sourceOfWealth}
+                value={form.otherDetail?.sourceOfWealth || sourceOfWealth}
                 options={sourceOfWealthOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -338,7 +338,7 @@ function StakeHolder({ form, setForm, holderType }) {
               <SelectOption
                 name="occupation"
                 label="Occupation"
-                value={holderType.otherDetail?.occupation || occupation}
+                value={form.otherDetail?.occupation || occupation}
                 options={occupationOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -348,7 +348,7 @@ function StakeHolder({ form, setForm, holderType }) {
               <SelectOption
                 name="pep"
                 label="Political Exposure"
-                value={holderType.otherDetail?.pep || pep}
+                value={form.otherDetail?.pep || pep}
                 options={politicalExposureOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -358,7 +358,7 @@ function StakeHolder({ form, setForm, holderType }) {
               <SelectOption
                 name="kraAddressType"
                 label="KRA Address Type"
-                value={holderType.otherDetail?.kraAddressType || kraAddressType}
+                value={form.otherDetail?.kraAddressType || kraAddressType}
                 options={addressTypeOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -371,7 +371,7 @@ function StakeHolder({ form, setForm, holderType }) {
                 name="sourceOfWealthOthers"
                 label="Other"
                 value={
-                  holderType.otherDetail?.sourceOfWealthOthers ||
+                  form.otherDetail?.sourceOfWealthOthers ||
                   sourceOfWealthOthers
                 }
                 disabled={isOtherSourceOfWealth}
@@ -384,7 +384,7 @@ function StakeHolder({ form, setForm, holderType }) {
                 name="occupationOthers"
                 label="Other"
                 value={
-                  holderType.otherDetail?.occupationOthers || occupationOthers
+                  form.otherDetail?.occupationOthers || occupationOthers
                 }
                 disabled={isOtherOccupation}
                 mandatory="*"
@@ -403,7 +403,7 @@ function StakeHolder({ form, setForm, holderType }) {
                 name="taxResidencyFlag"
                 label="Tax Residency in a country other than India? "
                 value={
-                  holderType.fatcaDetail?.taxResidencyFlag || taxResidencyFlag
+                  form.fatcaDetail?.taxResidencyFlag || taxResidencyFlag
                 }
                 options={taxResidencyOptions}
                 changeFun={formHandeler}
@@ -416,7 +416,7 @@ function StakeHolder({ form, setForm, holderType }) {
               <InputText
                 name="birthCity"
                 label="Place of Birth"
-                value={holderType.fatcaDetail?.birthCity || birthCity}
+                value={form.fatcaDetail?.birthCity || birthCity}
                 changeFun={formHandeler}
                 mandatory="*"
               />
@@ -425,7 +425,7 @@ function StakeHolder({ form, setForm, holderType }) {
               <SelectOption
                 name="birthCountry"
                 label="Country of Birth "
-                value={holderType.fatcaDetail?.birthCountry || birthCountry}
+                value={form.fatcaDetail?.birthCountry || birthCountry}
                 options={countryListOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -436,7 +436,7 @@ function StakeHolder({ form, setForm, holderType }) {
                 name="citizenshipCountry"
                 label="Country of Citizenship "
                 value={
-                  holderType.fatcaDetail?.citizenshipCountry ||
+                  form.fatcaDetail?.citizenshipCountry ||
                   citizenshipCountry
                 }
                 options={countryListOptions}
@@ -449,7 +449,7 @@ function StakeHolder({ form, setForm, holderType }) {
                 name="nationalityCountry"
                 label="Country of Nationality"
                 value={
-                  holderType.fatcaDetail?.nationalityCountry || nationalityCountry
+                  form.fatcaDetail?.nationalityCountry || nationalityCountry
                 }
                 options={countryListOptions}
                 changeFun={formHandeler}

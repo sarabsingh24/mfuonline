@@ -4,4 +4,8 @@ export const PAGE_COUNT = "PAGE_COUNT";
 export const NEXT_SEC = "NEXT_SEC";
 export const CAN_CRITERIA = "CAN_CRITERIA";
 export const PRIME_HOLDER = "PRIME_HOLDER";
+export const SECOND_HOLDER = "SECOND_HOLDER";
+export const THIRD_HOLDER = "THIRD_HOLDER";
+export const GUARDIAN_HOLDER = "GUARDIAN_HOLDER";
+ 
 ;

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect, useCallback } from "react";
+
 import { Form } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -56,9 +56,9 @@ function CanCriteria() {
     if (!!errors[name]) {
       setErrors({ ...errors, [name]: null });
     }
-    if (name === 'holdingNature') {
-  //     setForm({...defaultValue,investorCategory: "",
-  // taxStatus: "",});
+    if (name === "holdingNature") {
+      //     setForm({...defaultValue,investorCategory: "",
+      // taxStatus: "",});
     }
   };
 
@@ -89,8 +89,6 @@ function CanCriteria() {
 
   useEffect(() => {
     if (holdingNature === "SI") {
-
-      
       setForm({
         ...form,
         holdingNature: "SI",
@@ -100,13 +98,13 @@ function CanCriteria() {
       setInvestorList(singleOptions);
       tabShoHideHandeler(tabsCreater, ["NOMI"]);
     } else if (holdingNature === "JO") {
-      setForm({ ...form, holdingNature: "JO", investorCategory: "I" });
       setInvestorList(jointOptions);
 
       setTaxList(singleIndividualOptions);
       tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
+      // setForm({ ...form, holdingNature: "JO", investorCategory: "I" });
     } else if (holdingNature === "AS") {
-      setForm({ ...form, holdingNature: "AS", investorCategory: "I" });
+      // setForm({ ...form, holdingNature: "AS", investorCategory: "I" });
       setInvestorList(jointOptions);
     } else {
       setInvestorList([]);
@@ -156,7 +154,6 @@ function CanCriteria() {
   };
 
   useEffect(() => {
-  
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 

@@ -9,12 +9,14 @@ import { commonFormField } from "../../common/stake-holder/stakeHolderData";
 import { useEffect } from "react";
 function PrimaryHolder() {
   const [form, setForm] = useState(commonFormField);
-  const [holderType, setHolderType] = useState({});
+  // const [holderType, setHolderType] = useState({});
 
   const { stepsCount, primeHolderObj, dispatch } = useCommonReducer();
 
   useEffect(() => {
-    setHolderType(primeHolderObj);
+    if (Object.keys(primeHolderObj).length) {
+      setForm(primeHolderObj);
+    }
   }, [primeHolderObj]);
 
   // const formSubmitHandeler = (e) => {
@@ -44,7 +46,7 @@ function PrimaryHolder() {
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
-        <StakeHolder form={form} setForm={setForm} holderType={holderType} />
+        <StakeHolder form={form} setForm={setForm} />
       </Form>
     </React.Fragment>
   );

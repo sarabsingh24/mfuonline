@@ -5,6 +5,9 @@ import {
   NEXT_SEC,
   CAN_CRITERIA,
   PRIME_HOLDER,
+  SECOND_HOLDER,
+  THIRD_HOLDER,
+  GUARDIAN_HOLDER,
 } from "./Constant";
 
 //Tab Action
@@ -15,3 +18,6 @@ export const nextSection = createAction(NEXT_SEC);
 //Form Action
 export const criteriaForm = createAction(CAN_CRITERIA);
 export const primeHolderForm = createAction(PRIME_HOLDER);
+export const secondHolderForm = createAction(SECOND_HOLDER);
+export const thirdHolderForm = createAction(THIRD_HOLDER);
+export const guardianHolderForm = createAction(GUARDIAN_HOLDER);

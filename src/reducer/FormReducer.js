@@ -1,10 +1,19 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { CAN_CRITERIA, PRIME_HOLDER } from "./Constant";
+import {
+  CAN_CRITERIA,
+  PRIME_HOLDER,
+  SECOND_HOLDER,
+  THIRD_HOLDER,
+  GUARDIAN_HOLDER,
+} from "./Constant";
 
 
 const initialState = {
   canCriteriaObj: {},
   primeHolderObj: {},
+  secondHolderObj: {},
+  thirdHolderObj: {},
+  guardianHolderObj: {},
 };
 
 export default createReducer(initialState, (builder) => {
@@ -14,5 +23,17 @@ export default createReducer(initialState, (builder) => {
   builder.addCase(PRIME_HOLDER, (state, action) => {
     state.primeHolderObj = action.payload;
   });
+  builder.addCase(SECOND_HOLDER, (state, action) => {
+    state.secondHolderObj = action.payload;
+  });
+   builder.addCase(THIRD_HOLDER, (state, action) => {
+     state.thirdHolderObj = action.payload;
+   });
+  
+    builder.addCase(GUARDIAN_HOLDER, (state, action) => {
+      state.guardianHolderObj = action.payload;
+    });
+  
+  
   
 });

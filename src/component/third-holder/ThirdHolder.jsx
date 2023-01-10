@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 
 //components
 import StakeHolder from "../../common/stake-holder/StakeHolder";
-import { pageCount } from "../../reducer/Action";
+import { pageCount, thirdHolderForm } from "../../reducer/Action";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
+import { commonFormField } from "../../common/stake-holder/stakeHolderData";
 
 function ThirdHolder() {
-  const { stepsCount, dispatch } = useCommonReducer();
+  const [form, setForm] = useState( commonFormField );
+  const { stepsCount,thirdHolderObj, dispatch } = useCommonReducer();
+
+
+ useEffect(() => {
+   if (Object.keys(thirdHolderObj).length) {
+     setForm(thirdHolderObj);
+   }
+ }, [thirdHolderObj]);
+
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
 
     console.log("Third holder");
     if (true) {
+        dispatch(thirdHolderForm({ ...thirdHolderObj, ...form }));
       dispatch(pageCount(stepsCount + 1));
     }
   };
