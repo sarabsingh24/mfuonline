@@ -30,8 +30,8 @@ function RegistrationForm() {
   }, [displayedTab, stepsCount, tabsCreater]);
 
   if (str === "CRI") {
-    // return <PrimaryHolder />;
-    return <CanCriteria />;
+    return <ProofUpload />;
+    // return <CanCriteria />;
   }
   if (str === "PRIM") {
     return <PrimaryHolder />;

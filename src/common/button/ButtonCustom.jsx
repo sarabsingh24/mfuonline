@@ -3,16 +3,19 @@ import { BtnStyle } from "./ButtonCustom-style";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 
-function ButtonCustom({ text, btnFun, variant, type }) {
+function ButtonCustom({ text, btnFun, variant, type, bgColor }) {
   return (
     <>
-      {!type ? (
+      {!type  ? (
         //Back button
-        <BtnStyle onClick={btnFun}>{text}</BtnStyle>
+        <BtnStyle onClick={btnFun} back >{text}</BtnStyle>
       ) : (
         //Next button
-        <BtnStyle type={type}>{text}</BtnStyle>
+        <BtnStyle type={type} >
+          {text}
+        </BtnStyle>
       )}
+     
     </>
   );
 }

@@ -25,4 +25,12 @@ grid-template-columns: 1fr 2fr 1fr 4fr 1fr 1fr ;
   background: #f2dede;
 }
 
+.no-image-found{
+
+   font-size: 14px;
+ 
+  background: #f2dede;
+  text-align: center;
+  line-height: 48px;
+}
 

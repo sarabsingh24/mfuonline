@@ -24,26 +24,38 @@ function ProofUpload() {
 
   const getImageHandeler = (e) => {
     e.preventDefault();
+
     console.log(e.target.files[0]);
     const { name, size, type } = e.target.files[0];
+    const path = URL.createObjectURL(e.target.files[0]);
     const id = +new Date();
+
     setImagesList([
       ...imagesList,
-      { id, name, size, type, status: "pending..." },
+      { id, path, name, size, type, status: "pending..." },
     ]);
+
+    e.target.value = "";
   };
 
-   const formSubmitHandeler = (e) => {
-     e.preventDefault();
-     console.log("bank account");
-     if (true) {
-       dispatch(pageCount(stepsCount + 1));
-     }
-   };
+  const removeImgHandeler = (id) => {
+    let filterImage = imagesList.filter((img) => img.id !== id);
+    setImagesList(filterImage);
+  };
+
+  const formSubmitHandeler = (e) => {
+    e.preventDefault();
+    console.log("bank account");
+    if (true) {
+      dispatch(pageCount(stepsCount + 1));
+    }
+  };
 
   useEffect(() => {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
+
+  console.log(imagesList);
 
   return (
     <Form onSubmit={formSubmitHandeler}>
@@ -58,27 +70,35 @@ function ProofUpload() {
               </Alert>
             </Col>
           </Row>
-          <Row className="mb-3">
-            <Col xs={12} md={6}>
-              <InputText
+          <Row className="mb-5 mt-3" style={{ position: "relative" }}>
+            <Col xs={12} md={3}>
+              {/* <InputText
                 type="file"
                 name="addFile"
-                label="Add Files..."
-                changeFunc={getImageHandeler}
+                label=""
+                changeFun={getImageHandeler}
+              /> */}
+              <input
+                type="file"
+                className="upload-image-btn"
+                onChange={getImageHandeler}
               />
-            </Col>
-            <Col xs={12} md={2}>
-              <Button variant="success" type="input">
+              <Button
+                variant="success"
+                type="input"
+                style={{ width: "auto", position: "absolute", top: "-3px" }}
+              >
                 <Badge
                   bg="success"
                   style={{ fontSize: "20px", padding: "2px" }}
                 >
                   +
                 </Badge>
-                Upload File
+                Add a File...
                 <span className="visually-hidden">unread messages</span>
               </Button>
             </Col>
+            <Col xs={12} md={2} style={{ paddingBottom: "14px" }}></Col>
           </Row>
           <Row>
             <Col xs={12}>
@@ -90,24 +110,43 @@ function ProofUpload() {
             </Col>
           </Row>
 
-          {imagesList?.map((image, index) => {
-            return (
-              <Row key={index}>
-                <Col xs={12} className="proof-table-row">
-                  <div>Image Preview</div>
-                  <div>{image.name}</div>
-                  <div>{image.size}</div>
-                  <div>{image.type}</div>
-                  <div>{image.status}</div>
-                  <div>
-                    <Button variant="warning" size="sm">
-                      Remove
-                    </Button>
-                  </div>
-                </Col>
-              </Row>
-            );
-          })}
+          {imagesList.length ? (
+            imagesList?.map((image, index) => {
+              return (
+                <Row key={index}>
+                  <Col xs={12} className="proof-table-row">
+                    <div>
+                      <img
+                        src={image.path}
+                        alt={image.name}
+                        style={{ width: "80px" }}
+                      />
+                    </div>
+
+                    <div>{image.name}</div>
+                    <div>{image.size}</div>
+                    <div>{image.type}</div>
+                    <div>{image.status}</div>
+                    <div>
+                      <Button
+                        variant="warning"
+                        size="sm"
+                        onClick={() => removeImgHandeler(image.id)}
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  </Col>
+                </Row>
+              );
+            })
+          ) : (
+            <Row>
+              <Col xs={12}>
+                <div className="no-image-found"> No image added</div>
+              </Col>
+            </Row>
+          )}
 
           <Row className="mt-3">
             <Col xs={12}>
@@ -160,7 +199,12 @@ function ProofUpload() {
           </Row>
         </GridCustom>
       </Section>
-      <FooterSection backBtn={true} nextBtn={false} btnFun={btnFun} />
+      <FooterSection
+        backBtn={true}
+        nextBtn={false}
+        submitBtn={true}
+        btnFun={btnFun}
+      />
     </Form>
   );
 }

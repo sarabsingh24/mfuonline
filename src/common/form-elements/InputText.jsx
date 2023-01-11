@@ -20,7 +20,7 @@ function InputText({
         <span className="red">{mandatory}</span>
       </Form.Label>
       <Form.Control
-      name={name}
+        name={name}
         // placeholder={placeholder ? placeholder : ""}
         disabled={disabled ? disabled : false}
         value={value}
@@ -28,6 +28,7 @@ function InputText({
         onChange={changeFun}
         className={!!errors?.[name] && "redBorder"}
         isInvalid={!!errors?.name}
+        style={{ color: "#666", fontWeight: "500" }}
       />
       <div className="red">{errors?.[name]}</div>
     </Form.Group>

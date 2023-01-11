@@ -21,22 +21,18 @@ function SelectOption({
       </Form.Label>
 
       <Form.Select
-       
         onChange={changeFun}
         name={name}
         className={!!errors?.[name] && "redBorder"}
-        value={ value }
+        value={value}
+        style={{ color: "#666", fontWeight: "500" }}
         // required
       >
         {/* {!options.label && <option selected>{value}</option>} */}
         {options.map((item) => {
           return (
-            <option
-              key={item.value}
-              label={item.label}
-              value={item.value }
-            >
-              {item.label }
+            <option key={item.value} label={item.label} value={item.value}>
+              {item.label}
             </option>
           );
         })}

@@ -3,11 +3,11 @@ import styled from "styled-components";
 export const StepperContainer = styled.section`
   position: relative;
   padding: 16px;
-  margin: 40px 0;
+  margin: 40px 0 0;
 `;
 
 export const StepperLine = styled.div`
-  border: 1px solid #bdbdbd;
+  /* border: 1px solid #bdbdbd; */
   margin: 0 auto;
   width: 90%;
 `;
@@ -20,10 +20,10 @@ export const StepBox = styled.div`
   margin-top: -28px;
   flex-grow: 1;
   text-align: center;
-  color: rgba(0, 0, 0, 0.3);
+  color: #6e6e6e;
 
   &.tab-active {
-  color: #01579b;
+  color: #fff;
   }
 `;
 
@@ -32,23 +32,32 @@ export const StepCount = styled.div`
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  border: 2px solid #b3e5fc;
+  border: 2px solid #cacccc;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 20px;
-  color: #eeeeee;
+  color: #969696;
   background: #bdbdbd;
 
   &.tab-active {
     color: #ffffff;
-    background: #0288d1;
+    border: 2px solid #83d0fa;
+    background-image: -webkit-linear-gradient(
+      0deg,
+      #884d80 0%,
+      #9795f0 0%,
+      #2b5876 0%,
+      #4e4376 100%
+    );
+    /* background: #0288d1; */
   }
 `;
 export const StepText = styled.div`
   text-align: center;
   font-size: 14px;
-  /* font-weight:600; */
+  font-weight:600;
+  margin-top: 10px;
 
   @media (max-width: 768px) {
     display: none;

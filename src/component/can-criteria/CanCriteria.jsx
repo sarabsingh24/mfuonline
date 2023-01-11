@@ -89,22 +89,27 @@ function CanCriteria() {
 
   useEffect(() => {
     if (holdingNature === "SI") {
-      setForm({
-        ...form,
-        holdingNature: "SI",
-        investorCategory: canCriteriaObj?.form?.investorCategory || "",
-        // investorCategory: canCriteriaObj?.form?.investorCategory || "",
-      });
       setInvestorList(singleOptions);
       tabShoHideHandeler(tabsCreater, ["NOMI"]);
+      setForm({
+        ...form,
+        holdingNature: form.holdingNature || "",
+        investorCategory: form.investorCategory || "",
+        holderCount:  '1',
+      });
     } else if (holdingNature === "JO") {
       setInvestorList(jointOptions);
 
       setTaxList(singleIndividualOptions);
       tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
-      // setForm({ ...form, holdingNature: "JO", investorCategory: "I" });
+     setForm({
+       ...form,
+       holdingNature: "JO",
+       investorCategory: form.investorCategory || "",
+       holderCount: form.holderCount || '2',
+     });
     } else if (holdingNature === "AS") {
-      // setForm({ ...form, holdingNature: "AS", investorCategory: "I" });
+      setForm({ ...form, holdingNature: "AS", investorCategory: "I" });
       setInvestorList(jointOptions);
     } else {
       setInvestorList([]);
@@ -158,7 +163,7 @@ function CanCriteria() {
   }, [dispatch, stepsCount]);
 
   // console.log(form);
-  // console.log({ ...canCriteriaObj });
+  // console.log(canCriteriaObj.form );
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
@@ -169,7 +174,7 @@ function CanCriteria() {
                 <SelectOption
                   name="holdingNature"
                   label="Holding Nature"
-                  value={holdingNature}
+                  value={form?.holdingNature}
                   options={natureOptions}
                   changeFun={formHandeler}
                   mandatory="*"
@@ -180,7 +185,7 @@ function CanCriteria() {
                 <SelectOption
                   name="investorCategory"
                   label="Investor Category"
-                  value={investorCategory || "Select"}
+                  value={form.investorCategory || investorCategory}
                   options={investorList.length ? investorList : investorOptions}
                   changeFun={formHandeler}
                   mandatory="*"
@@ -193,7 +198,7 @@ function CanCriteria() {
                 <SelectOption
                   name="taxStatus"
                   label="Tax Status"
-                  value={taxStatus || "Select"}
+                  value={form?.taxStatus || taxStatus}
                   options={taxList.length ? taxList : singleIndividualOptions}
                   changeFun={formHandeler}
                   mandatory="*"
@@ -204,7 +209,7 @@ function CanCriteria() {
                 <SelectOption
                   name="holderCount"
                   label="Holders"
-                  value={holderCount || ""}
+                  value={form?.holderCount || holderCount}
                   options={holderOptions}
                   changeFun={formHandeler}
                   mandatory="*"

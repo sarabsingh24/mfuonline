@@ -44,7 +44,10 @@ export const singleOptions = [
 ];
  
 export const jointOptions = [
-  
+  {
+    value: "",
+    label: "search",
+  },
   {
     value: "I",
     label: "Individual",
