@@ -12,6 +12,7 @@ import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import { pageCount } from "../../reducer/Action";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
+import AddNominee from "./AddNominee";
 
 const nominee = [
   { value: "N", label: "No - I/We declare to Opt out" },
@@ -20,8 +21,16 @@ const nominee = [
 
 function Nominees() {
   const [btnFun, setBtnFun] = useState({});
-
+  const [nomine, setNomine] = useState();
+  const [nomineesArray, setNomineesArray] = useState([]);
   const { stepsCount, tabsCreater, dispatch } = useCommonReducer();
+
+  const nomineeCountHandeler = (e) => {
+    let count = e.target.value;
+    let dummyArray = Array.from({ length: +count }, (_, index) => index);
+    setNomine(count);
+    setNomineesArray(dummyArray);
+  };
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
@@ -34,6 +43,8 @@ function Nominees() {
   useEffect(() => {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
+
+  console.log(nomine);
 
   return (
     <Form onSubmit={formSubmitHandeler}>
@@ -55,15 +66,42 @@ function Nominees() {
               <SelectOption
                 name="nomineeOption"
                 label="Nomination Option"
-                select={false}
+                // select={false}
                 options={nominee}
                 // changeFun={formHandeler}
+                mandatory="*"
+              />
+            </Col>
+            <Col xs={12} md={3}>
+              <SelectOption
+                name="nomineeCount"
+                label="No. of Nominee"
+                // select={false}
+                value={nomine}
+                options={[
+                  
+                  { value: "1", label: "1" },
+                  { value: "2", label: "2" },
+                  { value: "3", label: "3" },
+                ]}
+                changeFun={nomineeCountHandeler}
                 mandatory="*"
               />
             </Col>
           </Row>
         </GridCustom>
       </Section>
+      {nomineesArray.map((n, i) => {
+        let order = i === 0 ? "First" : i === 1 ? "Second" : "Third";
+        return (
+          <Section key={order} heading={`${order} Nominee`}>
+            <GridCustom>
+              <AddNominee />
+            </GridCustom>
+          </Section>
+        );
+      })}
+
       <FooterSection backBtn={true} nextBtn={true} btnFun={btnFun} />
     </Form>
   );

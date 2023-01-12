@@ -56,4 +56,8 @@ code {
   height: 37px;
   border: 1px solid red;
   opacity: 0;
+  
+}
+.fade {
+  font-size: 13px;
 }

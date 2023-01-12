@@ -95,19 +95,19 @@ function CanCriteria() {
         ...form,
         holdingNature: form.holdingNature || "",
         investorCategory: form.investorCategory || "",
-        holderCount:  '1',
+        holderCount: "1",
       });
     } else if (holdingNature === "JO") {
       setInvestorList(jointOptions);
 
       setTaxList(singleIndividualOptions);
       tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
-     setForm({
-       ...form,
-       holdingNature: "JO",
-       investorCategory: form.investorCategory || "",
-       holderCount: form.holderCount || '2',
-     });
+      setForm({
+        ...form,
+        holdingNature: "JO",
+        investorCategory: form.investorCategory || "",
+        holderCount: form.holderCount === "1" ? "2" : form.holderCount,
+      });
     } else if (holdingNature === "AS") {
       setForm({ ...form, holdingNature: "AS", investorCategory: "I" });
       setInvestorList(jointOptions);
@@ -119,7 +119,15 @@ function CanCriteria() {
   useEffect(() => {
     if (investorCategory === "I") {
       setTaxList(singleIndividualOptions);
-      tabShoHideHandeler(tabsCreater, ["NOMI"]);
+
+      if (holdingNature === "JO") {
+        if (holderCount === "3") {
+          tabShoHideHandeler(tabsCreater, ["SEC", "THIR", "NOMI"]);
+        }
+        tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
+      } else {
+        tabShoHideHandeler(tabsCreater, ["NOMI"]);
+      }
     } else if (investorCategory === "M") {
       setTaxList(singleMinorOptions);
       tabShoHideHandeler(tabsCreater, ["GUAR"]);
@@ -131,20 +139,38 @@ function CanCriteria() {
     }
   }, [investorCategory]);
 
-  // useEffect(() => {
-  //   if (holderCount === "3") {
-  //     setTaxList(singleIndividualOptions);
-  //     tabShoHideHandeler(tabsCreater, ["SEC", "THIR", "NOMI"]);
-  //   }
-  //   if (holderCount === "2") {
-  //     setTaxList(singleIndividualOptions);
-  //     tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
-  //   }
-  //   if (holderCount === "1") {
-  //     setTaxList(singleIndividualOptions);
-  //     tabShoHideHandeler(tabsCreater, ["NOMI"]);
-  //   }
-  // }, [holderCount]);
+  useEffect(() => {
+    if (holderCount === "3") {
+      setTaxList(singleIndividualOptions);
+      if (holdingNature === "SI") {
+        setForm({
+          ...form,
+          holderCount: 1,
+        });
+        tabShoHideHandeler(tabsCreater, ["NOMI"]);
+      } else {
+        tabShoHideHandeler(tabsCreater, ["SEC", "THIR", "NOMI"]);
+      }
+    }
+    if (holderCount === "2") {
+      setTaxList(singleIndividualOptions);
+
+      if (holdingNature === "SI") {
+        setForm({
+          ...form,
+          holderCount: 1,
+        });
+        tabShoHideHandeler(tabsCreater, ["NOMI"]);
+      } else {
+        tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
+      }
+    }
+    if (holderCount === "1") {
+      setTaxList(singleIndividualOptions);
+
+      tabShoHideHandeler(tabsCreater, ["NOMI"]);
+    }
+  }, [holderCount]);
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
@@ -212,7 +238,7 @@ function CanCriteria() {
                   value={form?.holderCount || holderCount}
                   options={holderOptions}
                   changeFun={formHandeler}
-                  mandatory="*"
+                  mandatory=""
                   errors={errors}
                 />
                 {/* <InputText

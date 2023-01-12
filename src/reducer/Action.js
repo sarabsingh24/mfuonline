@@ -8,6 +8,7 @@ import {
   SECOND_HOLDER,
   THIRD_HOLDER,
   GUARDIAN_HOLDER,
+  PROOF_UPLOAD,
 } from "./Constant";
 
 //Tab Action
@@ -21,3 +22,10 @@ export const primeHolderForm = createAction(PRIME_HOLDER);
 export const secondHolderForm = createAction(SECOND_HOLDER);
 export const thirdHolderForm = createAction(THIRD_HOLDER);
 export const guardianHolderForm = createAction(GUARDIAN_HOLDER);
+
+//Bank Account
+
+//Nominee
+
+//Proof Update
+export const proofUploadForm = createAction(PROOF_UPLOAD);

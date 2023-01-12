@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StepperContainer = styled.section`
   position: relative;
-  padding: 16px;
+  padding: 16px 0;
   margin: 40px 0 0;
 `;
 
@@ -51,6 +51,12 @@ export const StepCount = styled.div`
       #4e4376 100%
     );
     /* background: #0288d1; */
+  }
+
+  @media (max-width: 768px) {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
   }
 `;
 export const StepText = styled.div`

@@ -46,7 +46,7 @@ function PrimaryHolder() {
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
-        <StakeHolder form={form} setForm={setForm} />
+        <StakeHolder form={form} setForm={setForm} holderType={"Primary Holder"} />
       </Form>
     </React.Fragment>
   );

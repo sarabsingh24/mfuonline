@@ -6,6 +6,7 @@ import CanCriteria from "./can-criteria/CanCriteria";
 import GuardianHolder from "./guardian-holder/GuardianHolder";
 import Nominees from "./nominees/Nominees";
 import PrimaryHolder from "./primary-holder/PrimaryHolder";
+import ThirdHolder from './third-holder/ThirdHolder'
 import ProofUpload from "./proof-upload/ProofUpload";
 import SecondHolder from "./second-holder/SecondHolder";
 import useCommonReducer from "../common/customComp/useCommonReducer";
@@ -38,6 +39,9 @@ function RegistrationForm() {
   }
   if (str === "SEC") {
     return <SecondHolder />;
+  }
+  if (str === "THIR") {
+    return <ThirdHolder />;
   }
   if (str === "GUAR") {
     return <GuardianHolder />;

@@ -31,7 +31,7 @@ const [form, setForm] = useState(commonFormField);
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
-        <StakeHolder form={form} setForm={setForm} />
+        <StakeHolder form={form} setForm={setForm} holderType={"Guardian"} />
       </Form>
     </React.Fragment>
   );

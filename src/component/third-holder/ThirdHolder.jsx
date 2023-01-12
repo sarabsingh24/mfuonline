@@ -8,23 +8,21 @@ import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { commonFormField } from "../../common/stake-holder/stakeHolderData";
 
 function ThirdHolder() {
-  const [form, setForm] = useState( commonFormField );
-  const { stepsCount,thirdHolderObj, dispatch } = useCommonReducer();
+  const [form, setForm] = useState(commonFormField);
+  const { stepsCount, thirdHolderObj, dispatch } = useCommonReducer();
 
-
- useEffect(() => {
-   if (Object.keys(thirdHolderObj).length) {
-     setForm(thirdHolderObj);
-   }
- }, [thirdHolderObj]);
-
+  useEffect(() => {
+    if (Object.keys(thirdHolderObj).length) {
+      setForm(thirdHolderObj);
+    }
+  }, [thirdHolderObj]);
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
 
     console.log("Third holder");
     if (true) {
-        dispatch(thirdHolderForm({ ...thirdHolderObj, ...form }));
+      dispatch(thirdHolderForm({ ...thirdHolderObj, ...form }));
       dispatch(pageCount(stepsCount + 1));
     }
   };
@@ -32,7 +30,11 @@ function ThirdHolder() {
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
-        <StakeHolder />
+        <StakeHolder
+          form={form}
+          setForm={setForm}
+          holderType={"Third Holder"}
+        />
       </Form>
     </React.Fragment>
   );

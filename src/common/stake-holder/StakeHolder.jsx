@@ -24,7 +24,7 @@ import {
   grossAnnualIncomeOptions,
 } from "./stakeHolderData";
 
-function StakeHolder({ form, setForm}) {
+function StakeHolder({ form, setForm, holderType }) {
   const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
   const [networthRadio, setNetworthRadio] = useState(false);
   const [btnFun, setBtnFun] = useState({});
@@ -150,7 +150,7 @@ function StakeHolder({ form, setForm}) {
 
   return (
     <React.Fragment>
-      <Section heading="Basic Details">
+      <Section heading={`${holderType} Basic Details`}>
         <GridCustom>
           <Row>
             <Col xs={12} md={4}>
@@ -192,7 +192,7 @@ function StakeHolder({ form, setForm}) {
           </Row>
 
           <Row>
-            <Col xs={12} md={4}>
+            {/* <Col xs={12} md={4}>
               <Form.Group className="mb-4">
                 <Form.Label>Res. (ISD-STD-Phone)</Form.Label>
                 <InputGroup>
@@ -224,7 +224,7 @@ function StakeHolder({ form, setForm}) {
                   />
                 </InputGroup>
               </Form.Group>
-            </Col>
+            </Col> */}
             <Col xs={12} md={4}>
               <Form.Group className="mb-4">
                 <Form.Label>
@@ -234,17 +234,14 @@ function StakeHolder({ form, setForm}) {
                   <Form.Control
                     name="mobileIsdCode"
                     maxLength={2}
-                    value={
-                      form.contactDetail?.mobileIsdCode || mobileIsdCode
-                    }
+                    value={form.contactDetail?.mobileIsdCode || mobileIsdCode}
                     onChange={formHandeler}
                   />
                   <Form.Control
                     name="primaryMobileNo"
                     style={{ flex: "8" }}
                     value={
-                      form.contactDetail?.primaryMobileNo ||
-                      primaryMobileNo
+                      form.contactDetail?.primaryMobileNo || primaryMobileNo
                     }
                     onChange={formHandeler}
                   />
@@ -268,7 +265,7 @@ function StakeHolder({ form, setForm}) {
         </GridCustom>
       </Section>
 
-      <Section heading="Additional KYC Details">
+      <Section heading={`${holderType} Additional KYC Details`}>
         <GridCustom>
           <Row className="justify-content-md-center">
             <Col xs={12} md={2} className="m-4">
@@ -371,8 +368,7 @@ function StakeHolder({ form, setForm}) {
                 name="sourceOfWealthOthers"
                 label="Other"
                 value={
-                  form.otherDetail?.sourceOfWealthOthers ||
-                  sourceOfWealthOthers
+                  form.otherDetail?.sourceOfWealthOthers || sourceOfWealthOthers
                 }
                 disabled={isOtherSourceOfWealth}
                 mandatory="*"
@@ -383,9 +379,7 @@ function StakeHolder({ form, setForm}) {
               <InputText
                 name="occupationOthers"
                 label="Other"
-                value={
-                  form.otherDetail?.occupationOthers || occupationOthers
-                }
+                value={form.otherDetail?.occupationOthers || occupationOthers}
                 disabled={isOtherOccupation}
                 mandatory="*"
                 changeFun={formHandeler}
@@ -395,16 +389,14 @@ function StakeHolder({ form, setForm}) {
         </GridCustom>
       </Section>
 
-      <Section heading="FATCA Details">
+      <Section heading={`${holderType} FATCA Details`}>
         <GridCustom>
           <Row>
             <Col xs={12} md={4}>
               <SelectOption
                 name="taxResidencyFlag"
                 label="Tax Residency in a country other than India? "
-                value={
-                  form.fatcaDetail?.taxResidencyFlag || taxResidencyFlag
-                }
+                value={form.fatcaDetail?.taxResidencyFlag || taxResidencyFlag}
                 options={taxResidencyOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -436,8 +428,7 @@ function StakeHolder({ form, setForm}) {
                 name="citizenshipCountry"
                 label="Country of Citizenship "
                 value={
-                  form.fatcaDetail?.citizenshipCountry ||
-                  citizenshipCountry
+                  form.fatcaDetail?.citizenshipCountry || citizenshipCountry
                 }
                 options={countryListOptions}
                 changeFun={formHandeler}

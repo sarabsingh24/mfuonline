@@ -14,18 +14,28 @@ import InputText from "../../common/form-elements/InputText";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
-import { pageCount } from "../../reducer/Action";
+import { pageCount, proofUploadForm } from "../../reducer/Action";
 
 function ProofUpload() {
   const [btnFun, setBtnFun] = useState({});
   const [imagesList, setImagesList] = useState([]);
 
-  const { stepsCount, tabsCreater, dispatch } = useCommonReducer();
+  const { stepsCount, tabsCreater,proofUploadObj, dispatch } = useCommonReducer();
+
+
+
+ useEffect(() => {
+   if (proofUploadObj.length) {
+     setImagesList(proofUploadObj);
+   }
+
+ }, [proofUploadObj]);
+
 
   const getImageHandeler = (e) => {
     e.preventDefault();
 
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
     const { name, size, type } = e.target.files[0];
     const path = URL.createObjectURL(e.target.files[0]);
     const id = +new Date();
@@ -39,15 +49,18 @@ function ProofUpload() {
   };
 
   const removeImgHandeler = (id) => {
-    let filterImage = imagesList.filter((img) => img.id !== id);
+    let filterImage = proofUploadObj.filter((img) => img.id !== id);
     setImagesList(filterImage);
+    dispatch(proofUploadForm([...filterImage]));
   };
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
-    console.log("bank account");
+    console.log("Proof upload");
     if (true) {
-      dispatch(pageCount(stepsCount + 1));
+      alert('form successfuly submitted')
+      // dispatch(pageCount(0));
+      dispatch(proofUploadForm([ ...imagesList]));
     }
   };
 
@@ -55,8 +68,7 @@ function ProofUpload() {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 
-  console.log(imagesList);
-
+// console.log(proofUploadObj);
   return (
     <Form onSubmit={formSubmitHandeler}>
       <Section heading="Proof Upload">
@@ -86,7 +98,7 @@ function ProofUpload() {
               <Button
                 variant="success"
                 type="input"
-                style={{ width: "auto", position: "absolute", top: "-3px" }}
+                style={{ width: "auto", position: "absolute", top: "-3px"}}
               >
                 <Badge
                   bg="success"

@@ -7,5 +7,5 @@ export const PRIME_HOLDER = "PRIME_HOLDER";
 export const SECOND_HOLDER = "SECOND_HOLDER";
 export const THIRD_HOLDER = "THIRD_HOLDER";
 export const GUARDIAN_HOLDER = "GUARDIAN_HOLDER";
- 
+export const PROOF_UPLOAD = "PROOF_UPLOAD";
 ;
