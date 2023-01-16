@@ -119,14 +119,16 @@ function StakeHolder({ form, setForm, holderType }) {
 
     if (name === "sourceOfWealth" && val === "08") {
       setIsOtherSourceOfWealth(false);
-    } else {
+    } else if(name === "sourceOfWealth" && val !== "08") {
       setIsOtherSourceOfWealth(true);
+      setForm({ ...form, otherDetail:{...form.otherDetail,[name]: val, sourceOfWealthOthers: "" }});
     }
 
     if (name === "occupation" && val === "99") {
       setIsOtherOccupation(false);
-    } else {
+    } else if (name === "occupation" && val !== "99") {
       setIsOtherOccupation(true);
+       setForm({ ...form, otherDetail:{...form.otherDetail,[name]: val, occupationOthers: "" }});
     }
   };
 

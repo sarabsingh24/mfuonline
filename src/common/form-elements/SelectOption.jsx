@@ -4,15 +4,12 @@ import { Form } from "react-bootstrap";
 function SelectOption({
   name,
   label,
-  select,
   options,
   changeFun,
   mandatory,
   errors,
   value,
 }) {
- 
-
   return (
     <Form.Group className="mb-3">
       <Form.Label>
@@ -28,7 +25,6 @@ function SelectOption({
         style={{ color: "#666", fontWeight: "500" }}
         // required
       >
-        {/* {!options.label && <option selected>{value}</option>} */}
         {options.map((item) => {
           return (
             <option key={item.value} label={item.label} value={item.value}>

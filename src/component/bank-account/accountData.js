@@ -12,7 +12,7 @@ export const accountType = [
   { value: "SNRR", label: "Special Non Resident repatriable" },
 ];
 
-export const bankProof = [
+export const bankProofOptions = [
   { value: "14", label: "Latest Bank Passbook" },
   { value: "15", label: "Latest Bank Account Statement" },
   { value: "77", label: "Cheque Copy" },

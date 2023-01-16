@@ -17,12 +17,12 @@ import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { tabUpdate, pageCount, bankAccountForm } from "../../reducer/Action";
 
 const bankRecord = {
-  sequenceNo: "0",
+  sequenceNo: "",
   defaultAccountFlag: true,
-  accountNo: "11111",
+  accountNo: "",
   accountType: "",
-  bankId: "1aaaaaa",
-  micrCode: "111",
+  bankId: "",
+  micrCode: "",
   ifscCode: "",
   bankProof: "",
 };
@@ -31,60 +31,45 @@ function BankAccounts() {
   const [form, setForm] = useState([]);
   const [number, setNumber] = useState(1);
   const [btnFun, setBtnFun] = useState({});
-  
-  const { stepsCount, bankAccountsObj, dispatch } = useCommonReducer();
+  const [counts, setCounts] = useState([]);
+  const [account, setAccount] = useState([]);
+  const dummyArray = [bankRecord, bankRecord, bankRecord];
+  const { stepsCount, tabsCreater, bankAccountsObj, dispatch } =
+    useCommonReducer();
+
+  useEffect(() => {
+    if (bankAccountsObj.length) {
+      setForm(bankAccountsObj);
+    } else {
+      setForm([]);
+    }
+  }, [bankAccountsObj]);
 
   const numberHandeler = (e) => {
     let val = e.target.value;
     setNumber(val);
   };
 
-  const thisAccountHandeler = (e, num) => {
-    let name = e.target.name;
-    let value = e.target.value;
+  // const thisAccountHandeler = (e, num) => {
+  //   console.log(e.target, num);
+  //   let name = e.target.name;
+  //   let value = e.target.value;
 
-    let newArray = form.map((obj) => {
-      if (obj.sequenceNo === num.toString()) {
-        return { ...obj, [name]: value };
-      }
-      return obj;
-    });
-
-    setForm(newArray);
-  };
+  //   // setForm([...form,]);
+  //   // setThisAccount({ ...thisAccount, [name]: value });
+  // };
 
   useEffect(() => {
-    if (+number === 1) {
-      setForm([...form.slice(0, 1)]);
-    }
-    if (+number === 2) {
-      if (form.length > 2) {
-        setForm([...form.slice(0, 2)]);
-      } else {
-        setForm([...form, { ...bankRecord, sequenceNo: "1" }]);
-      }
-    }
-    if (+number === 3) {
-      if (form.length === 2) {
-        setForm([...form, { ...bankRecord, sequenceNo: "2" }]);
-      } else {
-        setForm([
-          ...form,
-          { ...bankRecord, sequenceNo: "1" },
-          { ...bankRecord, sequenceNo: "2" },
-        ]);
-      }
-    }
+    let dummyArray = Array.from({ length: number }, (_, index) => index);
+    setCounts(dummyArray);
   }, [number]);
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
     console.log("bank account");
     if (true) {
-      localStorage.removeItem("number");
-      form.map((item) => delete item.reAccountNo);
-      dispatch(bankAccountForm(form));
-      dispatch(pageCount(stepsCount + 1));
+      // dispatch(bankAccountForm(  account ));
+      // dispatch(pageCount(stepsCount + 1));
     }
   };
 
@@ -92,15 +77,8 @@ function BankAccounts() {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 
-  useEffect(() => {
-    if (Object.keys(bankAccountsObj).length) {
-      setForm(bankAccountsObj);
-    } else {
-      setForm([bankRecord]);
-    }
-  }, [bankAccountsObj]);
+  console.log(account);
 
-  console.log(form);
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
@@ -121,17 +99,17 @@ function BankAccounts() {
           </GridCustom>
         </Section>
 
-        {form?.map((item, index) => {
+        {counts.map((_, index) => {
           return (
             <BankAccountSection
               key={index}
               count={index}
-              form={item}
-              thisAccountHandeler={thisAccountHandeler}
+              form={form[index] || bankRecord}
+              account={account}
+              setAccount={setAccount}
             />
           );
         })}
-
         <FooterSection backBtn={true} nextBtn={true} btnFun={btnFun} />
       </Form>
     </React.Fragment>

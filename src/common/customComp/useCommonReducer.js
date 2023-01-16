@@ -11,6 +11,7 @@ function useCommonReducer() {
     secondHolderObj,
     thirdHolderObj,
     guardianHolderObj,
+    bankAccountsObj,
     proofUploadObj,
   } = useSelector((state) => state.formReducer);
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function useCommonReducer() {
     secondHolderObj,
     thirdHolderObj,
     guardianHolderObj,
+    bankAccountsObj,
     proofUploadObj,
     dispatch,
   };

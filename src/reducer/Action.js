@@ -8,6 +8,7 @@ import {
   SECOND_HOLDER,
   THIRD_HOLDER,
   GUARDIAN_HOLDER,
+  BANK_ACCOUNTS,
   PROOF_UPLOAD,
 } from "./Constant";
 
@@ -24,8 +25,13 @@ export const thirdHolderForm = createAction(THIRD_HOLDER);
 export const guardianHolderForm = createAction(GUARDIAN_HOLDER);
 
 //Bank Account
-
+export const bankAccountForm = createAction(BANK_ACCOUNTS);
 //Nominee
 
 //Proof Update
 export const proofUploadForm = createAction(PROOF_UPLOAD);
+
+
+
+//dispatch
+//http://api.armfintech.com:81/mfu/v1/cans

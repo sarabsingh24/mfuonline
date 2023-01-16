@@ -7,63 +7,67 @@ import "../Style.css";
 //component
 import Section from "../../common/section/Section";
 import InputText from "../../common/form-elements/InputText";
-import InputTextParam from "../../common/form-elements/InputTextParam";
 import GridCustom from "../../common/grid-custom/GridCustom";
 import SelectOption from "../../common/form-elements/SelectOption";
 import { accountType, bankProofOptions } from "./accountData";
 
-function BankAccountSection({
-  count,
-  form,
-  thisAccountHandeler,
- 
-}) {
- 
+function BankAccountSection({ count, form, account, setAccount }) {
+  const [thisAccount, setThisAccount] = useState({
+    ...form,
+    reAccountNo: form.accountNo || "",
+  });
   let accountCount = count === 0 ? "Default" : count === 1 ? "Second" : "Third";
+
+  const thisAccountHandeler = (e, num) => {
+    console.log(e.target, num);
+    let name = e.target.name;
+    let value = e.target.value;
+    let isDefaultAccount = count === 0 ? true : false;
+    let copyThisAccount = {
+      ...thisAccount,
+      defaultAccountFlag: isDefaultAccount,
+      sequenceNo: count + 1,
+    };
+
+    setThisAccount({ ...copyThisAccount, [name]: value });
+  };
+
+  useEffect(() => {
+    // delete copyThisAccount.reAccountNo;
+
+    setAccount([thisAccount]);
+  }, [thisAccount]);
+
+  console.log(thisAccount);
 
   return (
     <Section heading={`${accountCount} Bank Account details`}>
       <GridCustom>
         <Row>
           <Col xs={12} md={4}>
-            <InputTextParam
+            <InputText
               name="accountNo"
               label="Bank A/c No"
               type="password"
-              value={form?.accountNo}
-              changeFun={{ thisAccountHandeler, count }}
-              mandatory="*"
-            />
-            {/* <InputText
-              name="accountNo"
-              label="Bank A/c No"
-              type="password"
-              value={form?.accountNo}
+              value={thisAccount?.accountNo}
               changeFun={() => thisAccountHandeler(count)}
               mandatory="*"
-            /> */}
+            />
           </Col>
           <Col xs={12} md={4}>
-            <InputTextParam
+            <InputText
               name="reAccountNo"
               label="Re-Enter Bank A/c No"
-              value={form?.reAccountNo}
-              changeFun={{ thisAccountHandeler, count }}
-              mandatory="*"
-            />
-            {/* <InputText
-              name="reAccountNo"
-              label="Re-Enter Bank A/c No"
-              value={form?.reAccountNo}
+              value={thisAccount?.reAccountNo}
               changeFun={thisAccountHandeler}
               mandatory="*"
-            /> */}
+            />
           </Col>
           <Col xs={12} md={4}>
             <SelectOption
               name="accountType"
               label="Account Type"
-              value={form?.accountType}
+              value={thisAccount?.accountType}
               options={accountType}
               changeFun={thisAccountHandeler}
               mandatory="*"
@@ -72,45 +76,31 @@ function BankAccountSection({
         </Row>
         <Row>
           <Col xs={12} md={4}>
-            <InputTextParam
+            <InputText
               name="bankId"
               label="Bank"
-              value={form?.bankId}
-              changeFun={{ thisAccountHandeler, count }}
+              value={thisAccount?.bankId}
+              changeFun={(e) => thisAccountHandeler(e, count)}
               mandatory="*"
             />
           </Col>
           <Col xs={12} md={4}>
-            <InputTextParam
+            <InputText
               name="micrCode"
               label="MICR"
-              value={form?.micrCode}
-              changeFun={{ thisAccountHandeler, count }}
-              mandatory="*"
-            />
-            {/* <InputText
-              name="micrCode"
-              label="MICR"
-              value={form?.micrCode}
+              value={thisAccount?.micrCode}
               changeFun={thisAccountHandeler}
               mandatory="*"
-            /> */}
+            />
           </Col>
           <Col xs={12} md={4}>
-            <InputTextParam
+            <InputText
               name="ifscCode"
               label="IFSC"
-              value={form?.ifscCode}
-              changeFun={{ thisAccountHandeler, count }}
-              mandatory="*"
-            />
-            {/* <InputText
-              name="ifscCode"
-              label="IFSC"
-              value={form?.ifscCode}
+              value={thisAccount?.ifscCode}
               changeFun={thisAccountHandeler}
               mandatory="*"
-            /> */}
+            />
           </Col>
         </Row>
         <Row>
@@ -118,7 +108,7 @@ function BankAccountSection({
             <SelectOption
               name="bankProof"
               label="Bank Proof"
-              value={form?.bankProof}
+              value={thisAccount?.bankProof}
               options={bankProofOptions}
               changeFun={thisAccountHandeler}
               mandatory="*"
