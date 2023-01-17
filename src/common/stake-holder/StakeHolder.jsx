@@ -24,13 +24,13 @@ import {
   grossAnnualIncomeOptions,
 } from "./stakeHolderData";
 
-function StakeHolder({ form, setForm, holderType }) {
+function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
   const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
   const [networthRadio, setNetworthRadio] = useState(false);
   const [btnFun, setBtnFun] = useState({});
   const [isOtherSourceOfWealth, setIsOtherSourceOfWealth] = useState(true);
   const [isOtherOccupation, setIsOtherOccupation] = useState(true);
-
+ 
   const { stepsCount, dispatch } = useCommonReducer();
 
   const { name, dateOfBirth, panPekrnNo, confirmpanPekrnNo } = form;
@@ -82,6 +82,10 @@ function StakeHolder({ form, setForm, holderType }) {
         ...form,
         contactDetail: { ...form.contactDetail, [name]: val },
       });
+
+      if (!!errors[name]) {
+        setErrors({ ...errors, [name]: null });
+      }
     } else if (
       name === "grossIncome" ||
       name === "netWorth" ||
@@ -113,22 +117,30 @@ function StakeHolder({ form, setForm, holderType }) {
       setForm({ ...form, [name]: val });
     }
 
-    // if (!!errors[name]) {
-    //   setErrors({ ...errors, [name]: null });
-    // }
+    
 
     if (name === "sourceOfWealth" && val === "08") {
       setIsOtherSourceOfWealth(false);
-    } else if(name === "sourceOfWealth" && val !== "08") {
+    } else if (name === "sourceOfWealth" && val !== "08") {
       setIsOtherSourceOfWealth(true);
-      setForm({ ...form, otherDetail:{...form.otherDetail,[name]: val, sourceOfWealthOthers: "" }});
+      setForm({
+        ...form,
+        otherDetail: {
+          ...form.otherDetail,
+          [name]: val,
+          sourceOfWealthOthers: "",
+        },
+      });
     }
 
     if (name === "occupation" && val === "99") {
       setIsOtherOccupation(false);
     } else if (name === "occupation" && val !== "99") {
       setIsOtherOccupation(true);
-       setForm({ ...form, otherDetail:{...form.otherDetail,[name]: val, occupationOthers: "" }});
+      setForm({
+        ...form,
+        otherDetail: { ...form.otherDetail, [name]: val, occupationOthers: "" },
+      });
     }
   };
 
@@ -241,6 +253,7 @@ function StakeHolder({ form, setForm, holderType }) {
                   />
                   <Form.Control
                     name="primaryMobileNo"
+                    maxLength={10}
                     style={{ flex: "8" }}
                     value={
                       form.contactDetail?.primaryMobileNo || primaryMobileNo
@@ -257,6 +270,7 @@ function StakeHolder({ form, setForm, holderType }) {
                 value={form.contactDetail?.primaryEmail || primaryEmail}
                 mandatory="*"
                 changeFun={formHandeler}
+                errors={errors}
               />
             </Col>
           </Row>
@@ -318,6 +332,7 @@ function StakeHolder({ form, setForm, holderType }) {
                 name="netWorthDate"
                 label="As on date"
                 value={netWorthDate}
+                changeFun={formHandeler}
                 mandatory="*"
               />
             </Col>

@@ -22,7 +22,7 @@ function ThirdHolder() {
 
     console.log("Third holder");
     if (true) {
-      dispatch(thirdHolderForm({ ...thirdHolderObj, ...form }));
+      dispatch(thirdHolderForm({ ...thirdHolderObj,holderType: "TH", ...form }));
       dispatch(pageCount(stepsCount + 1));
     }
   };

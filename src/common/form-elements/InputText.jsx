@@ -12,7 +12,16 @@ function InputText({
   mandatory, 
   errors,
   name,
-}) {
+  count
+}) 
+
+
+
+{
+
+ 
+
+
   return (
     <Form.Group className="mb-3">
       <Form.Label>
@@ -24,11 +33,13 @@ function InputText({
         // placeholder={placeholder ? placeholder : ""}
         disabled={disabled ? disabled : false}
         value={value}
+        data-count={count && count}
         type={type ? type : "text"}
         onChange={changeFun}
         className={!!errors?.[name] && "redBorder"}
         isInvalid={!!errors?.name}
         style={{ color: "#666", fontWeight: "500" }}
+       
       />
       <div className="red">{errors?.[name]}</div>
     </Form.Group>

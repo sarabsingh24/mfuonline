@@ -31,8 +31,9 @@ function RegistrationForm() {
   }, [displayedTab, stepsCount, tabsCreater]);
 
   if (str === "CRI") {
-    return <BankAccounts />;
-    // return <CanCriteria />;
+    
+  //  return <BankAccounts />;
+    return <CanCriteria />;
   }
   if (str === "PRIM") {
     return <PrimaryHolder />;

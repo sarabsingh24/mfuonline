@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 
-function DatePicker({ name, label, mandatory, changeFun }) {
+function DatePicker({ name, label, mandatory, changeFun, value ,count}) {
   const [todayDate, setTodayDate] = useState("");
   useEffect(() => {
     let date = new Date();
+    if (value) {
+      date = new Date(value);
+    }
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
@@ -13,7 +16,7 @@ function DatePicker({ name, label, mandatory, changeFun }) {
     if (day < 10) day = "0" + day.toString();
 
     setTodayDate(`${year}-${month}-${day}`);
-  }, []);
+  }, [value]);
 
   return (
     <Form.Group className="mb-3">
@@ -24,8 +27,10 @@ function DatePicker({ name, label, mandatory, changeFun }) {
       <Form.Control
         type="date"
         name={name}
+        count={count}
+        value={todayDate}
         onChange={changeFun}
-        max={todayDate}
+        // max={todayDate}
       />
     </Form.Group>
   );

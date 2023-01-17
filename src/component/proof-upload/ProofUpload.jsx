@@ -14,13 +14,13 @@ import InputText from "../../common/form-elements/InputText";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
-import { pageCount, proofUploadForm } from "../../reducer/Action";
+import { pageCount, proofUploadForm, postData } from "../../reducer/Action";
 
 function ProofUpload() {
   const [btnFun, setBtnFun] = useState({});
   const [imagesList, setImagesList] = useState([]);
 
-  const { stepsCount, tabsCreater,proofUploadObj, dispatch } = useCommonReducer();
+  const { stepsCount, tabsCreater,proofUploadObj,combinedForm, dispatch } = useCommonReducer();
 
 
 
@@ -49,18 +49,30 @@ function ProofUpload() {
   };
 
   const removeImgHandeler = (id) => {
-    let filterImage = proofUploadObj.filter((img) => img.id !== id);
+    let filterImage = imagesList.filter((img) => img.id !== id);
     setImagesList(filterImage);
-    dispatch(proofUploadForm([...filterImage]));
+    // dispatch(proofUploadForm([...filterImage]));
   };
 
-  const formSubmitHandeler = (e) => {
+  const formSubmitHandeler = async(e) => {
     e.preventDefault();
+   
     console.log("Proof upload");
     if (true) {
-      alert('form successfuly submitted')
+      // alert('form successfuly submitted')
       // dispatch(pageCount(0));
-      dispatch(proofUploadForm([ ...imagesList]));
+      // dispatch(proofUploadForm([ ...imagesList]));
+      // dispatch(postData(combinedForm));
+       let result = await fetch("http://api.finnsysonline.com:81/mfu/v1/cans", {
+         method: "POST",
+         body: JSON.stringify(combinedForm),
+         headers: {
+           "content-type": "application/json",
+         },
+       });
+    result = await result.json();
+  console.log(result)
+  
     }
   };
 
@@ -68,7 +80,7 @@ function ProofUpload() {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 
-// console.log(proofUploadObj);
+
   return (
     <Form onSubmit={formSubmitHandeler}>
       <Section heading="Proof Upload">

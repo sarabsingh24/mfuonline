@@ -20,7 +20,7 @@ const nominee = [
 ];
 
 const nomineeCompObj = {
-  sequenceNo: "0",
+  sequenceNo: 0,
   nomineeName: "dsds",
   relation: "",
   percentage: "",
@@ -33,7 +33,7 @@ const nomineeCompObj = {
 function Nominees() {
   const [form, setForm] = useState([]);
   const [btnFun, setBtnFun] = useState({});
-  const [number, setNumber] = useState("1");
+  const [number, setNumber] = useState(1);
   const [nomine, setNomine] = useState(false);
   const [isNominee, setIsNominee] = useState(false);
 
@@ -58,11 +58,10 @@ function Nominees() {
   const thisAccountHandeler = (e, num) => {
     let name = e.target.name;
     let value = e.target.value;
-    let count = e.target.dataset.count;
-    console.log(count);
+    // console.log(name,value)
     let newArray = form.map((obj) => {
-      console.log(obj.sequenceNo, "=====", count);
-      if (obj.sequenceNo === count) {
+      console.log(obj.sequenceNo, "=====", num);
+      if (obj.sequenceNo === num || obj.sequenceNo === num.toString()) {
         return { ...obj, [name]: value };
       }
       return obj;

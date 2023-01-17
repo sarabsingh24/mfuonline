@@ -25,13 +25,14 @@ const bankRecord = {
   micrCode: "111",
   ifscCode: "",
   bankProof: "",
+  reAccountNo:''
 };
 
 function BankAccounts() {
   const [form, setForm] = useState([]);
-  const [number, setNumber] = useState(1);
+  const [number, setNumber] = useState('1');
   const [btnFun, setBtnFun] = useState({});
-  
+
   const { stepsCount, bankAccountsObj, dispatch } = useCommonReducer();
 
   const numberHandeler = (e) => {
@@ -39,12 +40,14 @@ function BankAccounts() {
     setNumber(val);
   };
 
-  const thisAccountHandeler = (e, num) => {
+  const thisAccountHandeler = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-
+    let count = e.target.dataset.count
+ 
     let newArray = form.map((obj) => {
-      if (obj.sequenceNo === num.toString()) {
+     console.log(obj.sequenceNo, "=====", count);
+      if (obj.sequenceNo === count ) {
         return { ...obj, [name]: value };
       }
       return obj;
@@ -81,7 +84,7 @@ function BankAccounts() {
     e.preventDefault();
     console.log("bank account");
     if (true) {
-      localStorage.removeItem("number");
+     
       form.map((item) => delete item.reAccountNo);
       dispatch(bankAccountForm(form));
       dispatch(pageCount(stepsCount + 1));
@@ -111,7 +114,7 @@ function BankAccounts() {
                 <SelectOption
                   name="accounts"
                   label="Bank Account(s)"
-                  value={number}
+                  value={number || ''}
                   options={accountCount}
                   changeFun={numberHandeler}
                   mandatory=""

@@ -8,5 +8,6 @@ export const SECOND_HOLDER = "SECOND_HOLDER";
 export const THIRD_HOLDER = "THIRD_HOLDER";
 export const GUARDIAN_HOLDER = "GUARDIAN_HOLDER";
 export const BANK_ACCOUNTS = "BANK_ACCOUNTS";
+export const NOMINEES = "NOMINEES";
 export const PROOF_UPLOAD = "PROOF_UPLOAD";
-;
+

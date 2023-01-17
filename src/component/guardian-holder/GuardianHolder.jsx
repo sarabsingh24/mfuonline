@@ -23,7 +23,7 @@ const [form, setForm] = useState(commonFormField);
     e.preventDefault();
     console.log("GuardianHolder");
     if (true) {
-        dispatch(guardianHolderForm({ ...guardianHolderObj, ...form }));
+        dispatch(guardianHolderForm({ ...guardianHolderObj,holderType: "GR", ...form }));
       dispatch(pageCount(stepsCount + 1));
     }
   };

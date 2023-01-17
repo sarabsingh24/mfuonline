@@ -9,6 +9,7 @@ function SelectOption({
   mandatory,
   errors,
   value,
+  count,
 }) {
   return (
     <Form.Group className="mb-3">
@@ -18,6 +19,7 @@ function SelectOption({
       </Form.Label>
 
       <Form.Select
+        data-count={count && count}
         onChange={changeFun}
         name={name}
         className={!!errors?.[name] && "redBorder"}

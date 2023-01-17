@@ -23,7 +23,7 @@ const [form, setForm] = useState( commonFormField );
     e.preventDefault();
     console.log("second Holder");
     if (true) {
-      dispatch(secondHolderForm({ ...secondHolderObj, ...form }));
+      dispatch(secondHolderForm({ ...secondHolderObj,holderType: "SC", ...form }));
       dispatch(pageCount(stepsCount + 1));
     }
   };

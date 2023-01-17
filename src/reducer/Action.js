@@ -1,4 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
+import axios from "axios";
 import {
   TAB_UPDATE,
   PAGE_COUNT,
@@ -9,6 +10,7 @@ import {
   THIRD_HOLDER,
   GUARDIAN_HOLDER,
   BANK_ACCOUNTS,
+  NOMINEES,
   PROOF_UPLOAD,
 } from "./Constant";
 
@@ -26,12 +28,28 @@ export const guardianHolderForm = createAction(GUARDIAN_HOLDER);
 
 //Bank Account
 export const bankAccountForm = createAction(BANK_ACCOUNTS);
+
 //Nominee
+export const nomineesForm = createAction(NOMINEES);
 
 //Proof Update
 export const proofUploadForm = createAction(PROOF_UPLOAD);
 
-
-
 //dispatch
+//delete reAccountNo from bankAccount
 //http://api.armfintech.com:81/mfu/v1/cans
+//http://api.finnsysonline.com:81/mfu/v1/cans
+
+export const postData = async (data) => {
+  axios.post("http://api.armfintech.com:81/mfu/v1/cans", data);
+
+  // return async () => {
+  //   await fetch("http://api.finnsysonline.com:81/mfu/v1/cans", {
+  //     method: "POST",
+  //     body: JSON.stringify(data),
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //   });
+  // };
+};

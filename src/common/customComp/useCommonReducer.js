@@ -12,10 +12,23 @@ function useCommonReducer() {
     thirdHolderObj,
     guardianHolderObj,
     bankAccountsObj,
+    nomineeObj,
     proofUploadObj,
   } = useSelector((state) => state.formReducer);
   const dispatch = useDispatch();
-  
+
+  const combinedForm = {
+    ...canCriteriaObj,
+    holderRecords: [
+      Object.keys(primeHolderObj).length ? primeHolderObj : null,
+      Object.keys(secondHolderObj).length ? secondHolderObj : null,
+      Object.keys(thirdHolderObj).length ? thirdHolderObj : null,
+      Object.keys(guardianHolderObj).length ? guardianHolderObj : null,
+    ],
+    bankRecords: bankAccountsObj,
+    nomineeDetails: nomineeObj,
+  };
+
   return {
     tabsCreater,
     stepsCount,
@@ -26,7 +39,9 @@ function useCommonReducer() {
     thirdHolderObj,
     guardianHolderObj,
     bankAccountsObj,
+    nomineeObj,
     proofUploadObj,
+    combinedForm,
     dispatch,
   };
 }

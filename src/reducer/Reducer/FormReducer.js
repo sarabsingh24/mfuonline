@@ -6,6 +6,7 @@ import {
   THIRD_HOLDER,
   GUARDIAN_HOLDER,
   BANK_ACCOUNTS,
+  NOMINEES,
   PROOF_UPLOAD,
 } from "../Constant";
 
@@ -16,6 +17,7 @@ const initialState = {
   thirdHolderObj: {},
   guardianHolderObj: {},
   bankAccountsObj: [],
+  nomineeObj: {},
   proofUploadObj: [],
 };
 
@@ -35,9 +37,12 @@ export default createReducer(initialState, (builder) => {
   builder.addCase(GUARDIAN_HOLDER, (state, action) => {
     state.guardianHolderObj = action.payload;
   });
-   builder.addCase(BANK_ACCOUNTS, (state, action) => {
-     state.bankAccountsObj = action.payload;
-   });
+  builder.addCase(BANK_ACCOUNTS, (state, action) => {
+    state.bankAccountsObj = action.payload;
+  });
+  builder.addCase(NOMINEES, (state, action) => {
+    state.nomineeObj = action.payload;
+  });
   builder.addCase(PROOF_UPLOAD, (state, action) => {
     state.proofUploadObj = action.payload;
   });

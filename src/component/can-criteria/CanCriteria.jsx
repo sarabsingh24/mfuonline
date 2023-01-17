@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect} from "react";
 
 import { Form } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
@@ -179,7 +179,7 @@ function CanCriteria() {
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
-      dispatch(criteriaForm({ ...canCriteriaObj, form }));
+      dispatch(criteriaForm({ ...canCriteriaObj, ...form }));
       dispatch(pageCount(stepsCount + 1));
     }
   };
