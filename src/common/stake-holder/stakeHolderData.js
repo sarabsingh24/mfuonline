@@ -1,16 +1,22 @@
-
 export const commonFormField = {
   name: "",
   dateOfBirth: "",
   panPekrnNo: "",
   confirmpanPekrnNo: "",
   contactDetail: {
-    residenceIsd:'',
-    residenceStd:"",
-    residencePhoneNo:"",
     mobileIsdCode: "",
-    primaryMobileNo:"",
+    primaryMobileNo: "",
     primaryEmail: "",
+    residenceIsd: "00",
+    residenceStd: "00",
+    residencePhoneNo: "string",
+    primaryMobileBelongsTo: "A",
+    alternateMobileNo: "string",
+    officeIsd: "string",
+    officeStd: "string",
+    officePhoneNo: "string",
+    primaryEmailBelongsTo: "A",
+    alternateEmail: "string",
   },
   otherDetail: {
     grossIncome: "",
@@ -29,11 +35,21 @@ export const commonFormField = {
     birthCountry: "",
     citizenshipCountry: "",
     nationalityCountry: "",
+    birthCountryOthers: "string",
+    citizenshipCountryOthers: "string",
+    nationalityCountryOthers: "string",
+    taxRecords: [
+      {
+        sequenceNo: 0,
+        taxCountry: "string",
+        taxCountryOthers: "string",
+        taxReferenceNo: "string",
+        identityType: "string",
+        identityTypeOthers: "string",
+      },
+    ],
   },
 };
-
-
-
 
 export const sourceOfWealthOptions = [
   {

@@ -45,7 +45,7 @@ function CanCriteria() {
   const { stepsCount, tabsCreater, canCriteriaObj, dispatch } =
     useCommonReducer();
 
-  const { holdingNature, investorCategory, taxStatus, holderCount } = form;
+ 
 
   const formHandeler = (e) => {
     let name = e.target.name;
@@ -56,10 +56,10 @@ function CanCriteria() {
     if (!!errors[name]) {
       setErrors({ ...errors, [name]: null });
     }
-    if (name === "holdingNature") {
-      //     setForm({...defaultValue,investorCategory: "",
-      // taxStatus: "",});
-    }
+    // if (name === "holdingNature") {
+    //       setForm({...defaultValue,investorCategory: "",
+    //   taxStatus: "",});
+    // }
   };
 
   const tabShoHideHandeler = (tabList, listName) => {
@@ -77,7 +77,7 @@ function CanCriteria() {
 
   useEffect(() => {
     if (Object.keys(canCriteriaObj).length > 0) {
-      setForm(canCriteriaObj.form);
+      setForm(canCriteriaObj);
     } else {
       setForm(defaultValue);
     }
@@ -88,7 +88,7 @@ function CanCriteria() {
   }, []);
 
   useEffect(() => {
-    if (holdingNature === "SI") {
+    if (form.holdingNature === "SI") {
       setInvestorList(singleOptions);
       tabShoHideHandeler(tabsCreater, ["NOMI"]);
       setForm({
@@ -97,7 +97,7 @@ function CanCriteria() {
         investorCategory: form.investorCategory || "",
         holderCount: "1",
       });
-    } else if (holdingNature === "JO") {
+    } else if (form.holdingNature === "JO") {
       setInvestorList(jointOptions);
 
       setTaxList(singleIndividualOptions);
@@ -108,41 +108,41 @@ function CanCriteria() {
         investorCategory: form.investorCategory || "",
         holderCount: form.holderCount === "1" ? "2" : form.holderCount,
       });
-    } else if (holdingNature === "AS") {
+    } else if (form.holdingNature === "AS") {
       setForm({ ...form, holdingNature: "AS", investorCategory: "I" });
       setInvestorList(jointOptions);
     } else {
       setInvestorList([]);
     }
-  }, [holdingNature]);
+  }, [form?.holdingNature]);
 
   useEffect(() => {
-    if (investorCategory === "I") {
+    if (form.investorCategory === "I") {
       setTaxList(singleIndividualOptions);
 
-      if (holdingNature === "JO") {
-        if (holderCount === "3") {
+      if (form.holdingNature === "JO") {
+        if (form.holderCount === "3") {
           tabShoHideHandeler(tabsCreater, ["SEC", "THIR", "NOMI"]);
         }
         tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
       } else {
         tabShoHideHandeler(tabsCreater, ["NOMI"]);
       }
-    } else if (investorCategory === "M") {
+    } else if (form.investorCategory === "M") {
       setTaxList(singleMinorOptions);
       tabShoHideHandeler(tabsCreater, ["GUAR"]);
-    } else if (investorCategory === "S") {
+    } else if (form.investorCategory === "S") {
       setTaxList(singleSoleProprietorOptions);
       tabShoHideHandeler(tabsCreater, ["NOMI"]);
     } else {
       setTaxList([]);
     }
-  }, [investorCategory]);
+  }, [form?.investorCategory]);
 
   useEffect(() => {
-    if (holderCount === "3") {
+    if (form.holderCount === "3") {
       setTaxList(singleIndividualOptions);
-      if (holdingNature === "SI") {
+      if (form.holdingNature === "SI") {
         setForm({
           ...form,
           holderCount: 1,
@@ -152,10 +152,10 @@ function CanCriteria() {
         tabShoHideHandeler(tabsCreater, ["SEC", "THIR", "NOMI"]);
       }
     }
-    if (holderCount === "2") {
+    if (form.holderCount === "2") {
       setTaxList(singleIndividualOptions);
 
-      if (holdingNature === "SI") {
+      if (form.holdingNature === "SI") {
         setForm({
           ...form,
           holderCount: 1,
@@ -165,12 +165,12 @@ function CanCriteria() {
         tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
       }
     }
-    if (holderCount === "1") {
+    if (form.holderCount === "1") {
       setTaxList(singleIndividualOptions);
 
       tabShoHideHandeler(tabsCreater, ["NOMI"]);
     }
-  }, [holderCount]);
+  }, [form?.holderCount]);
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
@@ -188,8 +188,7 @@ function CanCriteria() {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 
-  // console.log(form);
-  // console.log(canCriteriaObj.form );
+  
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
@@ -200,7 +199,7 @@ function CanCriteria() {
                 <SelectOption
                   name="holdingNature"
                   label="Holding Nature"
-                  value={form?.holdingNature}
+                  value={form?.holdingNature || ''}
                   options={natureOptions}
                   changeFun={formHandeler}
                   mandatory="*"
@@ -211,7 +210,7 @@ function CanCriteria() {
                 <SelectOption
                   name="investorCategory"
                   label="Investor Category"
-                  value={form.investorCategory || investorCategory}
+                  value={form?.investorCategory || ''}
                   options={investorList.length ? investorList : investorOptions}
                   changeFun={formHandeler}
                   mandatory="*"
@@ -224,7 +223,7 @@ function CanCriteria() {
                 <SelectOption
                   name="taxStatus"
                   label="Tax Status"
-                  value={form?.taxStatus || taxStatus}
+                  value={form?.taxStatus || ''}
                   options={taxList.length ? taxList : singleIndividualOptions}
                   changeFun={formHandeler}
                   mandatory="*"
@@ -235,7 +234,7 @@ function CanCriteria() {
                 <SelectOption
                   name="holderCount"
                   label="Holders"
-                  value={form?.holderCount || holderCount}
+                  value={form?.holderCount || 1}
                   options={holderOptions}
                   changeFun={formHandeler}
                   mandatory=""

@@ -6,9 +6,12 @@ import StakeHolder from "../../common/stake-holder/StakeHolder";
 import { pageCount, thirdHolderForm } from "../../reducer/Action";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { commonFormField } from "../../common/stake-holder/stakeHolderData";
+import { validateForm } from "../primary-holder/PrimaryHolderValidation";
+
 
 function ThirdHolder() {
   const [form, setForm] = useState(commonFormField);
+  const [errors, setErrors] = useState({});
   const { stepsCount, thirdHolderObj, dispatch } = useCommonReducer();
 
   useEffect(() => {
@@ -21,8 +24,23 @@ function ThirdHolder() {
     e.preventDefault();
 
     console.log("Third holder");
-    if (true) {
-      dispatch(thirdHolderForm({ ...thirdHolderObj,holderType: "TH", ...form }));
+    const formErrors = validateForm(form);
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+    } else {
+      if (thirdHolderObj.confirmpanPekrnNo) {
+        delete thirdHolderObj.confirmpanPekrnNo;
+      }
+      dispatch(
+        thirdHolderForm({
+          ...thirdHolderObj,
+          holderType: "TH",
+          panExemptFlag: "string",
+          relationship: "01",
+          relationshipProof: "01",
+          ...form,
+        })
+      );
       dispatch(pageCount(stepsCount + 1));
     }
   };
@@ -34,6 +52,8 @@ function ThirdHolder() {
           form={form}
           setForm={setForm}
           holderType={"Third Holder"}
+          errors={errors}
+          setErrors={setErrors}
         />
       </Form>
     </React.Fragment>

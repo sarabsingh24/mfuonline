@@ -21,20 +21,6 @@ function PrimaryHolder() {
     }
   }, [primeHolderObj]);
 
-  //===============form submit with error report
-  // const formSubmitHandeler = (e) => {
-  //   e.preventDefault();
-
-  //   console.log("Primary Holder");
-  //     const formErrors = validateForm(form);
-  //     if (Object.keys(formErrors).length > 0) {
-  //       setErrors(formErrors);
-  //     } else {
-  //       dispatch(criteriaForm({ ...primeHolderObj, form }));
-  //       dispatch(pageCount(stepsCount + 1));
-  //     }
-
-  // };
   const formSubmitHandeler = (e) => {
     e.preventDefault();
     console.log("Primary Holder");
@@ -42,14 +28,23 @@ function PrimaryHolder() {
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
+      if (primeHolderObj.confirmpanPekrnNo) {
+        delete primeHolderObj.confirmpanPekrnNo;
+      }
+
       dispatch(
-        primeHolderForm({ ...primeHolderObj, holderType: "PR", ...form })
+        primeHolderForm({
+          ...primeHolderObj,
+          holderType: "PR",
+          panExemptFlag: "string",
+          relationship: "01",
+          relationshipProof: "01",
+          ...form,
+        })
       );
       dispatch(pageCount(stepsCount + 1));
     }
   };
-
-  console.log(form);
 
   return (
     <React.Fragment>

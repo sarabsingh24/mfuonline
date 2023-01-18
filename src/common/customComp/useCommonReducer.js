@@ -17,14 +17,19 @@ function useCommonReducer() {
   } = useSelector((state) => state.formReducer);
   const dispatch = useDispatch();
 
+
+
+  let arrayFilter = [
+    Object.keys(primeHolderObj).length && primeHolderObj,
+    Object.keys(secondHolderObj).length && secondHolderObj,
+    Object.keys(thirdHolderObj).length && thirdHolderObj,
+    Object.keys(guardianHolderObj).length && guardianHolderObj,
+  ].filter(i => i !== 0 );
+
+
   const combinedForm = {
     ...canCriteriaObj,
-    holderRecords: [
-      Object.keys(primeHolderObj).length ? primeHolderObj : null,
-      Object.keys(secondHolderObj).length ? secondHolderObj : null,
-      Object.keys(thirdHolderObj).length ? thirdHolderObj : null,
-      Object.keys(guardianHolderObj).length ? guardianHolderObj : null,
-    ],
+    holderRecords: [...arrayFilter],
     bankRecords: bankAccountsObj,
     nomineeDetails: nomineeObj,
   };
