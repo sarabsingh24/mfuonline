@@ -10,11 +10,62 @@ import InputText from "../../common/form-elements/InputText";
 
 import GridCustom from "../../common/grid-custom/GridCustom";
 import SelectOption from "../../common/form-elements/SelectOption";
-
+import { validateForm } from "./BankAccountValidation";
 import { accountType, bankProofOptions } from "./accountData";
+import AccountNumber from "./AccountNumber";
 
-function BankAccountSection({ count, form, thisAccountHandeler }) {
+function BankAccountSection({
+  count,
+  form,
+  formObj,
+  setForm,
+  isError,
+  setIsError,
+}) {
+  const [errors, setErrors] = useState({});
   let accountCount = count === 0 ? "Default" : count === 1 ? "Second" : "Third";
+  const formErrors = validateForm(formObj);
+
+  const thisAccountHandeler = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    let count = e.target.dataset.count;
+
+    let newArray = form.map((obj) => {
+      if (
+        name === "accountNo" ||
+        name === "reAccountNo" ||
+        name === "micrCode" ||
+        name === "ifscCode"
+      ) {
+        if (obj.sequenceNo === count && !isNaN(value)) {
+          if (!!errors[name]) {
+            setErrors({ ...errors, [name]: null });
+          }
+
+          return { ...obj, [name]: value };
+        }
+
+        return obj;
+      } else {
+        if (obj.sequenceNo === count) {
+          return { ...obj, [name]: value };
+        }
+        return obj;
+      }
+    });
+
+    setForm(newArray);
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      setIsError(false);
+    } else {
+      setIsError(true);
+    }
+  }, [formObj?.accountNo, formObj?.reAccountNo]);
 
   return (
     <Section heading={`${accountCount} Bank Account details`}>
@@ -25,10 +76,11 @@ function BankAccountSection({ count, form, thisAccountHandeler }) {
               name="accountNo"
               label="Bank A/c No"
               type="password"
-              value={form?.accountNo || ''}
+              value={formObj?.accountNo || ""}
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
+              errors={errors}
             />
           </Col>
           <Col xs={12} md={4}>
@@ -36,17 +88,18 @@ function BankAccountSection({ count, form, thisAccountHandeler }) {
               name="reAccountNo"
               label="Re-Enter Bank A/c No"
               type="text"
-              value={form?.reAccountNo || ''}
+              value={formObj?.reAccountNo || ""}
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
+              errors={errors}
             />
           </Col>
           <Col xs={12} md={4}>
             <SelectOption
               name="accountType"
               label="Account Type"
-              value={form?.accountType || ''}
+              value={formObj?.accountType || ""}
               options={accountType}
               count={count}
               changeFun={thisAccountHandeler}
@@ -60,7 +113,7 @@ function BankAccountSection({ count, form, thisAccountHandeler }) {
               name="bankId"
               label="Bank"
               type="text"
-              value={form?.bankId || ''}
+              value={formObj?.bankId || ""}
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
@@ -71,7 +124,7 @@ function BankAccountSection({ count, form, thisAccountHandeler }) {
               name="micrCode"
               label="MICR"
               type="text"
-              value={form?.micrCode || ''}
+              value={formObj?.micrCode || ""}
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
@@ -82,7 +135,7 @@ function BankAccountSection({ count, form, thisAccountHandeler }) {
               name="ifscCode"
               label="IFSC"
               type="text"
-              value={form?.ifscCode || ''}
+              value={formObj?.ifscCode || ""}
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
@@ -94,7 +147,7 @@ function BankAccountSection({ count, form, thisAccountHandeler }) {
             <SelectOption
               name="bankProof"
               label="Bank Proof"
-              value={form?.bankProof || ''}
+              value={formObj?.bankProof || ""}
               options={bankProofOptions}
               count={count}
               changeFun={thisAccountHandeler}

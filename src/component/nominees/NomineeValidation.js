@@ -1,11 +1,17 @@
 export const validateForm = (form) => {
   const newErrors = {};
-  if (!form.nature || form.nature === "")
-    newErrors.nature = "please select Holding Nature";
-  if (!form.investor || form.investor === "")
-    newErrors.investor = "please select Investor Category";
-  if (!form.textStatus || form.textStatus === "")
-    newErrors.textStatus = "please select Tax Status";
 
+  if (!form.nomineeName || form.nomineeName === "") {
+    newErrors.nomineeName = "Pleasse fill the nominee name";
+  }
+
+  if (!form.relation || form.relation === "") {
+    newErrors.reAccountNo = "Pleasse fill relation";
+  }
+  if (!form.percentage || form.percentage === "") {
+    newErrors.reAccountNo = "Pleasse fill relation";
+  }
+
+ 
   return newErrors;
 };

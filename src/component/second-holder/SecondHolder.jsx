@@ -30,9 +30,9 @@ const [form, setForm] = useState( commonFormField );
       setErrors(formErrors);
     }else {
 
-       if (secondHolderObj.confirmpanPekrnNo) {
-         delete secondHolderObj.confirmpanPekrnNo;
-       }
+      //  if (secondHolderObj.confirmpanPekrnNo) {
+      //    delete secondHolderObj.confirmpanPekrnNo;
+      //  }
       dispatch(
         secondHolderForm({
           ...secondHolderObj,

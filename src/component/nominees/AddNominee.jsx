@@ -26,6 +26,7 @@ export default function AddNominee({ count, form, thisAccountHandeler }) {
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
+              
             />
           </Col>
           <Col xs={12} md={3}>

@@ -20,10 +20,10 @@ export const StepBox = styled.div`
   margin-top: -28px;
   flex-grow: 1;
   text-align: center;
-  color: #6e6e6e;
+  color: #9e9e9e;
 
   &.tab-active {
-  color: #fff;
+    color: #03a9f4;
   }
 `;
 
@@ -43,14 +43,14 @@ export const StepCount = styled.div`
   &.tab-active {
     color: #ffffff;
     border: 2px solid #83d0fa;
-    background-image: -webkit-linear-gradient(
+    /* background-image: -webkit-linear-gradient(
       0deg,
       #884d80 0%,
       #9795f0 0%,
       #2b5876 0%,
       #4e4376 100%
-    );
-    /* background: #0288d1; */
+    ); */
+    background: #2196f3;
   }
 
   @media (max-width: 768px) {

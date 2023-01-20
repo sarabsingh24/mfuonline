@@ -40,16 +40,16 @@ export const proofUploadForm = createAction(PROOF_UPLOAD);
 //http://api.armfintech.com:81/mfu/v1/cans
 //http://api.finnsysonline.com:81/mfu/v1/cans
 
-export const postData = async (data) => {
-  axios.post("http://api.armfintech.com:81/mfu/v1/cans", data);
+// export const postData = async (data) => {
+//   axios.post("http://api.armfintech.com:81/mfu/v1/cans", data);
 
-  // return async () => {
-  //   await fetch("http://api.finnsysonline.com:81/mfu/v1/cans", {
-  //     method: "POST",
-  //     body: JSON.stringify(data),
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //   });
-  // };
-};
+//   // return async () => {
+//   //   await fetch("http://api.finnsysonline.com:81/mfu/v1/cans", {
+//   //     method: "POST",
+//   //     body: JSON.stringify(data),
+//   //     headers: {
+//   //       "content-type": "application/json",
+//   //     },
+//   //   });
+//   // };
+// };

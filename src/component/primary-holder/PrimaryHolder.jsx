@@ -10,7 +10,7 @@ import { commonFormField } from "../../common/stake-holder/stakeHolderData";
 import { validateForm } from "./PrimaryHolderValidation";
 
 function PrimaryHolder() {
-  const [form, setForm] = useState(commonFormField);
+  const [form, setForm] = useState();
   const [errors, setErrors] = useState({});
 
   const { stepsCount, primeHolderObj, dispatch } = useCommonReducer();
@@ -18,6 +18,8 @@ function PrimaryHolder() {
   useEffect(() => {
     if (Object.keys(primeHolderObj).length) {
       setForm(primeHolderObj);
+    }else{
+      setForm(commonFormField);
     }
   }, [primeHolderObj]);
 
@@ -28,9 +30,9 @@ function PrimaryHolder() {
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
-      if (primeHolderObj.confirmpanPekrnNo) {
-        delete primeHolderObj.confirmpanPekrnNo;
-      }
+      // if (primeHolderObj.confirmpanPekrnNo) {
+      //   delete primeHolderObj.confirmpanPekrnNo;
+      // }
 
       dispatch(
         primeHolderForm({

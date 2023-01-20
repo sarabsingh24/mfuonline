@@ -37,14 +37,17 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
     let name = e.target.name;
     let val = e.target.value;
 
-    // console.log(name, val);
-
-    if (
-      name === "residenceIsd" ||
-      name === "residenceStd" ||
-      name === "residencePhoneNo" ||
-      name === "mobileIsdCode" ||
-      name === "primaryMobileNo" ||
+    if (name === "panPekrnNo" || name === "confirmpanPekrnNo") {
+      let valueCase = val.toUpperCase()
+      setForm({
+        ...form,
+        [name]: valueCase,
+       
+      });
+    } else if (
+      // name === "residenceIsd" ||
+      // name === "residenceStd" ||
+      // name === "residencePhoneNo" ||
       name === "primaryEmail"
     ) {
       setForm({
@@ -57,6 +60,26 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
 
       if (!!errors[name]) {
         setErrors({ ...errors, [name]: null });
+      }
+    } else if (name === "mobileIsdCode") {
+      if (!isNaN(val)) {
+        setForm({
+          ...form,
+          contactDetail: {
+            ...form.contactDetail,
+            mobileIsdCode: val,
+          },
+        });
+      }
+    } else if (name === "primaryMobileNo") {
+      if (!isNaN(val)) {
+        setForm({
+          ...form,
+          contactDetail: {
+            ...form.contactDetail,
+            primaryMobileNo: val,
+          },
+        });
       }
     } else if (name === "grossIncome") {
       setForm({
@@ -197,18 +220,21 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <InputText
                 name="panPekrnNo"
                 label="PAN / PEKRN"
-                value={form?.panPekrnNo || ""}
+                type="password"
+                value={form?.panPekrnNo.toUpperCase() || ""}
                 mandatory=""
                 changeFun={formHandeler}
+                errors={errors}
               />
             </Col>
             <Col xs={12} md={{ span: 4, offset: 8 }}>
               <InputText
                 name="confirmpanPekrnNo"
                 label="Re-Enter PAN / PEKRN"
-                value={form?.confirmpanPekrnNo || ""}
+                value={form?.confirmpanPekrnNo.toUpperCase() || ""}
                 mandatory=""
                 changeFun={formHandeler}
+                errors={errors}
               />
             </Col>
           </Row>
@@ -256,14 +282,14 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                   <Form.Control
                     name="mobileIsdCode"
                     maxLength={2}
-                    value={form.contactDetail?.mobileIsdCode || ""}
+                    value={form?.contactDetail?.mobileIsdCode || ""}
                     onChange={formHandeler}
                   />
                   <Form.Control
                     name="primaryMobileNo"
                     maxLength={10}
                     style={{ flex: "8" }}
-                    value={form.contactDetail?.primaryMobileNo || ""}
+                    value={form?.contactDetail?.primaryMobileNo || ""}
                     onChange={formHandeler}
                   />
                 </InputGroup>
@@ -273,7 +299,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <InputText
                 name="primaryEmail"
                 label="Email"
-                value={form.contactDetail?.primaryEmail || ""}
+                value={form?.contactDetail?.primaryEmail || ""}
                 mandatory="*"
                 changeFun={formHandeler}
                 errors={errors}
@@ -367,7 +393,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <SelectOption
                 name="sourceOfWealth"
                 label="Source of Wealth"
-                value={form.otherDetail?.sourceOfWealth || ""}
+                value={form?.otherDetail?.sourceOfWealth || ""}
                 options={sourceOfWealthOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -377,7 +403,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <SelectOption
                 name="occupation"
                 label="Occupation"
-                value={form.otherDetail?.occupation || ""}
+                value={form?.otherDetail?.occupation || ""}
                 options={occupationOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -387,7 +413,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <SelectOption
                 name="pep"
                 label="Political Exposure"
-                value={form.otherDetail?.pep || ""}
+                value={form?.otherDetail?.pep || ""}
                 options={politicalExposureOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -397,7 +423,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <SelectOption
                 name="kraAddressType"
                 label="KRA Address Type"
-                value={form.otherDetail?.kraAddressType || ""}
+                value={form?.otherDetail?.kraAddressType || ""}
                 options={addressTypeOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -409,7 +435,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <InputText
                 name="sourceOfWealthOthers"
                 label="Other"
-                value={form.otherDetail?.sourceOfWealthOthers || ""}
+                value={form?.otherDetail?.sourceOfWealthOthers || ""}
                 disabled={isOtherSourceOfWealth}
                 mandatory="*"
                 changeFun={formHandeler}
@@ -419,7 +445,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <InputText
                 name="occupationOthers"
                 label="Other"
-                value={form.otherDetail?.occupationOthers || ""}
+                value={form?.otherDetail?.occupationOthers || ""}
                 disabled={isOtherOccupation}
                 mandatory="*"
                 changeFun={formHandeler}
@@ -436,7 +462,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <SelectOption
                 name="taxResidencyFlag"
                 label="Tax Residency in a country other than India? "
-                value={form.fatcaDetail?.taxResidencyFlag || ""}
+                value={form?.fatcaDetail?.taxResidencyFlag || ""}
                 options={taxResidencyOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -448,7 +474,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <InputText
                 name="birthCity"
                 label="Place of Birth"
-                value={form.fatcaDetail?.birthCity || ""}
+                value={form?.fatcaDetail?.birthCity || ""}
                 changeFun={formHandeler}
                 mandatory="*"
               />
@@ -457,7 +483,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <SelectOption
                 name="birthCountry"
                 label="Country of Birth "
-                value={form.fatcaDetail?.birthCountry || ""}
+                value={form?.fatcaDetail?.birthCountry || ""}
                 options={countryListOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -467,7 +493,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <SelectOption
                 name="citizenshipCountry"
                 label="Country of Citizenship "
-                value={form.fatcaDetail?.citizenshipCountry || ""}
+                value={form?.fatcaDetail?.citizenshipCountry || ""}
                 options={countryListOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -477,7 +503,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
               <SelectOption
                 name="nationalityCountry"
                 label="Country of Nationality"
-                value={form.fatcaDetail?.nationalityCountry || ""}
+                value={form?.fatcaDetail?.nationalityCountry || ""}
                 options={countryListOptions}
                 changeFun={formHandeler}
                 mandatory="*"

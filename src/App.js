@@ -13,7 +13,7 @@ function App() {
   return (
     <Container>
       <Tabs />
-      <RegistrationForm count={stepsCount} />
+      <RegistrationForm count={stepsCount} /> 
     </Container>
   );
 }

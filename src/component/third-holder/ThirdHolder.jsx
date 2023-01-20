@@ -28,9 +28,9 @@ function ThirdHolder() {
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
-      if (thirdHolderObj.confirmpanPekrnNo) {
-        delete thirdHolderObj.confirmpanPekrnNo;
-      }
+      // if (thirdHolderObj.confirmpanPekrnNo) {
+      //   delete thirdHolderObj.confirmpanPekrnNo;
+      // }
       dispatch(
         thirdHolderForm({
           ...thirdHolderObj,

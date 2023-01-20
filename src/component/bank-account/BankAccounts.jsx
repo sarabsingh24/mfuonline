@@ -15,45 +15,34 @@ import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { tabUpdate, pageCount, bankAccountForm } from "../../reducer/Action";
+import { validateForm } from "./BankAccountValidation";
 
 const bankRecord = {
   sequenceNo: "0",
   defaultAccountFlag: true,
-  accountNo: "11111",
+  accountNo: "",
   accountType: "",
-  bankId: "1aaaaaa",
-  micrCode: "111",
+  bankId: "",
+  micrCode: "",
   ifscCode: "",
   bankProof: "",
-  reAccountNo:''
+  reAccountNo: "",
 };
 
 function BankAccounts() {
   const [form, setForm] = useState([]);
-  const [number, setNumber] = useState('1');
+  const [number, setNumber] = useState("1");
   const [btnFun, setBtnFun] = useState({});
-
+  const [isError, setIsError] = useState([
+    { validation: false },
+    { validation: false },
+    { validation: false },
+  ]);
   const { stepsCount, bankAccountsObj, dispatch } = useCommonReducer();
 
   const numberHandeler = (e) => {
     let val = e.target.value;
     setNumber(val);
-  };
-
-  const thisAccountHandeler = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-    let count = e.target.dataset.count
- 
-    let newArray = form.map((obj) => {
-     console.log(obj.sequenceNo, "=====", count);
-      if (obj.sequenceNo === count ) {
-        return { ...obj, [name]: value };
-      }
-      return obj;
-    });
-
-    setForm(newArray);
   };
 
   useEffect(() => {
@@ -83,9 +72,21 @@ function BankAccounts() {
   const formSubmitHandeler = (e) => {
     e.preventDefault();
     console.log("bank account");
-    if (true) {
-     
-      form.map((item) => delete item.reAccountNo);
+    const account = (e) => {
+      console.log(e);
+      if (
+        e.accountNo.length &&
+        e.reAccountNo.length &&
+        e.accountNo === e.reAccountNo
+      ) {
+        return true;
+      }
+      return false;
+    };
+    let isAccount = form.every(account);
+
+    if (isAccount) {
+      // form.map((item) => delete item.reAccountNo);
       dispatch(bankAccountForm(form));
       dispatch(pageCount(stepsCount + 1));
     }
@@ -103,7 +104,7 @@ function BankAccounts() {
     }
   }, [bankAccountsObj]);
 
-  console.log(form);
+  console.log(isError);
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
@@ -114,7 +115,7 @@ function BankAccounts() {
                 <SelectOption
                   name="accounts"
                   label="Bank Account(s)"
-                  value={number || ''}
+                  value={number || ""}
                   options={accountCount}
                   changeFun={numberHandeler}
                   mandatory=""
@@ -129,8 +130,11 @@ function BankAccounts() {
             <BankAccountSection
               key={index}
               count={index}
-              form={item}
-              thisAccountHandeler={thisAccountHandeler}
+              formObj={item}
+              form={form}
+              setForm={setForm}
+              setIsError={setIsError}
+              isError={isError}
             />
           );
         })}

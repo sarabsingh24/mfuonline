@@ -28,9 +28,9 @@ const [form, setForm] = useState(commonFormField);
      if (Object.keys(formErrors).length > 0) {
        setErrors(formErrors);
      } else {
-       if (guardianHolderObj.confirmpanPekrnNo) {
-         delete guardianHolderObj.confirmpanPekrnNo;
-       }
+      //  if (guardianHolderObj.confirmpanPekrnNo) {
+      //    delete guardianHolderObj.confirmpanPekrnNo;
+      //  }
        dispatch(
          guardianHolderForm({
            ...guardianHolderObj,
