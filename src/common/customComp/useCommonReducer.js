@@ -4,6 +4,12 @@ function useCommonReducer() {
   const { tabsCreater, stepsCount, openForm } = useSelector(
     (state) => state.tabReducer
   );
+ const { isSuccess, isError, message } = useSelector(
+   (state) => state.PostReducer
+ );
+
+
+
 
   const {
     canCriteriaObj,
@@ -47,6 +53,9 @@ function useCommonReducer() {
     nomineeObj,
     proofUploadObj,
     combinedForm,
+    isSuccess,
+    isError,
+    message,
     dispatch,
   };
 }

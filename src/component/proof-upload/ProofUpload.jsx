@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Alert from "react-bootstrap/Alert";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
+import { toast } from "react-toastify";
 import "../Style.css";
 
 // component
@@ -15,22 +16,33 @@ import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { pageCount, proofUploadForm, postData } from "../../reducer/Action";
+import {
+  createAccount,
+  reset,
+} from "../../reducer/Reducer/account/accountSlice";
+
 
 function ProofUpload() {
   const [btnFun, setBtnFun] = useState({});
   const [imagesList, setImagesList] = useState([]);
 
-  const { stepsCount, tabsCreater,proofUploadObj,combinedForm, dispatch } = useCommonReducer();
+  const {
+    stepsCount,
+    tabsCreater,
+    proofUploadObj,
+    combinedForm,
+    isSuccess,
+    isError,
+    message,
+   
+    dispatch,
+  } = useCommonReducer();
 
-
-
- useEffect(() => {
-   if (proofUploadObj.length) {
-     setImagesList(proofUploadObj);
-   }
-
- }, [proofUploadObj]);
-
+  useEffect(() => {
+    if (proofUploadObj.length) {
+      setImagesList(proofUploadObj);
+    }
+  }, [proofUploadObj]);
 
   const getImageHandeler = (e) => {
     e.preventDefault();
@@ -54,32 +66,31 @@ function ProofUpload() {
     // dispatch(proofUploadForm([...filterImage]));
   };
 
-  const formSubmitHandeler = async(e) => {
-    e.preventDefault();
-   
-    console.log("Proof upload");
-    if (true) {
-      // alert('form successfuly submitted')
-      // dispatch(pageCount(0));
-      // dispatch(proofUploadForm([ ...imagesList]));
-      // dispatch(postData(combinedForm));
-       let result = await fetch("http://api.finnsysonline.com:81/mfu/v1/cans", {
-         method: "POST",
-         body: JSON.stringify(combinedForm),
-         headers: {
-           "content-type": "application/json",
-         },
-       });
-    result = await result.json();
-  console.log(result)
-  
-    }
-  };
-
   useEffect(() => {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 
+  const formSubmitHandeler = async (e) => {
+    e.preventDefault();
+    console.log("Proof upload");
+
+    if (true) {
+      dispatch(createAccount(combinedForm));
+    }
+  };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+     
+    }
+
+    if (isSuccess) {
+      toast.success("User Registered successfuly");
+     
+    }
+       dispatch(reset());
+  }, [isError, isSuccess, message]);
 
   return (
     <Form onSubmit={formSubmitHandeler}>
@@ -110,7 +121,7 @@ function ProofUpload() {
               <Button
                 variant="success"
                 type="input"
-                style={{ width: "auto", position: "absolute", top: "-3px"}}
+                style={{ width: "auto", position: "absolute", top: "-3px" }}
               >
                 <Badge
                   bg="success"

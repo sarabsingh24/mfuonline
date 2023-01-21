@@ -35,21 +35,3 @@ export const nomineesForm = createAction(NOMINEES);
 //Proof Update
 export const proofUploadForm = createAction(PROOF_UPLOAD);
 
-//dispatch
-//delete reAccountNo from bankAccount
-//http://api.armfintech.com:81/mfu/v1/cans
-//http://api.finnsysonline.com:81/mfu/v1/cans
-
-// export const postData = async (data) => {
-//   axios.post("http://api.armfintech.com:81/mfu/v1/cans", data);
-
-//   // return async () => {
-//   //   await fetch("http://api.finnsysonline.com:81/mfu/v1/cans", {
-//   //     method: "POST",
-//   //     body: JSON.stringify(data),
-//   //     headers: {
-//   //       "content-type": "application/json",
-//   //     },
-//   //   });
-//   // };
-// };

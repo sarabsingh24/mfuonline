@@ -12,17 +12,10 @@ import GridCustom from "../../common/grid-custom/GridCustom";
 import SelectOption from "../../common/form-elements/SelectOption";
 import { validateForm } from "./BankAccountValidation";
 import { accountType, bankProofOptions } from "./accountData";
-import AccountNumber from "./AccountNumber";
 
-function BankAccountSection({
-  count,
-  form,
-  formObj,
-  setForm,
-  isError,
-  setIsError,
-}) {
+function BankAccountSection({ count, form, formObj, setForm }) {
   const [errors, setErrors] = useState({});
+  const [st, setST] = useState(false);
   let accountCount = count === 0 ? "Default" : count === 1 ? "Second" : "Third";
   const formErrors = validateForm(formObj);
 
@@ -42,7 +35,7 @@ function BankAccountSection({
           if (!!errors[name]) {
             setErrors({ ...errors, [name]: null });
           }
-
+          setST(true);
           return { ...obj, [name]: value };
         }
 
@@ -59,12 +52,11 @@ function BankAccountSection({
   };
 
   useEffect(() => {
-    if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
-      setIsError(false);
-    } else {
-      setIsError(true);
-    }
+    
+      if (Object.keys(formErrors).length > 0) {
+        setErrors(formErrors);
+      }
+    
   }, [formObj?.accountNo, formObj?.reAccountNo]);
 
   return (

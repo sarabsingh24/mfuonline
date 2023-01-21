@@ -23,7 +23,7 @@ export const StepBox = styled.div`
   color: #9e9e9e;
 
   &.tab-active {
-    color: #03a9f4;
+    color: #222222;
   }
 `;
 

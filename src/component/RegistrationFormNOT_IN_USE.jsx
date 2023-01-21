@@ -32,7 +32,7 @@ function RegistrationForm() {
 
   if (str === "CRI") {
     
-
+// return <BankAccounts />;
     return <CanCriteria />;
   }
   if (str === "PRIM") {

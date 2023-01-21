@@ -33,11 +33,7 @@ function BankAccounts() {
   const [form, setForm] = useState([]);
   const [number, setNumber] = useState("1");
   const [btnFun, setBtnFun] = useState({});
-  const [isError, setIsError] = useState([
-    { validation: false },
-    { validation: false },
-    { validation: false },
-  ]);
+
   const { stepsCount, bankAccountsObj, dispatch } = useCommonReducer();
 
   const numberHandeler = (e) => {
@@ -104,7 +100,7 @@ function BankAccounts() {
     }
   }, [bankAccountsObj]);
 
-  console.log(isError);
+ 
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
@@ -133,8 +129,7 @@ function BankAccounts() {
               formObj={item}
               form={form}
               setForm={setForm}
-              setIsError={setIsError}
-              isError={isError}
+            
             />
           );
         })}
