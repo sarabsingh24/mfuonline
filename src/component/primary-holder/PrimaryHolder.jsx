@@ -6,7 +6,6 @@ import StakeHolder from "../../common/stake-holder/StakeHolder";
 import { pageCount, primeHolderForm } from "../../reducer/Action";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { commonFormField } from "../../common/stake-holder/stakeHolderData";
-
 import { validateForm } from "./PrimaryHolderValidation";
 
 function PrimaryHolder() {
@@ -50,7 +49,7 @@ function PrimaryHolder() {
 
   return (
     <React.Fragment>
-      <Form onSubmit={formSubmitHandeler}>
+      <Form onSubmit={formSubmitHandeler} autocomplete="off">
         <StakeHolder
           form={form}
           setForm={setForm}

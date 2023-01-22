@@ -22,22 +22,23 @@ const nominee = [
 
 const nomineeCompObj = {
   sequenceNo: "0",
-  nomineeName: "",
+  nomineeName: "dsds",
   relation: "",
   percentage: "",
-  dateOfBirth: "",
+  dateOfBirth: "2015-04-11",
   nomineeGuardianName: "",
   nomineeGuardianRelation: "",
   nomineeGuardianDob: "",
 };
 
-export default function Nominees() {
+function Nominees() {
   const [form, setForm] = useState([]);
   const [btnFun, setBtnFun] = useState({});
   const [number, setNumber] = useState("1");
   const [nomine, setNomine] = useState(false);
   const [isNominee, setIsNominee] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const [isErorArray, setIsErorArray] = useState([]);
+  const [errors, setErrors] = useState({});
   const { stepsCount, tabsCreater, nomineeObj, dispatch } = useCommonReducer();
 
   const numberHandeler = (e) => {
@@ -55,34 +56,6 @@ export default function Nominees() {
       setForm([nomineeCompObj]);
     }
   }, [isNominee]);
-
-  const thisAccountHandeler = (e, num) => {
-    let name = e.target.name;
-    let value = e.target.value;
-    let count = e.target.dataset.count;
-    console.log(count);
-    let newArray = form.map((obj) => {
-      console.log(obj.sequenceNo, "=====", count);
-      if (obj.sequenceNo === count) {
-        return { ...obj, [name]: value };
-      }
-      return obj;
-    });
-
-    let newError = errors.map((item, index) => {
-      if (index == count) {
-        if (!!item[name]) {
-          return { ...item, [name]: null };
-        }
-      }
-      return item;
-    });
-
-    setErrors(newError);
-
-    console.log(newArray);
-    setForm(newArray);
-  };
 
   useEffect(() => {
     if (+number === 1) {
@@ -111,30 +84,22 @@ export default function Nominees() {
   const formSubmitHandeler = (e) => {
     e.preventDefault();
     console.log("Nominees");
-    const formErrors = validateForm(form);
-    // if (formErrors.length > 0) {
-    //   alert("error");
-    //   setErrors(formErrors);
-    // } else {
-    const account = (e) => {
-      if (!Object.keys(e).length) {
-        return true;
-      }
-      return false;
-    };
-    let isAccount = formErrors.every(account);
-    // console.log(isAccount, "===========isAccount");
-    // console.log(formErrors, "=========formErrors");
-    // console.log(isAccount);
-    if (!isAccount) {
-      alert("error");
-      setErrors(formErrors);
+    // const formErrors = validateForm(form);
+    console.log(isErorArray, "=========submit");
+
+    let checkForNull = isErorArray.every(
+      (e) => e.percentage === null && e.relation === null
+    );
+    console.log(checkForNull);
+    if (!checkForNull) {
+      alert("errror");
+      // setErrors(formErrors);
     } else {
       alert("success");
-      //   dispatch(
-      //     nomineesForm({ nomineeOptedFlag: isNominee, nomineeRecords: form })
-      //   );
-      //   dispatch(pageCount(stepsCount + 1));
+      // dispatch(
+      //   nomineesForm({ nomineeOptedFlag: isNominee, nomineeRecords: form })
+      // );
+      // dispatch(pageCount(stepsCount + 1));
     }
   };
 
@@ -150,7 +115,11 @@ export default function Nominees() {
       setForm([nomineeCompObj]);
     }
   }, [nomineeObj]);
-  console.log(errors);
+
+  useEffect(() => {
+    console.log(isErorArray, "=========outside");
+  }, [isErorArray]);
+
   return (
     <Form onSubmit={formSubmitHandeler}>
       <Section heading="Nominee details">
@@ -190,6 +159,8 @@ export default function Nominees() {
                   ]}
                   changeFun={numberHandeler}
                   mandatory="*"
+                  errors={errors}
+                  setErrors={setErrors}
                 />
               )}
             </Col>
@@ -201,11 +172,13 @@ export default function Nominees() {
           return (
             <AddNominee
               key={index}
-              formObj={detail}
-              setForm={setForm}
               count={index}
-              thisAccountHandeler={thisAccountHandeler}
-              errors={errors}
+              formObj={detail}
+              form={form}
+              setForm={setForm}
+              isErorArray={isErorArray}
+              setIsErorArray={setIsErorArray}
+              setErrors={setErrors}
             />
           );
         })}
@@ -214,3 +187,5 @@ export default function Nominees() {
     </Form>
   );
 }
+
+export default Nominees;

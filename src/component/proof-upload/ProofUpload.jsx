@@ -6,7 +6,9 @@ import Alert from "react-bootstrap/Alert";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "../Style.css";
+
 
 // component
 import GridCustom from "../../common/grid-custom/GridCustom";
@@ -37,6 +39,8 @@ function ProofUpload() {
    
     dispatch,
   } = useCommonReducer();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (proofUploadObj.length) {
@@ -87,6 +91,7 @@ function ProofUpload() {
 
     if (isSuccess) {
       toast.success("User Registered successfuly");
+      navigate('/');
      
     }
        dispatch(reset());
