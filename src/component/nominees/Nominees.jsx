@@ -35,7 +35,7 @@ export default function Nominees() {
   const [form, setForm] = useState([]);
   const [btnFun, setBtnFun] = useState({});
   const [number, setNumber] = useState("1");
-  const [nomine, setNomine] = useState(false);
+ 
   const [isNominee, setIsNominee] = useState(false);
   const [errors, setErrors] = useState([]);
   const { stepsCount, tabsCreater, nomineeObj, dispatch } = useCommonReducer();
@@ -70,7 +70,7 @@ export default function Nominees() {
     });
 
     let newError = errors.map((item, index) => {
-      if (index == count) {
+      if (index === count) {
         if (!!item[name]) {
           return { ...item, [name]: null };
         }
@@ -112,10 +112,6 @@ export default function Nominees() {
     e.preventDefault();
     console.log("Nominees");
     const formErrors = validateForm(form);
-    // if (formErrors.length > 0) {
-    //   alert("error");
-    //   setErrors(formErrors);
-    // } else {
     const account = (e) => {
       if (!Object.keys(e).length) {
         return true;
@@ -123,18 +119,16 @@ export default function Nominees() {
       return false;
     };
     let isAccount = formErrors.every(account);
-    // console.log(isAccount, "===========isAccount");
-    // console.log(formErrors, "=========formErrors");
-    // console.log(isAccount);
+  
     if (!isAccount) {
       alert("error");
       setErrors(formErrors);
     } else {
       alert("success");
-      //   dispatch(
-      //     nomineesForm({ nomineeOptedFlag: isNominee, nomineeRecords: form })
-      //   );
-      //   dispatch(pageCount(stepsCount + 1));
+        dispatch(
+          nomineesForm({ nomineeOptedFlag: isNominee, nomineeRecords: form })
+        );
+        dispatch(pageCount(stepsCount + 1));
     }
   };
 

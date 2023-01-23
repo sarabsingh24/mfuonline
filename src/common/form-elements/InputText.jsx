@@ -1,7 +1,6 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-
 function InputText({
   label,
   placeholder,
@@ -9,19 +8,11 @@ function InputText({
   value,
   type,
   changeFun,
-  mandatory, 
+  mandatory,
   errors,
   name,
-  count
-}) 
-
-
-
-{
-
- 
-
-
+  count,
+}) {
   return (
     <Form.Group className="mb-3">
       <Form.Label>
@@ -39,7 +30,6 @@ function InputText({
         className={!!errors?.[name] && "redBorder"}
         isInvalid={!!errors?.name}
         style={{ color: "#666", fontWeight: "500" }}
-       
       />
       <div className="red">{errors?.[name]}</div>
     </Form.Group>

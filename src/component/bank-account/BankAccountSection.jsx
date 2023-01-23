@@ -13,51 +13,17 @@ import SelectOption from "../../common/form-elements/SelectOption";
 import { validateForm } from "./BankAccountValidation";
 import { accountType, bankProofOptions } from "./accountData";
 
-function BankAccountSection({ count, form, formObj, setForm }) {
-  const [errors, setErrors] = useState({});
-  const [st, setST] = useState(false);
+function BankAccountSection({
+  count,
+  form,
+  formObj,
+  setForm,
+  errors,
+  thisAccountHandeler,
+}) {
+ 
   let accountCount = count === 0 ? "Default" : count === 1 ? "Second" : "Third";
   const formErrors = validateForm(formObj);
-
-  const thisAccountHandeler = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-    let count = e.target.dataset.count;
-
-    let newArray = form.map((obj) => {
-      if (
-        name === "accountNo" ||
-        name === "reAccountNo" ||
-        name === "micrCode" ||
-        name === "ifscCode"
-      ) {
-        if (obj.sequenceNo === count && !isNaN(value)) {
-          if (!!errors[name]) {
-            setErrors({ ...errors, [name]: null });
-          }
-          setST(true);
-          return { ...obj, [name]: value };
-        }
-
-        return obj;
-      } else {
-        if (obj.sequenceNo === count) {
-          return { ...obj, [name]: value };
-        }
-        return obj;
-      }
-    });
-
-    setForm(newArray);
-  };
-
-  useEffect(() => {
-    
-      if (Object.keys(formErrors).length > 0) {
-        setErrors(formErrors);
-      }
-    
-  }, [formObj?.accountNo, formObj?.reAccountNo]);
 
   return (
     <Section heading={`${accountCount} Bank Account details`}>
@@ -72,7 +38,7 @@ function BankAccountSection({ count, form, formObj, setForm }) {
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
-              errors={errors}
+              errors={errors[count]}
             />
           </Col>
           <Col xs={12} md={4}>
@@ -84,7 +50,7 @@ function BankAccountSection({ count, form, formObj, setForm }) {
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
-              errors={errors}
+              errors={errors[count]}
             />
           </Col>
           <Col xs={12} md={4}>
@@ -96,6 +62,7 @@ function BankAccountSection({ count, form, formObj, setForm }) {
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
+              errors={errors[count]}
             />
           </Col>
         </Row>
@@ -109,6 +76,7 @@ function BankAccountSection({ count, form, formObj, setForm }) {
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
+              errors={errors[count]}
             />
           </Col>
           <Col xs={12} md={4}>
@@ -120,6 +88,7 @@ function BankAccountSection({ count, form, formObj, setForm }) {
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
+              errors={errors[count]}
             />
           </Col>
           <Col xs={12} md={4}>
@@ -131,6 +100,7 @@ function BankAccountSection({ count, form, formObj, setForm }) {
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
+              errors={errors[count]}
             />
           </Col>
         </Row>
@@ -144,11 +114,11 @@ function BankAccountSection({ count, form, formObj, setForm }) {
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
+              errors={errors[count]}
             />
           </Col>
         </Row>
       </GridCustom>
-      {/* <button onClick={addHandeler}>add</button> */}
     </Section>
   );
 }

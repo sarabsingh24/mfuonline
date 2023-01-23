@@ -33,12 +33,40 @@ function BankAccounts() {
   const [form, setForm] = useState([]);
   const [number, setNumber] = useState("1");
   const [btnFun, setBtnFun] = useState({});
-
+  const [errors, setErrors] = useState([]);
   const { stepsCount, bankAccountsObj, dispatch } = useCommonReducer();
 
   const numberHandeler = (e) => {
     let val = e.target.value;
     setNumber(val);
+  };
+
+  const thisAccountHandeler = (e, num) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    let count = e.target.dataset.count;
+    console.log(count);
+    let newArray = form.map((obj) => {
+      console.log(obj.sequenceNo, "=====", count);
+      if (obj.sequenceNo === count) {
+        return { ...obj, [name]: value };
+      }
+      return obj;
+    });
+
+    let newError = errors.map((item, index) => {
+      if (index == count) {
+        if (!!item[name]) {
+          return { ...item, [name]: null };
+        }
+      }
+      return item;
+    });
+
+    setErrors(newError);
+
+    console.log(newArray);
+    setForm(newArray);
   };
 
   useEffect(() => {
@@ -68,20 +96,19 @@ function BankAccounts() {
   const formSubmitHandeler = (e) => {
     e.preventDefault();
     console.log("bank account");
+    const formErrors = validateForm(form);
     const account = (e) => {
-      console.log(e);
-      if (
-        e.accountNo.length &&
-        e.reAccountNo.length &&
-        e.accountNo === e.reAccountNo
-      ) {
+      if (!Object.keys(e).length) {
         return true;
       }
       return false;
     };
-    let isAccount = form.every(account);
-
-    if (isAccount) {
+    let isAccount = formErrors.every(account);
+    if (!isAccount) {
+      alert("error");
+      setErrors(formErrors);
+    } else {
+      alert("success");
       // form.map((item) => delete item.reAccountNo);
       dispatch(bankAccountForm(form));
       dispatch(pageCount(stepsCount + 1));
@@ -100,7 +127,6 @@ function BankAccounts() {
     }
   }, [bankAccountsObj]);
 
- 
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
@@ -121,15 +147,15 @@ function BankAccounts() {
           </GridCustom>
         </Section>
 
-        {form?.map((item, index) => {
+        {form?.map((detail, index) => {
           return (
             <BankAccountSection
               key={index}
-              count={index}
-              formObj={item}
-              form={form}
+              formObj={detail}
               setForm={setForm}
-            
+              count={index}
+              thisAccountHandeler={thisAccountHandeler}
+              errors={errors}
             />
           );
         })}

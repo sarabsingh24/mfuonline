@@ -57,7 +57,7 @@ export default function AddNominee({ count, formObj, setForm,errors, thisAccount
               count={count}
               changeFun={thisAccountHandeler}
               mandatory="*"
-              
+              errors={errors[count]}
             />
           </Col>
         </Row>

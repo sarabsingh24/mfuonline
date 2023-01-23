@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 
-function DatePicker({ name, label, mandatory, changeFun, value ,count}) {
+function DatePicker({
+  name,
+  label,
+  mandatory,
+  changeFun,
+  value,
+  count,
+  errors,
+}) {
   const [todayDate, setTodayDate] = useState("");
   useEffect(() => {
     let date = new Date();
@@ -27,11 +35,15 @@ function DatePicker({ name, label, mandatory, changeFun, value ,count}) {
       <Form.Control
         type="date"
         name={name}
-        count={count}
+        data-count={count}
         value={todayDate}
         onChange={changeFun}
         // max={todayDate}
+        className={!!errors?.[name] && "redBorder"}
+        isInvalid={!!errors?.name}
+        style={{ color: "#666", fontWeight: "500" }}
       />
+      <div className="red">{errors?.[name]}</div>
     </Form.Group>
   );
 }

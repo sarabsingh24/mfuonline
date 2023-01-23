@@ -12,6 +12,11 @@ export const validateForm = (form) => {
     if (!form[item].percentage || form[item].percentage === "") {
       newErrors.percentage = "Pleasse fill percentage";
     }
+
+    console.log(form[item].dateOfBirth);
+     if (!form[item].dateOfBirth || form[item].dateOfBirth === "") {
+       newErrors.dateOfBirth = "Pleasse fill dateOfBirth";
+     }
     // if (Object.keys(newErrors).length) {
       newarray.push(newErrors);
     // }

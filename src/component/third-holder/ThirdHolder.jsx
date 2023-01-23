@@ -6,12 +6,15 @@ import StakeHolder from "../../common/stake-holder/StakeHolder";
 import { pageCount, thirdHolderForm } from "../../reducer/Action";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { commonFormField } from "../../common/stake-holder/stakeHolderData";
-import { validateForm } from "../primary-holder/PrimaryHolderValidation";
+import { validateForm } from "../../common/stake-holder/StakeHolderValidation";
 
 
 function ThirdHolder() {
   const [form, setForm] = useState(commonFormField);
   const [errors, setErrors] = useState({});
+   const [networthRadio, setNetworthRadio] = useState(false);
+   const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
+   
   const { stepsCount, thirdHolderObj, dispatch } = useCommonReducer();
 
   useEffect(() => {
@@ -24,7 +27,7 @@ function ThirdHolder() {
     e.preventDefault();
 
     console.log("Third holder");
-    const formErrors = validateForm(form);
+    const formErrors = validateForm(form, networthRadio, grossIncomeRadio);
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
@@ -54,6 +57,10 @@ function ThirdHolder() {
           holderType={"Third Holder"}
           errors={errors}
           setErrors={setErrors}
+          networthRadio={networthRadio}
+          setNetworthRadio={setNetworthRadio}
+          grossIncomeRadio={grossIncomeRadio}
+          setGrossIncomeRadio={setGrossIncomeRadio}
         />
       </Form>
     </React.Fragment>

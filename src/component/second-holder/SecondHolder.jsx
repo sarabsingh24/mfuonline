@@ -6,12 +6,13 @@ import StakeHolder from "../../common/stake-holder/StakeHolder";
 import { pageCount, secondHolderForm } from "../../reducer/Action";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { commonFormField } from "../../common/stake-holder/stakeHolderData";
-import { validateForm } from "../primary-holder/PrimaryHolderValidation";
+import { validateForm } from "../../common/stake-holder/StakeHolderValidation";
 
 function SecondHolder() {
 const [form, setForm] = useState( commonFormField );
  const [errors, setErrors] = useState({});
- 
+  const [networthRadio, setNetworthRadio] = useState(false);
+  const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
   const { stepsCount,secondHolderObj, dispatch } = useCommonReducer();
 
 
@@ -25,7 +26,7 @@ const [form, setForm] = useState( commonFormField );
   const formSubmitHandeler = (e) => {
     e.preventDefault();
     console.log("second Holder");
-    const formErrors = validateForm(form);
+    const formErrors = validateForm(form, networthRadio, grossIncomeRadio);
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     }else {
@@ -57,6 +58,10 @@ const [form, setForm] = useState( commonFormField );
           holderType={"Second Holder"}
           errors={errors}
           setErrors={setErrors}
+          networthRadio={networthRadio}
+          setNetworthRadio={setNetworthRadio}
+          grossIncomeRadio={grossIncomeRadio}
+          setGrossIncomeRadio={setGrossIncomeRadio}
         />
       </Form>
     </React.Fragment>

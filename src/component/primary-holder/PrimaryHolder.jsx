@@ -6,12 +6,13 @@ import StakeHolder from "../../common/stake-holder/StakeHolder";
 import { pageCount, primeHolderForm } from "../../reducer/Action";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { commonFormField } from "../../common/stake-holder/stakeHolderData";
-import { validateForm } from "./PrimaryHolderValidation";
+import { validateForm } from "../../common/stake-holder/StakeHolderValidation";
 
 function PrimaryHolder() {
   const [form, setForm] = useState();
   const [errors, setErrors] = useState({});
-
+ const [networthRadio, setNetworthRadio] = useState(false);
+ const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
   const { stepsCount, primeHolderObj, dispatch } = useCommonReducer();
 
   useEffect(() => {
@@ -25,10 +26,16 @@ function PrimaryHolder() {
   const formSubmitHandeler = (e) => {
     e.preventDefault();
     console.log("Primary Holder");
-    const formErrors = validateForm(form);
+    const formErrors = validateForm(
+      form,
+      networthRadio,
+      grossIncomeRadio
+    );
     if (Object.keys(formErrors).length > 0) {
+      alert("error");
       setErrors(formErrors);
     } else {
+      alert('success')
       // if (primeHolderObj.confirmpanPekrnNo) {
       //   delete primeHolderObj.confirmpanPekrnNo;
       // }
@@ -49,13 +56,17 @@ function PrimaryHolder() {
 
   return (
     <React.Fragment>
-      <Form onSubmit={formSubmitHandeler} autocomplete="off">
+      <Form onSubmit={formSubmitHandeler} autoComplete="off">
         <StakeHolder
           form={form}
           setForm={setForm}
           holderType={"Primary Holder"}
           errors={errors}
           setErrors={setErrors}
+          networthRadio={networthRadio}
+          setNetworthRadio={setNetworthRadio}
+          grossIncomeRadio={grossIncomeRadio}
+          setGrossIncomeRadio={setGrossIncomeRadio}
         />
       </Form>
     </React.Fragment>

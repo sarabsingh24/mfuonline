@@ -15,7 +15,7 @@ import PrimaryHolder from "./component/primary-holder/PrimaryHolder";
 import ThirdHolder from "./component/third-holder/ThirdHolder";
 import ProofUpload from "./component/proof-upload/ProofUpload";
 import SecondHolder from "./component/second-holder/SecondHolder";
-import CheckNavigate from './common/check-navigate/CheckNavigate'
+import CheckNavigate from "./common/check-navigate/CheckNavigate";
 
 function App() {
   return (
@@ -42,4 +42,3 @@ function App() {
 }
 
 export default App;
- 

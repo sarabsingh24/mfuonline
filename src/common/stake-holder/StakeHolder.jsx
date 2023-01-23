@@ -24,9 +24,19 @@ import {
   grossAnnualIncomeOptions,
 } from "./stakeHolderData";
 
-function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
-  const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
-  const [networthRadio, setNetworthRadio] = useState(false);
+function StakeHolder({
+  form,
+  setForm,
+  holderType,
+  errors,
+  setErrors,
+  networthRadio,
+  setNetworthRadio,
+  grossIncomeRadio,
+  setGrossIncomeRadio,
+}) {
+  
+
   const [btnFun, setBtnFun] = useState({});
   const [isOtherSourceOfWealth, setIsOtherSourceOfWealth] = useState(true);
   const [isOtherOccupation, setIsOtherOccupation] = useState(true);
@@ -38,11 +48,10 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
     let val = e.target.value;
 
     if (name === "panPekrnNo" || name === "confirmpanPekrnNo") {
-      let valueCase = val.toUpperCase()
+      let valueCase = val.toUpperCase();
       setForm({
         ...form,
         [name]: valueCase,
-       
       });
     } else if (
       // name === "residenceIsd" ||
@@ -92,6 +101,9 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
           netWorthDate: "",
         },
       });
+      if (!!errors[name]) {
+        setErrors({ ...errors, [name]: null });
+      }
     } else if (name === "netWorth" || name === "netWorthDate") {
       setForm({
         ...form,
@@ -102,6 +114,9 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
           grossIncome: "",
         },
       });
+      if (!!errors[name]) {
+        setErrors({ ...errors, [name]: null });
+      }
     } else if (
       name === "sourceOfWealth" ||
       name === "sourceOfWealthOthers" ||
@@ -118,6 +133,10 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
           [name]: val,
         },
       });
+
+      if (!!errors[name]) {
+        setErrors({ ...errors, [name]: null });
+      }
     } else if (
       name === "taxResidencyFlag" ||
       name === "birthCity" ||
@@ -132,6 +151,9 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
           [name]: val,
         },
       });
+       if (!!errors[name]) {
+         setErrors({ ...errors, [name]: null });
+       }
     } else {
       setForm({ ...form, [name]: val });
     }
@@ -205,6 +227,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 mandatory="*"
                 value={form?.name || ""}
                 changeFun={formHandeler}
+                errors={errors}
               />
             </Col>
             <Col xs={12} md={4}>
@@ -214,6 +237,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 value={form?.dateOfBirth}
                 mandatory="*"
                 changeFun={formHandeler}
+                errors={errors}
               />
             </Col>
             <Col xs={12} md={4}>
@@ -284,15 +308,28 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                     maxLength={2}
                     value={form?.contactDetail?.mobileIsdCode || ""}
                     onChange={formHandeler}
+                    errors={errors}
+                    className={!!errors?.mobileIsdCode && "redBorder"}
+                    isInvalid={!!errors?.name}
                   />
                   <Form.Control
                     name="primaryMobileNo"
                     maxLength={10}
-                    style={{ flex: "8" }}
+                    style={{ flex: "8", marginLeft: "1px" }}
                     value={form?.contactDetail?.primaryMobileNo || ""}
                     onChange={formHandeler}
+                    errors={errors}
+                    className={!!errors?.primaryMobileNo && "redBorder"}
+                    isInvalid={!!errors?.name}
                   />
                 </InputGroup>
+                <div className="red">
+                  {errors?.mobileIsdCode && errors?.primaryMobileNo
+                    ? "mobile info required"
+                    : errors?.mobileIsdCode
+                    ? errors?.mobileIsdCode
+                    : errors?.primaryMobileNo}
+                </div>
               </Form.Group>
             </Col>
             <Col xs={12} md={4}>
@@ -360,6 +397,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 options={grossAnnualIncomeOptions}
                 changeFun={formHandeler}
                 mandatory="*"
+                errors={errors}
               />
             </Col>
           </Row>
@@ -376,6 +414,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 value={form?.otherDetail?.netWorth || ""}
                 mandatory="*"
                 changeFun={formHandeler}
+                errors={errors}
               />
             </Col>
             <Col xs={12} md={3}>
@@ -385,6 +424,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 value={form?.otherDetail?.netWorthDate || ""}
                 changeFun={formHandeler}
                 mandatory="*"
+                errors={errors}
               />
             </Col>
           </Row>
@@ -396,7 +436,6 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 value={form?.otherDetail?.sourceOfWealth || ""}
                 options={sourceOfWealthOptions}
                 changeFun={formHandeler}
-                mandatory="*"
               />
             </Col>
             <Col xs={12} md={3}>
@@ -407,6 +446,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 options={occupationOptions}
                 changeFun={formHandeler}
                 mandatory="*"
+                errors={errors}
               />
             </Col>
             <Col xs={12} md={3}>
@@ -417,6 +457,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 options={politicalExposureOptions}
                 changeFun={formHandeler}
                 mandatory="*"
+                errors={errors}
               />
             </Col>
             <Col xs={12} md={3}>
@@ -427,6 +468,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 options={addressTypeOptions}
                 changeFun={formHandeler}
                 mandatory="*"
+                errors={errors}
               />
             </Col>
           </Row>
@@ -437,7 +479,6 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 label="Other"
                 value={form?.otherDetail?.sourceOfWealthOthers || ""}
                 disabled={isOtherSourceOfWealth}
-                mandatory="*"
                 changeFun={formHandeler}
               />
             </Col>
@@ -447,8 +488,8 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 label="Other"
                 value={form?.otherDetail?.occupationOthers || ""}
                 disabled={isOtherOccupation}
-                mandatory="*"
                 changeFun={formHandeler}
+                errors={errors}
               />
             </Col>
           </Row>
@@ -466,6 +507,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 options={taxResidencyOptions}
                 changeFun={formHandeler}
                 mandatory="*"
+                errors={errors}
               />
             </Col>
           </Row>
@@ -477,6 +519,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 value={form?.fatcaDetail?.birthCity || ""}
                 changeFun={formHandeler}
                 mandatory="*"
+                errors={errors}
               />
             </Col>
             <Col xs={12} md={3}>
@@ -487,6 +530,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 options={countryListOptions}
                 changeFun={formHandeler}
                 mandatory="*"
+                errors={errors}
               />
             </Col>
             <Col xs={12} md={3}>
@@ -497,6 +541,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 options={countryListOptions}
                 changeFun={formHandeler}
                 mandatory="*"
+                errors={errors}
               />
             </Col>
             <Col xs={12} md={3}>
@@ -507,6 +552,7 @@ function StakeHolder({ form, setForm, holderType, errors, setErrors }) {
                 options={countryListOptions}
                 changeFun={formHandeler}
                 mandatory="*"
+                errors={errors}
               />
             </Col>
           </Row>
