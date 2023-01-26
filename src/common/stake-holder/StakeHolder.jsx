@@ -34,9 +34,8 @@ function StakeHolder({
   setNetworthRadio,
   grossIncomeRadio,
   setGrossIncomeRadio,
-}) {
   
-
+}) {
   const [btnFun, setBtnFun] = useState({});
   const [isOtherSourceOfWealth, setIsOtherSourceOfWealth] = useState(true);
   const [isOtherOccupation, setIsOtherOccupation] = useState(true);
@@ -151,9 +150,9 @@ function StakeHolder({
           [name]: val,
         },
       });
-       if (!!errors[name]) {
-         setErrors({ ...errors, [name]: null });
-       }
+      if (!!errors[name]) {
+        setErrors({ ...errors, [name]: null });
+      }
     } else {
       setForm({ ...form, [name]: val });
     }

@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "../Style.css";
 
-
 // component
 import GridCustom from "../../common/grid-custom/GridCustom";
 import Section from "../../common/section/Section";
@@ -17,12 +16,22 @@ import InputText from "../../common/form-elements/InputText";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
-import { pageCount, proofUploadForm, postData } from "../../reducer/Action";
+import {
+  pageCount,
+  proofUploadForm,
+  postData,
+  criteriaForm,
+  primeHolderForm,
+  secondHolderForm,
+  thirdHolderForm,
+  guardianHolderForm,
+  bankAccountForm,
+  nomineesForm,
+} from "../../reducer/Action";
 import {
   createAccount,
   reset,
 } from "../../reducer/Reducer/account/accountSlice";
-
 
 function ProofUpload() {
   const [btnFun, setBtnFun] = useState({});
@@ -36,7 +45,7 @@ function ProofUpload() {
     isSuccess,
     isError,
     message,
-   
+
     dispatch,
   } = useCommonReducer();
 
@@ -86,15 +95,21 @@ function ProofUpload() {
   useEffect(() => {
     if (isError) {
       toast.error(message);
-     
     }
 
     if (isSuccess) {
       toast.success("User Registered successfuly");
-      navigate('/');
-     
+      dispatch(criteriaForm({}));
+      dispatch(primeHolderForm({}));
+      dispatch(secondHolderForm({}));
+      dispatch(thirdHolderForm({}));
+      dispatch(guardianHolderForm({}));
+      dispatch(bankAccountForm([]));
+      dispatch(nomineesForm({}));
+       navigate("/");
     }
-       dispatch(reset());
+
+    dispatch(reset());
   }, [isError, isSuccess, message]);
 
   return (

@@ -37,6 +37,6 @@ export const validateForm = (form) => {
 
     newarray.push(newErrors);
   }
-  console.log(newarray);
+ 
   return newarray;
 };

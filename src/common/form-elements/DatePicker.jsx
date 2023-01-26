@@ -12,10 +12,10 @@ function DatePicker({
 }) {
   const [todayDate, setTodayDate] = useState("");
   useEffect(() => {
-    let date = new Date();
-    if (value) {
-      date = new Date(value);
-    }
+    let date = new Date(value);
+    // if (value) {
+    //   date = new Date(value);
+    // }
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
@@ -36,7 +36,7 @@ function DatePicker({
         type="date"
         name={name}
         data-count={count}
-        value={todayDate}
+        value={value ? todayDate : ''}
         onChange={changeFun}
         // max={todayDate}
         className={!!errors?.[name] && "redBorder"}

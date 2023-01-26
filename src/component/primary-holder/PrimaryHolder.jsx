@@ -11,8 +11,10 @@ import { validateForm } from "../../common/stake-holder/StakeHolderValidation";
 function PrimaryHolder() {
   const [form, setForm] = useState();
   const [errors, setErrors] = useState({});
- const [networthRadio, setNetworthRadio] = useState(false);
+ 
  const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
+ const [networthRadio, setNetworthRadio] = useState(false);
+ 
   const { stepsCount, primeHolderObj, dispatch } = useCommonReducer();
 
   useEffect(() => {
@@ -29,7 +31,8 @@ function PrimaryHolder() {
     const formErrors = validateForm(
       form,
       networthRadio,
-      grossIncomeRadio
+      grossIncomeRadio,
+    
     );
     if (Object.keys(formErrors).length > 0) {
       alert("error");
@@ -54,6 +57,7 @@ function PrimaryHolder() {
     }
   };
 
+
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler} autoComplete="off">
@@ -67,6 +71,7 @@ function PrimaryHolder() {
           setNetworthRadio={setNetworthRadio}
           grossIncomeRadio={grossIncomeRadio}
           setGrossIncomeRadio={setGrossIncomeRadio}
+         
         />
       </Form>
     </React.Fragment>

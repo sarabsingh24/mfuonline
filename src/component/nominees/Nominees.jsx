@@ -35,7 +35,7 @@ export default function Nominees() {
   const [form, setForm] = useState([]);
   const [btnFun, setBtnFun] = useState({});
   const [number, setNumber] = useState("1");
- 
+
   const [isNominee, setIsNominee] = useState(false);
   const [errors, setErrors] = useState([]);
   const { stepsCount, tabsCreater, nomineeObj, dispatch } = useCommonReducer();
@@ -60,9 +60,8 @@ export default function Nominees() {
     let name = e.target.name;
     let value = e.target.value;
     let count = e.target.dataset.count;
-    console.log(count);
+
     let newArray = form.map((obj) => {
-      console.log(obj.sequenceNo, "=====", count);
       if (obj.sequenceNo === count) {
         return { ...obj, [name]: value };
       }
@@ -80,7 +79,6 @@ export default function Nominees() {
 
     setErrors(newError);
 
-    console.log(newArray);
     setForm(newArray);
   };
 
@@ -119,16 +117,16 @@ export default function Nominees() {
       return false;
     };
     let isAccount = formErrors.every(account);
-  
+
     if (!isAccount) {
       alert("error");
       setErrors(formErrors);
     } else {
       alert("success");
-        dispatch(
-          nomineesForm({ nomineeOptedFlag: isNominee, nomineeRecords: form })
-        );
-        dispatch(pageCount(stepsCount + 1));
+      dispatch(
+        nomineesForm({ nomineeOptedFlag: isNominee, nomineeRecords: form })
+      );
+      dispatch(pageCount(stepsCount + 1));
     }
   };
 
@@ -144,7 +142,7 @@ export default function Nominees() {
       setForm([nomineeCompObj]);
     }
   }, [nomineeObj]);
-  console.log(errors);
+
   return (
     <Form onSubmit={formSubmitHandeler}>
       <Section heading="Nominee details">
