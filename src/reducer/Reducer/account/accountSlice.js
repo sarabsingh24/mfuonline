@@ -2,12 +2,24 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import accountService from "./accountService";
 
 const initialState = {
+  canCriteriaObj: {},
+  primeHolderObj: {},
+  secondHolderObj: {},
+  thirdHolderObj: {},
+  guardianHolderObj: {},
+  bankAccountsObj: [],
+  nomineeObj: {},
+  proofUploadObj: [],
   account: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
+
+// export const canCriteria = (data) => {
+//   return { type: CAN_CRITERIA, payload: data };
+// };
 
 export const createAccount = createAsyncThunk(
   "account/create",
@@ -30,7 +42,45 @@ export const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state) => {
+      state.canCriteriaObj = {};
+      state.primeHolderObj = {};
+      state.secondHolderObj = {};
+      state.thirdHolderObj = {};
+      state.guardianHolderObj = {};
+      state.bankAccountsObj = [];
+      state.nomineeObj = {};
+      state.proofUploadObj = [];
+      state.account = [];
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.message = "";
+    },
+    criteriaForm: (state, action) => {
+      state.canCriteriaObj = action.payload;
+    },
+    primeHolderForm: (state, action) => {
+      state.primeHolderObj = action.payload;
+    },
+    secondHolderForm: (state, action) => {
+      state.secondHolderObj = action.payload;
+    },
+    thirdHolderForm: (state, action) => {
+      state.thirdHolderObj = action.payload;
+    },
+    guardianHolderForm: (state, action) => {
+      state.guardianHolderObj = action.payload;
+    },
+    bankAccountForm: (state, action) => {
+      state.bankAccountsObj = action.payload;
+    },
+    nomineesForm: (state, action) => {
+      state.nomineeObj = action.payload;
+    },
+    proofUploadForm: (state, action) => {
+      state.proofUploadObj = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createAccount.pending, (state) => {
@@ -45,11 +95,19 @@ export const accountSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
-      console.log(action.payload);
     });
   },
 });
 
-
-export const { reset } = accountSlice.actions;
+export const {
+  reset,
+  criteriaForm,
+  primeHolderForm,
+  secondHolderForm,
+  thirdHolderForm,
+  guardianHolderForm,
+  bankAccountForm,
+  nomineesForm,
+  proofUploadForm,
+} = accountSlice.actions;
 export default accountSlice.reducer;

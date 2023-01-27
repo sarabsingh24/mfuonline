@@ -27,7 +27,7 @@ import {
   guardianHolderForm,
   bankAccountForm,
   nomineesForm,
-} from "../../reducer/Action";
+} from "../../reducer/ActionNOT_In_USE";
 import {
   createAccount,
   reset,
@@ -45,7 +45,7 @@ function ProofUpload() {
     isSuccess,
     isError,
     message,
-
+nomineeObj,
     dispatch,
   } = useCommonReducer();
 
@@ -99,18 +99,14 @@ function ProofUpload() {
 
     if (isSuccess) {
       toast.success("User Registered successfuly");
-      dispatch(criteriaForm({}));
-      dispatch(primeHolderForm({}));
-      dispatch(secondHolderForm({}));
-      dispatch(thirdHolderForm({}));
-      dispatch(guardianHolderForm({}));
-      dispatch(bankAccountForm([]));
-      dispatch(nomineesForm({}));
        navigate("/");
     }
 
-    dispatch(reset());
+   return ()=>{
+      dispatch(reset());
+   }
   }, [isError, isSuccess, message]);
+
 
   return (
     <Form onSubmit={formSubmitHandeler}>

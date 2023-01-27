@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import axios from "axios";
+
 import {
   TAB_UPDATE,
   PAGE_COUNT,
@@ -12,7 +12,7 @@ import {
   BANK_ACCOUNTS,
   NOMINEES,
   PROOF_UPLOAD,
-} from "./Constant";
+} from "./ConstantNOT_in_Use";
 
 //Tab Action
 export const tabUpdate = createAction(TAB_UPDATE);

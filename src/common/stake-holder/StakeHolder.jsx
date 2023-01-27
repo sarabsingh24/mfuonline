@@ -12,7 +12,7 @@ import DatePicker from "../form-elements/DatePicker";
 import SelectOption from "../form-elements/SelectOption";
 import FooterSection from "../footerSection/FooterSection";
 import { btnHandeler } from "../helper/Helper";
-import { pageCount } from "../../reducer/Action";
+import { pageCount } from "../../reducer/ActionNOT_In_USE";
 import useCommonReducer from "../customComp/useCommonReducer";
 import {
   sourceOfWealthOptions,
@@ -78,6 +78,9 @@ function StakeHolder({
             mobileIsdCode: val,
           },
         });
+         if (!!errors[name]) {
+           setErrors({ ...errors, [name]: null });
+         }
       }
     } else if (name === "primaryMobileNo") {
       if (!isNaN(val)) {
@@ -88,6 +91,9 @@ function StakeHolder({
             primaryMobileNo: val,
           },
         });
+         if (!!errors[name]) {
+           setErrors({ ...errors, [name]: null });
+         }
       }
     } else if (name === "grossIncome") {
       setForm({
@@ -155,6 +161,9 @@ function StakeHolder({
       }
     } else {
       setForm({ ...form, [name]: val });
+       if (!!errors[name]) {
+         setErrors({ ...errors, [name]: null });
+       }
     }
 
     if (name === "sourceOfWealth" && val === "08") {

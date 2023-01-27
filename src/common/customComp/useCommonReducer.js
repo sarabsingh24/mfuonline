@@ -4,14 +4,10 @@ function useCommonReducer() {
   const { tabsCreater, stepsCount, openForm } = useSelector(
     (state) => state.tabReducer
   );
- const { isSuccess, isError, message } = useSelector(
-   (state) => state.PostReducer
- );
-
-
-
-
   const {
+    isSuccess,
+    isError,
+    message,
     canCriteriaObj,
     primeHolderObj,
     secondHolderObj,
@@ -20,18 +16,16 @@ function useCommonReducer() {
     bankAccountsObj,
     nomineeObj,
     proofUploadObj,
-  } = useSelector((state) => state.formReducer);
+  } = useSelector((state) => state.PostReducer);
+
   const dispatch = useDispatch();
-
-
 
   let arrayFilter = [
     Object.keys(primeHolderObj).length && primeHolderObj,
     Object.keys(secondHolderObj).length && secondHolderObj,
     Object.keys(thirdHolderObj).length && thirdHolderObj,
     Object.keys(guardianHolderObj).length && guardianHolderObj,
-  ].filter(i => i !== 0 );
-
+  ].filter((i) => i !== 0);
 
   const combinedForm = {
     ...canCriteriaObj,

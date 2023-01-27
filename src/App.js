@@ -17,6 +17,8 @@ import ProofUpload from "./component/proof-upload/ProofUpload";
 import SecondHolder from "./component/second-holder/SecondHolder";
 import CheckNavigate from "./common/check-navigate/CheckNavigate";
 
+
+
 function App() {
   return (
     <>

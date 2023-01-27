@@ -4,7 +4,7 @@ import Tab from "./Tab";
 
 //component
 import { stepsList } from "./Data";
-import { tabUpdate } from "../../reducer/Action";
+import { tabUpdate } from "../../reducer/ActionNOT_In_USE";
 import useCommonReducer from "../customComp/useCommonReducer";
 
 function Tabs() {

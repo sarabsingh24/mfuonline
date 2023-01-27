@@ -14,7 +14,9 @@ import SelectOption from "../../common/form-elements/SelectOption";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
-import { tabUpdate, pageCount, criteriaForm } from "../../reducer/Action";
+import { tabUpdate, pageCount } from "../../reducer/ActionNOT_In_USE";
+
+import { criteriaForm } from "../../reducer/Reducer/account/accountSlice";
 import { validateForm } from "./CanCriteriaValidation";
 import {
   natureOptions,
@@ -179,7 +181,8 @@ function CanCriteria() {
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
-      dispatch(criteriaForm({ ...canCriteriaObj, ...form }));
+      console.log( form );
+      dispatch(criteriaForm(form));
       dispatch(pageCount(stepsCount + 1));
     }
   };

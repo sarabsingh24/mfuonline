@@ -10,10 +10,11 @@ import Section from "../../common/section/Section";
 import SelectOption from "../../common/form-elements/SelectOption";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
-import { pageCount, nomineesForm } from "../../reducer/Action";
+import { pageCount } from "../../reducer/ActionNOT_In_USE";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import AddNominee from "./AddNominee";
 import { validateForm } from "./NomineeValidation";
+import { nomineesForm } from "../../reducer/Reducer/account/accountSlice";
 
 const nominee = [
   { value: "N", label: "No - I/We declare to Opt out" },
@@ -123,9 +124,9 @@ export default function Nominees() {
       setErrors(formErrors);
     } else {
       alert("success");
-      dispatch(
-        nomineesForm({ nomineeOptedFlag: isNominee, nomineeRecords: form })
-      );
+
+let obj =  {nomineeOptedFlag: isNominee, nomineeRecords: form}
+      dispatch(nomineesForm(obj));
       dispatch(pageCount(stepsCount + 1));
     }
   };
@@ -142,6 +143,8 @@ export default function Nominees() {
       setForm([nomineeCompObj]);
     }
   }, [nomineeObj]);
+
+
 
   return (
     <Form onSubmit={formSubmitHandeler}>

@@ -3,10 +3,11 @@ import { Form } from "react-bootstrap";
 
 //components
 import StakeHolder from "../../common/stake-holder/StakeHolder";
-import { pageCount, guardianHolderForm } from "../../reducer/Action";
+import { pageCount } from "../../reducer/ActionNOT_In_USE";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { commonFormField } from "../../common/stake-holder/stakeHolderData";
 import { validateForm } from "../../common/stake-holder/StakeHolderValidation";
+import { guardianHolderForm } from "../../reducer/Reducer/account/accountSlice";
 
 function GuardianHolder() {
 const [form, setForm] = useState(commonFormField);

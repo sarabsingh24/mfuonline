@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { TAB_UPDATE, PAGE_COUNT, NEXT_SEC } from "../Constant";
+import { TAB_UPDATE, PAGE_COUNT, NEXT_SEC } from "../ConstantNOT_in_Use";
 import { stepsList } from "../../common/tabs/Data";
 
 const initialState = {
