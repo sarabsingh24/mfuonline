@@ -3,43 +3,39 @@ import { Form } from "react-bootstrap";
 
 //components
 import StakeHolder from "../../common/stake-holder/StakeHolder";
-import { pageCount,  } from "../../reducer/ActionNOT_In_USE";
+// import { pageCount } from "../../reducer/ActionNOT_In_USE";
+import { tabUpdate, pageCount } from "../../reducer/Reducer/tab/tabSlice";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { commonFormField } from "../../common/stake-holder/stakeHolderData";
 import { validateForm } from "../../common/stake-holder/StakeHolderValidation";
-import {primeHolderForm} from '../../reducer/Reducer/account/accountSlice'
+import { primeHolderForm } from "../../reducer/Reducer/account/accountSlice";
 
 function PrimaryHolder() {
   const [form, setForm] = useState();
   const [errors, setErrors] = useState({});
- 
- const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
- const [networthRadio, setNetworthRadio] = useState(false);
- 
+
+  const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
+  const [networthRadio, setNetworthRadio] = useState(false);
+
   const { stepsCount, primeHolderObj, dispatch } = useCommonReducer();
 
   useEffect(() => {
     if (Object.keys(primeHolderObj).length) {
       setForm(primeHolderObj);
-    }else{
+    } else {
       setForm(commonFormField);
     }
   }, [primeHolderObj]);
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
-    console.log("Primary Holder");
-    const formErrors = validateForm(
-      form,
-      networthRadio,
-      grossIncomeRadio,
-    
-    );
+
+    const formErrors = validateForm(form, networthRadio, grossIncomeRadio);
     if (Object.keys(formErrors).length > 0) {
       alert("error");
       setErrors(formErrors);
     } else {
-      alert('success')
+      alert("success");
       // if (primeHolderObj.confirmpanPekrnNo) {
       //   delete primeHolderObj.confirmpanPekrnNo;
       // }
@@ -58,7 +54,6 @@ function PrimaryHolder() {
     }
   };
 
-
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler} autoComplete="off">
@@ -72,7 +67,6 @@ function PrimaryHolder() {
           setNetworthRadio={setNetworthRadio}
           grossIncomeRadio={grossIncomeRadio}
           setGrossIncomeRadio={setGrossIncomeRadio}
-         
         />
       </Form>
     </React.Fragment>

@@ -10,7 +10,8 @@ import Section from "../../common/section/Section";
 import SelectOption from "../../common/form-elements/SelectOption";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
-import { pageCount } from "../../reducer/ActionNOT_In_USE";
+// import { pageCount } from "../../reducer/ActionNOT_In_USE";
+import { tabUpdate, pageCount } from "../../reducer/Reducer/tab/tabSlice";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import AddNominee from "./AddNominee";
 import { validateForm } from "./NomineeValidation";
@@ -79,7 +80,6 @@ export default function Nominees() {
     });
 
     setErrors(newError);
-
     setForm(newArray);
   };
 
@@ -109,7 +109,7 @@ export default function Nominees() {
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
-    console.log("Nominees");
+
     const formErrors = validateForm(form);
     const account = (e) => {
       if (!Object.keys(e).length) {
@@ -125,7 +125,7 @@ export default function Nominees() {
     } else {
       alert("success");
 
-let obj =  {nomineeOptedFlag: isNominee, nomineeRecords: form}
+      let obj = { nomineeOptedFlag: isNominee, nomineeRecords: form };
       dispatch(nomineesForm(obj));
       dispatch(pageCount(stepsCount + 1));
     }
@@ -143,8 +143,6 @@ let obj =  {nomineeOptedFlag: isNominee, nomineeRecords: form}
       setForm([nomineeCompObj]);
     }
   }, [nomineeObj]);
-
-
 
   return (
     <Form onSubmit={formSubmitHandeler}>

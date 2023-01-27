@@ -14,7 +14,8 @@ import BankAccountSection from "./BankAccountSection";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
-import { tabUpdate, pageCount } from "../../reducer/ActionNOT_In_USE";
+// import { tabUpdate, pageCount } from "../../reducer/ActionNOT_In_USE";
+import { tabUpdate, pageCount } from "../../reducer/Reducer/tab/tabSlice";
 import { validateForm } from "./BankAccountValidation";
 import { bankAccountForm } from "../../reducer/Reducer/account/accountSlice";
 
@@ -46,9 +47,8 @@ function BankAccounts() {
     let name = e.target.name;
     let value = e.target.value;
     let count = e.target.dataset.count;
-    console.log(count);
+
     let newArray = form.map((obj) => {
-      console.log(obj.sequenceNo, "=====", count);
       if (obj.sequenceNo === count) {
         return { ...obj, [name]: value };
       }
@@ -66,7 +66,6 @@ function BankAccounts() {
 
     setErrors(newError);
 
-    console.log(newArray);
     setForm(newArray);
   };
 
@@ -96,7 +95,7 @@ function BankAccounts() {
 
   const formSubmitHandeler = (e) => {
     e.preventDefault();
-    console.log("bank account");
+
     const formErrors = validateForm(form);
     const account = (e) => {
       if (!Object.keys(e).length) {

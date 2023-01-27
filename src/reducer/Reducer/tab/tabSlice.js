@@ -32,6 +32,7 @@ export const tabSlice = createSlice({
 export const {
   reset,
   tabUpdate,
-  pageCount,nextSection,
+  pageCount,
+  nextSection,
 } = tabSlice.actions;
 export default tabSlice.reducer;

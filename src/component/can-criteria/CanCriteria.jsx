@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import { Form } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
@@ -14,8 +14,8 @@ import SelectOption from "../../common/form-elements/SelectOption";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
-import { tabUpdate, pageCount } from "../../reducer/ActionNOT_In_USE";
-
+// import { tabUpdate, pageCount } from "../../reducer/ActionNOT_In_USE";
+import { tabUpdate, pageCount } from '../../reducer/Reducer/tab/tabSlice'
 import { criteriaForm } from "../../reducer/Reducer/account/accountSlice";
 import { validateForm } from "./CanCriteriaValidation";
 import {
@@ -46,8 +46,6 @@ function CanCriteria() {
 
   const { stepsCount, tabsCreater, canCriteriaObj, dispatch } =
     useCommonReducer();
-
- 
 
   const formHandeler = (e) => {
     let name = e.target.name;
@@ -181,7 +179,6 @@ function CanCriteria() {
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
-      console.log( form );
       dispatch(criteriaForm(form));
       dispatch(pageCount(stepsCount + 1));
     }
@@ -191,7 +188,6 @@ function CanCriteria() {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 
-  
   return (
     <React.Fragment>
       <Form onSubmit={formSubmitHandeler}>
@@ -202,7 +198,7 @@ function CanCriteria() {
                 <SelectOption
                   name="holdingNature"
                   label="Holding Nature"
-                  value={form?.holdingNature || ''}
+                  value={form?.holdingNature || ""}
                   options={natureOptions}
                   changeFun={formHandeler}
                   mandatory="*"
@@ -213,7 +209,7 @@ function CanCriteria() {
                 <SelectOption
                   name="investorCategory"
                   label="Investor Category"
-                  value={form?.investorCategory || ''}
+                  value={form?.investorCategory || ""}
                   options={investorList.length ? investorList : investorOptions}
                   changeFun={formHandeler}
                   mandatory="*"
@@ -226,7 +222,7 @@ function CanCriteria() {
                 <SelectOption
                   name="taxStatus"
                   label="Tax Status"
-                  value={form?.taxStatus || ''}
+                  value={form?.taxStatus || ""}
                   options={taxList.length ? taxList : singleIndividualOptions}
                   changeFun={formHandeler}
                   mandatory="*"

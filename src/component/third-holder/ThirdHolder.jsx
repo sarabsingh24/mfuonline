@@ -3,7 +3,8 @@ import { Form } from "react-bootstrap";
 
 //components
 import StakeHolder from "../../common/stake-holder/StakeHolder";
-import { pageCount  } from "../../reducer/ActionNOT_In_USE";
+// import { pageCount } from "../../reducer/ActionNOT_In_USE";
+import { tabUpdate, pageCount } from "../../reducer/Reducer/tab/tabSlice";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import { commonFormField } from "../../common/stake-holder/stakeHolderData";
 import { validateForm } from "../../common/stake-holder/StakeHolderValidation";
@@ -12,9 +13,9 @@ import { thirdHolderForm } from "../../reducer/Reducer/account/accountSlice";
 function ThirdHolder() {
   const [form, setForm] = useState(commonFormField);
   const [errors, setErrors] = useState({});
-   const [networthRadio, setNetworthRadio] = useState(false);
-   const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
-   
+  const [networthRadio, setNetworthRadio] = useState(false);
+  const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
+
   const { stepsCount, thirdHolderObj, dispatch } = useCommonReducer();
 
   useEffect(() => {
@@ -26,7 +27,6 @@ function ThirdHolder() {
   const formSubmitHandeler = (e) => {
     e.preventDefault();
 
-    console.log("Third holder");
     const formErrors = validateForm(form, networthRadio, grossIncomeRadio);
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);

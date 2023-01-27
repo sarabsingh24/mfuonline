@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../Style.css";
 
 // component
@@ -16,18 +16,19 @@ import InputText from "../../common/form-elements/InputText";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
-import {
-  pageCount,
-  proofUploadForm,
-  postData,
-  criteriaForm,
-  primeHolderForm,
-  secondHolderForm,
-  thirdHolderForm,
-  guardianHolderForm,
-  bankAccountForm,
-  nomineesForm,
-} from "../../reducer/ActionNOT_In_USE";
+// import {
+//   pageCount,
+//   proofUploadForm,
+//   postData,
+//   criteriaForm,
+//   primeHolderForm,
+//   secondHolderForm,
+//   thirdHolderForm,
+//   guardianHolderForm,
+//   bankAccountForm,
+//   nomineesForm,
+// } from "../../reducer/ActionNOT_In_USE";
+import {pageCount} from '../../reducer/Reducer/tab/tabSlice'
 import {
   createAccount,
   reset,
@@ -37,6 +38,9 @@ function ProofUpload() {
   const [btnFun, setBtnFun] = useState({});
   const [imagesList, setImagesList] = useState([]);
 
+  const [status, setStatus] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     stepsCount,
     tabsCreater,
@@ -45,11 +49,11 @@ function ProofUpload() {
     isSuccess,
     isError,
     message,
-nomineeObj,
+    nomineeObj,
+    account,
+    bankAccountsObj,
     dispatch,
   } = useCommonReducer();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (proofUploadObj.length) {
@@ -57,10 +61,24 @@ nomineeObj,
     }
   }, [proofUploadObj]);
 
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess) {
+      toast.success("User Registered successfuly");
+      dispatch(pageCount(0));
+    }
+
+    return () => {
+      dispatch(reset());
+    };
+  }, [isError, isSuccess, message]);
+
   const getImageHandeler = (e) => {
     e.preventDefault();
 
-    // console.log(e.target.files[0]);
     const { name, size, type } = e.target.files[0];
     const path = URL.createObjectURL(e.target.files[0]);
     const id = +new Date();
@@ -85,28 +103,11 @@ nomineeObj,
 
   const formSubmitHandeler = async (e) => {
     e.preventDefault();
-    console.log("Proof upload");
 
     if (true) {
       dispatch(createAccount(combinedForm));
     }
   };
-
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
-
-    if (isSuccess) {
-      toast.success("User Registered successfuly");
-       navigate("/");
-    }
-
-   return ()=>{
-      dispatch(reset());
-   }
-  }, [isError, isSuccess, message]);
-
 
   return (
     <Form onSubmit={formSubmitHandeler}>

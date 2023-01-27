@@ -1,13 +1,14 @@
 import { useSelector, useDispatch } from "react-redux";
 
 function useCommonReducer() {
-  const { tabsCreater, stepsCount, openForm } = useSelector(
-    (state) => state.tabReducer
-  );
   const {
-    isSuccess,
-    isError,
-    message,
+    tabsCreater,
+  stepsCount ,
+  openForm,
+   
+  } = useSelector((state) => state.tab);
+
+  const {
     canCriteriaObj,
     primeHolderObj,
     secondHolderObj,
@@ -16,7 +17,11 @@ function useCommonReducer() {
     bankAccountsObj,
     nomineeObj,
     proofUploadObj,
-  } = useSelector((state) => state.PostReducer);
+    account,
+    isSuccess,
+    isError,
+    message,
+  } = useSelector((state) => state.account);
 
   const dispatch = useDispatch();
 
@@ -47,6 +52,7 @@ function useCommonReducer() {
     nomineeObj,
     proofUploadObj,
     combinedForm,
+    account,
     isSuccess,
     isError,
     message,

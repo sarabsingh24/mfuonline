@@ -17,9 +17,6 @@ const initialState = {
   message: "",
 };
 
-// export const canCriteria = (data) => {
-//   return { type: CAN_CRITERIA, payload: data };
-// };
 
 export const createAccount = createAsyncThunk(
   "account/create",
