@@ -10,14 +10,13 @@ import Section from "../../common/section/Section";
 import SelectOption from "../../common/form-elements/SelectOption";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
-// import { pageCount } from "../../reducer/ActionNOT_In_USE";
 import { tabUpdate, pageCount } from "../../reducer/Reducer/tab/tabSlice";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
 import AddNominee from "./AddNominee";
 import { validateForm } from "./NomineeValidation";
 import { nomineesForm } from "../../reducer/Reducer/account/accountSlice";
 
-const nominee = [
+const nomineeOption = [
   { value: "N", label: "No - I/We declare to Opt out" },
   { value: "Y", label: "Yes - I/We wish to nominate" },
 ];
@@ -37,6 +36,7 @@ export default function Nominees() {
   const [form, setForm] = useState([]);
   const [btnFun, setBtnFun] = useState({});
   const [number, setNumber] = useState("1");
+  const [nomineeSelected, setNomineeSelected] = useState("N");
 
   const [isNominee, setIsNominee] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -47,39 +47,44 @@ export default function Nominees() {
     setNumber(val);
   };
   const formHandeler = () => {
-    setIsNominee(!isNominee);
+    if (nomineeSelected === "N") {
+      setNomineeSelected("Y");
+      setForm([nomineeCompObj]);
+      setIsNominee(true);
+    } else {
+      setNomineeSelected("N");
+      setIsNominee(false);
+      dispatch(nomineesForm([]));
+    }
   };
 
-  useEffect(() => {
-    if (!isNominee) {
-      setForm([]);
-    } else {
-      setForm([nomineeCompObj]);
-    }
-  }, [isNominee]);
+  const newFun = (name, count) => {
+    let newError = errors.map((item, index) => {
+      console.log("index===", index, "count===", count);
+      if (index === +count) {
+        if (!!item[name]) {
+          console.log("ggg");
+          return { ...item, [name]: null };
+        }
+      }
+      return item;
+    });
+    setErrors(newError);
+  };
 
-  const thisAccountHandeler = (e, num) => {
+  const thisAccountHandeler = (e) => {
     let name = e.target.name;
     let value = e.target.value;
     let count = e.target.dataset.count;
 
     let newArray = form.map((obj) => {
       if (obj.sequenceNo === count) {
+        newFun(name, count);
         return { ...obj, [name]: value };
       }
       return obj;
     });
 
-    let newError = errors.map((item, index) => {
-      if (index === count) {
-        if (!!item[name]) {
-          return { ...item, [name]: null };
-        }
-      }
-      return item;
-    });
-
-    setErrors(newError);
     setForm(newArray);
   };
 
@@ -125,7 +130,10 @@ export default function Nominees() {
     } else {
       alert("success");
 
-      let obj = { nomineeOptedFlag: isNominee, nomineeRecords: form };
+      let obj = {
+        nomineeOptedFlag: nomineeSelected,
+        nomineeRecords: form,
+      };
       dispatch(nomineesForm(obj));
       dispatch(pageCount(stepsCount + 1));
     }
@@ -137,7 +145,8 @@ export default function Nominees() {
 
   useEffect(() => {
     if (Object.keys(nomineeObj).length) {
-      setIsNominee(nomineeObj.nomineeOptedFlag);
+      setNomineeSelected(nomineeObj.nomineeOptedFlag === "N" ? "N" : "Y");
+      setIsNominee(true);
       setForm(nomineeObj.nomineeRecords);
     } else {
       setForm([nomineeCompObj]);
@@ -164,7 +173,9 @@ export default function Nominees() {
               <SelectOption
                 name="nomineeOptedFlag"
                 label="Nomination Option"
-                options={nominee}
+                value={nomineeSelected}
+                // option={form?.length ? nominee[1] : nominee}
+                options={nomineeOption}
                 changeFun={formHandeler}
                 mandatory="*"
               />
@@ -174,8 +185,7 @@ export default function Nominees() {
                 <SelectOption
                   name="nomineeCount"
                   label="No. of Nominee"
-                  // select={false}
-                  value={number}
+                  value={form?.length || number}
                   options={[
                     { value: "1", label: "1" },
                     { value: "2", label: "2" },
@@ -190,7 +200,7 @@ export default function Nominees() {
         </GridCustom>
       </Section>
       {isNominee &&
-        form.map((detail, index) => {
+        form?.map((detail, index) => {
           return (
             <AddNominee
               key={index}

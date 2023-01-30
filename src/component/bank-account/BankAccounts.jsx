@@ -14,7 +14,6 @@ import BankAccountSection from "./BankAccountSection";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
-// import { tabUpdate, pageCount } from "../../reducer/ActionNOT_In_USE";
 import { tabUpdate, pageCount } from "../../reducer/Reducer/tab/tabSlice";
 import { validateForm } from "./BankAccountValidation";
 import { bankAccountForm } from "../../reducer/Reducer/account/accountSlice";

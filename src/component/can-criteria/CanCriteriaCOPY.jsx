@@ -101,7 +101,7 @@ function CanCriteria() {
         ...form,
         holdingNature: form.holdingNature || "",
         investorCategory: form.investorCategory || "",
-        holderCount: 1,
+        holderCount: "1",
       });
     } else if (form.holdingNature === "JO") {
       setInvestorList(jointOptions);
@@ -111,7 +111,7 @@ function CanCriteria() {
         ...form,
         holdingNature: "JO",
         investorCategory: form.investorCategory || "",
-        holderCount: form.holderCount === 1 ? 2 : form.holderCount,
+        holderCount: form.holderCount === "1" ? "2" : form.holderCount,
       });
     } else if (form.holdingNature === "AS") {
       setForm({ ...form, holdingNature: "AS", investorCategory: "I" });
@@ -136,12 +136,6 @@ function CanCriteria() {
     } else if (form.investorCategory === "M") {
       setTaxList(singleMinorOptions);
       tabShoHideHandeler(tabsCreater, ["GUAR"]);
-      setForm({
-        ...form,
-        holdingNature: "SI",
-        // investorCategory: form.investorCategory || "",
-        holderCount: form.holderCount === 1 ? 2 : 2,
-      });
     } else if (form.investorCategory === "S") {
       setTaxList(singleSoleProprietorOptions);
       tabShoHideHandeler(tabsCreater, ["NOMI"]);
@@ -152,71 +146,34 @@ function CanCriteria() {
 
   useEffect(() => {
     if (form.holderCount === "3") {
-      console.log(form.holderCount, form.investorCategory);
-      if (form.holdingNature === "SI" && form.investorCategory !== "M") {
+      setTaxList(singleIndividualOptions);
+      if (form.holdingNature === "SI") {
         setForm({
           ...form,
           holderCount: 1,
         });
         tabShoHideHandeler(tabsCreater, ["NOMI"]);
-      }
-      if (form.holdingNature === "JO" && form.investorCategory !== "M") {
-        setForm({
-          ...form,
-          holderCount: 3,
-        });
+      } else {
         tabShoHideHandeler(tabsCreater, ["SEC", "THIR", "NOMI"]);
-      }
-
-      if (form.investorCategory === "M") {
-        setForm({
-          ...form,
-          holderCount: 2,
-        });
-        tabShoHideHandeler(tabsCreater, ["GUAR"]);
       }
     }
     if (form.holderCount === "2") {
-      console.log(form.holderCount, form.holdingNature, form.investorCategory);
-      if (form.holdingNature === "SI" && form.investorCategory !== "M") {
+      setTaxList(singleIndividualOptions);
+
+      if (form.holdingNature === "SI") {
         setForm({
           ...form,
           holderCount: 1,
         });
         tabShoHideHandeler(tabsCreater, ["NOMI"]);
-      }
-      if (form.holdingNature === "JO" && form.investorCategory !== "M") {
-        setForm({
-          ...form,
-          holderCount: 2,
-        });
+      } else {
         tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
-      }
-
-      if (form.investorCategory === "M") {
-        setForm({
-          ...form,
-          holderCount: 2,
-        });
-        tabShoHideHandeler(tabsCreater, ["GUAR"]);
       }
     }
     if (form.holderCount === "1") {
-      console.log(form.holderCount);
-      if (form.holdingNature === "JO" || form.investorCategory !== "M") {
-        tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
-        setForm({
-          ...form,
-          holderCount: 2,
-        });
-      }
-      if (form.investorCategory === "M") {
-        setForm({
-          ...form,
-          holderCount: 2,
-        });
-        tabShoHideHandeler(tabsCreater, ["GUAR"]);
-      }
+      setTaxList(singleIndividualOptions);
+
+      tabShoHideHandeler(tabsCreater, ["NOMI"]);
     }
   }, [form?.holderCount]);
 

@@ -16,19 +16,7 @@ import InputText from "../../common/form-elements/InputText";
 import FooterSection from "../../common/footerSection/FooterSection";
 import { btnHandeler } from "../../common/helper/Helper";
 import useCommonReducer from "../../common/customComp/useCommonReducer";
-// import {
-//   pageCount,
-//   proofUploadForm,
-//   postData,
-//   criteriaForm,
-//   primeHolderForm,
-//   secondHolderForm,
-//   thirdHolderForm,
-//   guardianHolderForm,
-//   bankAccountForm,
-//   nomineesForm,
-// } from "../../reducer/ActionNOT_In_USE";
-import {pageCount} from '../../reducer/Reducer/tab/tabSlice'
+import { pageCount } from "../../reducer/Reducer/tab/tabSlice";
 import {
   createAccount,
   reset,
@@ -68,12 +56,9 @@ function ProofUpload() {
 
     if (isSuccess) {
       toast.success("User Registered successfuly");
+      dispatch(reset());
       dispatch(pageCount(0));
     }
-
-    return () => {
-      dispatch(reset());
-    };
   }, [isError, isSuccess, message]);
 
   const getImageHandeler = (e) => {

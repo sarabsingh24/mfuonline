@@ -12,7 +12,7 @@ import DatePicker from "../form-elements/DatePicker";
 import SelectOption from "../form-elements/SelectOption";
 import FooterSection from "../footerSection/FooterSection";
 import { btnHandeler } from "../helper/Helper";
-import { pageCount } from "../../reducer/ActionNOT_In_USE";
+import { pageCount } from "../../reducer/Reducer/tab/tabSlice";
 import useCommonReducer from "../customComp/useCommonReducer";
 import {
   sourceOfWealthOptions,

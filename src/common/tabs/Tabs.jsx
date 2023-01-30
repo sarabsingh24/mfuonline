@@ -4,7 +4,7 @@ import Tab from "./Tab";
 
 //component
 import { stepsList } from "./Data";
-// import { tabUpdate } from "../../reducer/ActionNOT_In_USE";
+
 import{tabUpdate} from '../../reducer/Reducer/tab/tabSlice'
 import useCommonReducer from "../customComp/useCommonReducer";
 
