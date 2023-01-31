@@ -104,10 +104,10 @@ function BankAccounts() {
     };
     let isAccount = formErrors.every(account);
     if (!isAccount) {
-      alert("error");
+      // alert("error");
       setErrors(formErrors);
     } else {
-      alert("success");
+      // alert("success");
       // form.map((item) => delete item.reAccountNo);
       dispatch(bankAccountForm(form));
       dispatch(pageCount(stepsCount + 1));

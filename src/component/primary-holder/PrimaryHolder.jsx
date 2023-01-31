@@ -31,10 +31,10 @@ function PrimaryHolder() {
 
     const formErrors = validateForm(form, networthRadio, grossIncomeRadio);
     if (Object.keys(formErrors).length > 0) {
-      alert("error");
+      // alert("error");
       setErrors(formErrors);
     } else {
-      alert("success");
+      // alert("success");
       // if (primeHolderObj.confirmpanPekrnNo) {
       //   delete primeHolderObj.confirmpanPekrnNo;
       // }

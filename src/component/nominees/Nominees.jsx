@@ -125,10 +125,10 @@ export default function Nominees() {
     let isAccount = formErrors.every(account);
 
     if (!isAccount) {
-      alert("error");
+      // alert("error");
       setErrors(formErrors);
     } else {
-      alert("success");
+      // alert("success");
 
       let obj = {
         nomineeOptedFlag: nomineeSelected,
