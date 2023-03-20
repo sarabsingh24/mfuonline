@@ -8,8 +8,13 @@ import Section from "../../common/section/Section";
 import InputText from "../../common/form-elements/InputText";
 import DatePicker from "../../common/form-elements/DatePicker";
 
-export default function AddNominee({ count, formObj, setForm,errors, thisAccountHandeler }) {
-  
+export default function AddNominee({
+  count,
+  formObj,
+  setForm,
+  errors,
+  thisAccountHandeler,
+}) {
   let order = count === 0 ? "First" : count === 1 ? "Second" : "Third";
 
   return (
@@ -21,7 +26,7 @@ export default function AddNominee({ count, formObj, setForm,errors, thisAccount
               name="nomineeName"
               label="Name of Nominee"
               value={formObj?.nomineeName || ""}
-              count={count}
+              count={count + 1}
               changeFun={thisAccountHandeler}
               mandatory="*"
               errors={errors[count]}
@@ -32,7 +37,7 @@ export default function AddNominee({ count, formObj, setForm,errors, thisAccount
               name="relation"
               label="Relationship"
               value={formObj?.relation || ""}
-              count={count}
+              count={count + 1}
               changeFun={thisAccountHandeler}
               mandatory="*"
               errors={errors[count]}
@@ -43,7 +48,8 @@ export default function AddNominee({ count, formObj, setForm,errors, thisAccount
               name="percentage"
               label="Percent(%)"
               value={formObj?.percentage || ""}
-              count={count}
+              // value={100}
+              count={count + 1}
               changeFun={thisAccountHandeler}
               mandatory="*"
               errors={errors[count]}
@@ -54,10 +60,11 @@ export default function AddNominee({ count, formObj, setForm,errors, thisAccount
               name="dateOfBirth"
               label="Date of Birth"
               value={formObj?.dateOfBirth || ""}
-              count={count}
+              count={count + 1}
               changeFun={thisAccountHandeler}
               mandatory="*"
               errors={errors[count]}
+              dob={true}
             />
           </Col>
         </Row>

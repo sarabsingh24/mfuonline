@@ -7,16 +7,16 @@ export const commonFormField = {
     mobileIsdCode: "",
     primaryMobileNo: "",
     primaryEmail: "",
-    residenceIsd: "00",
-    residenceStd: "00",
-    residencePhoneNo: "string",
+    // residenceIsd: "00",
+    // residenceStd: "00",
+    // residencePhoneNo: "12345678",
     primaryMobileBelongsTo: "A",
-    alternateMobileNo: "string",
-    officeIsd: "string",
-    officeStd: "string",
-    officePhoneNo: "string",
+    // alternateMobileNo: "1234567890",
+    // officeIsd: "00",
+    // officeStd: "00",
+    // officePhoneNo: "12345678",
     primaryEmailBelongsTo: "A",
-    alternateEmail: "string",
+    // alternateEmail: "email@ex.com",
   },
   otherDetail: {
     grossIncome: "",
@@ -30,21 +30,21 @@ export const commonFormField = {
     pep: "",
   },
   fatcaDetail: {
-    taxResidencyFlag: "",
-    birthCity: "",
-    birthCountry: "",
-    citizenshipCountry: "",
-    nationalityCountry: "",
-    birthCountryOthers: "string",
-    citizenshipCountryOthers: "string",
-    nationalityCountryOthers: "string",
+    taxResidencyFlag: "N",
+    // birthCity: "",
+    // birthCountry: "",
+    // citizenshipCountry: "",
+    // nationalityCountry: "",
+    // birthCountryOthers: "string",
+    // citizenshipCountryOthers: "string",
+    // nationalityCountryOthers: "string",
     taxRecords: [
       {
         sequenceNo: 0,
-        taxCountry: "string",
+        taxCountry: "",
         taxCountryOthers: "string",
-        taxReferenceNo: "string",
-        identityType: "string",
+        taxReferenceNo: "",
+        identityType: "",
         identityTypeOthers: "string",
       },
     ],
@@ -87,6 +87,7 @@ export const sourceOfWealthOptions = [
 ];
 
 export const occupationOptions = [
+  { value: "00", label: "Select Occupation" },
   { value: "01", label: "Private Sector Service" },
   { value: "02", label: "Public Sector" },
   { value: "03", label: "Business" },
@@ -101,12 +102,14 @@ export const occupationOptions = [
 ];
 
 export const politicalExposureOptions = [
+  { value: "0", label:"Select Exposure"},
   { value: "NA", label: "Not Applicable" },
   { value: "PEP", label: "Politically Exposed Person" },
   { value: "RPEP", label: "Related to Politically Exposed Person" },
 ];
 
 export const addressTypeOptions = [
+  { value: "0", label: "Select KRA" },
   { value: "1", label: "Residential or Business" },
   { value: "2", label: "Residential" },
   { value: "3", label: "Business" },
@@ -114,6 +117,10 @@ export const addressTypeOptions = [
 ];
 
 export const taxResidencyOptions = [
+  {
+    value: "0",
+    label: "Select Tax Residency",
+  },
   {
     value: "N",
     label: "No - Not a Tax Resident in a Country other than India",
@@ -131,7 +138,7 @@ export const grossAnnualIncomeOptions = [
 ];
 
 export const countryListOptions = [
-  { value: "0", label: "Select Country" },
+
   { value: "001", label: "Afghanistan" },
   { value: "002", label: "Aland Islands" },
   { value: "003", label: "Albania" },

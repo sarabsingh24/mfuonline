@@ -15,8 +15,8 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: "",
+  canId:"",
 };
-
 
 export const createAccount = createAsyncThunk(
   "account/create",
@@ -84,14 +84,19 @@ export const accountSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(createAccount.fulfilled, (state, action) => {
+      console.log("payload===",action.payload);
+      console.log("can ===", action.payload.can);
       state.isLoading = false;
       state.isSuccess = true;
+      state.canId = action.payload.can && action.payload.can;
       state.account.push(action.payload);
     });
     builder.addCase(createAccount.rejected, (state, action) => {
+      console.log(action.payload);
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
+      // state.account= null
     });
   },
 });

@@ -10,7 +10,6 @@ import InputText from "../../common/form-elements/InputText";
 
 import GridCustom from "../../common/grid-custom/GridCustom";
 import SelectOption from "../../common/form-elements/SelectOption";
-import { validateForm } from "./BankAccountValidation";
 import { accountType, bankProofOptions } from "./accountData";
 
 function BankAccountSection({
@@ -21,9 +20,7 @@ function BankAccountSection({
   errors,
   thisAccountHandeler,
 }) {
- 
   let accountCount = count === 0 ? "Default" : count === 1 ? "Second" : "Third";
-  const formErrors = validateForm(formObj);
 
   return (
     <Section heading={`${accountCount} Bank Account details`}>
@@ -35,7 +32,7 @@ function BankAccountSection({
               label="Bank A/c No"
               type="password"
               value={formObj?.accountNo || ""}
-              count={count}
+              count={count + 1}
               changeFun={thisAccountHandeler}
               mandatory="*"
               errors={errors[count]}
@@ -47,7 +44,7 @@ function BankAccountSection({
               label="Re-Enter Bank A/c No"
               type="text"
               value={formObj?.reAccountNo || ""}
-              count={count}
+              count={count + 1}
               changeFun={thisAccountHandeler}
               mandatory="*"
               errors={errors[count]}
@@ -59,7 +56,7 @@ function BankAccountSection({
               label="Account Type"
               value={formObj?.accountType || ""}
               options={accountType}
-              count={count}
+              count={count + 1}
               changeFun={thisAccountHandeler}
               mandatory="*"
               errors={errors[count]}
@@ -73,7 +70,7 @@ function BankAccountSection({
               label="Bank"
               type="text"
               value={formObj?.bankId || ""}
-              count={count}
+              count={count + 1}
               changeFun={thisAccountHandeler}
               mandatory="*"
               errors={errors[count]}
@@ -85,7 +82,7 @@ function BankAccountSection({
               label="MICR"
               type="text"
               value={formObj?.micrCode || ""}
-              count={count}
+              count={count + 1}
               changeFun={thisAccountHandeler}
               mandatory="*"
               errors={errors[count]}
@@ -97,7 +94,7 @@ function BankAccountSection({
               label="IFSC"
               type="text"
               value={formObj?.ifscCode || ""}
-              count={count}
+              count={count + 1}
               changeFun={thisAccountHandeler}
               mandatory="*"
               errors={errors[count]}
@@ -111,7 +108,7 @@ function BankAccountSection({
               label="Bank Proof"
               value={formObj?.bankProof || ""}
               options={bankProofOptions}
-              count={count}
+              count={count + 1}
               changeFun={thisAccountHandeler}
               mandatory="*"
               errors={errors[count]}

@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../Style.css";
 
+import { BsCheckCircleFill } from "react-icons/bs";
+
 // component
 import GridCustom from "../../common/grid-custom/GridCustom";
 import Section from "../../common/section/Section";
@@ -21,10 +23,15 @@ import {
   createAccount,
   reset,
 } from "../../reducer/Reducer/account/accountSlice";
+import UploadSection from "./UploadSection";
 
 function ProofUpload() {
   const [btnFun, setBtnFun] = useState({});
   const [imagesList, setImagesList] = useState([]);
+  const [bankAccount, setBankAccount] = useState([]);
+  const [recCanID, setRecCanID] = useState("");
+  const [nomineeApi, setNomineeApi] = useState([]);
+  const [canNominee, setCanNominee] = useState([]);
 
   const [status, setStatus] = useState(false);
   const location = useLocation();
@@ -40,6 +47,7 @@ function ProofUpload() {
     nomineeObj,
     account,
     bankAccountsObj,
+    canId,
     dispatch,
   } = useCommonReducer();
 
@@ -50,37 +58,25 @@ function ProofUpload() {
   }, [proofUploadObj]);
 
   useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
+    let banksName = bankAccountsObj.map((bank) => bank.bankId);
+    setBankAccount(banksName);
 
-    if (isSuccess) {
-      toast.success("User Registered successfuly");
-      dispatch(reset());
-      dispatch(pageCount(0));
-    }
-  }, [isError, isSuccess, message]);
+    setCanNominee(nomineeObj.nomineeRecords.length);
+    // console.log(nomineeObj);
+    // setRecCanID(canId);
+  }, [bankAccountsObj, nomineeObj]);
 
-  const getImageHandeler = (e) => {
-    e.preventDefault();
+  // useEffect(() => {
+  //   if (isError) {
+  //     toast.error(message);
+  //   }
 
-    const { name, size, type } = e.target.files[0];
-    const path = URL.createObjectURL(e.target.files[0]);
-    const id = +new Date();
-
-    setImagesList([
-      ...imagesList,
-      { id, path, name, size, type, status: "pending..." },
-    ]);
-
-    e.target.value = "";
-  };
-
-  const removeImgHandeler = (id) => {
-    let filterImage = imagesList.filter((img) => img.id !== id);
-    setImagesList(filterImage);
-    // dispatch(proofUploadForm([...filterImage]));
-  };
+  //   if (isSuccess) {
+  //     toast.success("User Registered successfuly");
+  //     // dispatch(reset());
+  //     // dispatch(pageCount(0));
+  //   }
+  // }, [isError, isSuccess, message]);
 
   useEffect(() => {
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
@@ -89,160 +85,152 @@ function ProofUpload() {
   const formSubmitHandeler = async (e) => {
     e.preventDefault();
 
+    let reponse = await fetch("http://api.finnsysonline.com:81/mfu/v1/cans", {
+      method: "POST",
+      body: JSON.stringify(combinedForm),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    reponse = await reponse.json();
+
+    if (reponse.success) {
+      toast.success(reponse.message);
+      setRecCanID(reponse.can);
+    } else {
+      toast.error(reponse.message);
+      // setRecCanID("30069GS001");
+    }
+
     if (true) {
       dispatch(createAccount(combinedForm));
     }
   };
 
+  useEffect(() => {
+    console.log(nomineeApi);
+    let requestInterval;
+    if (canNominee && recCanID !== "") {
+      requestInterval = setInterval(async () => {
+        let reponse = await fetch(
+          `http://api.finnsysonline.com:81/mfu/v1/cans/${recCanID}/status`,
+          {
+            method: "get",
+            headers: {
+              "content-type": "application/json",
+            },
+          }
+        );
+        reponse = await reponse.json();
+        console.log(reponse);
+        if (reponse.success) {
+          let nomineeList = reponse.nomineeVerificationLinks;
+          setNomineeApi(nomineeList);
+          //   toast.success(reponse.message);
+        } else {
+          toast.error(reponse.message);
+        }
+      }, 3000);
+    }
+    return () => {
+      clearInterval(requestInterval);
+    };
+  });
+
   return (
-    <Form onSubmit={formSubmitHandeler}>
+    <>
+      <FooterSection
+        backBtn={true}
+        nextBtn={false}
+        submitBtn={false}
+        btnFun={btnFun}
+        cls="btn-left-align"
+      />
       <Section heading="Proof Upload">
         <GridCustom>
           <Row>
             <Col xs={12}>
               <Alert variant="danger">
-                Please ensure that you upload all the required document proofs
-                before Submit eCAN as you will not be permitted to upload any
-                document images once the CAN data is VERIFIED at MFU.
+                Note: The allowed image file formats ( PNG, GIF, JPG | JPEG, ).
+                Total submitted document file size should not be more than 500
+                KB.
               </Alert>
             </Col>
           </Row>
-          <Row className="mb-5 mt-3" style={{ position: "relative" }}>
-            <Col xs={12} md={3}>
-              {/* <InputText
-                type="file"
-                name="addFile"
-                label=""
-                changeFun={getImageHandeler}
-              /> */}
-              <input
-                type="file"
-                className="upload-image-btn"
-                onChange={getImageHandeler}
-              />
-              <Button
-                variant="success"
-                type="input"
-                style={{ width: "auto", position: "absolute", top: "-3px" }}
-              >
-                <Badge
-                  bg="success"
-                  style={{ fontSize: "20px", padding: "2px" }}
+          <Row className=" mb-4">
+            <Col xs={12} md={6}>
+              <h5 className={recCanID ? "text-success" : "text-secondary"}>
+                Step 1: Submit Can Criteria Form &nbsp;
+                {recCanID && <BsCheckCircleFill />}
+              </h5>
+
+              {!recCanID && (
+                <button
+                  type="button"
+                  onClick={formSubmitHandeler}
+                  className="btn  btn-success me-2  btn-sm"
                 >
-                  +
-                </Badge>
-                Add a File...
-                <span className="visually-hidden">unread messages</span>
-              </Button>
+                  Submit Can Criteria Form
+                </button>
+              )}
             </Col>
-            <Col xs={12} md={2} style={{ paddingBottom: "14px" }}></Col>
           </Row>
-          <Row>
+          <Row className=" mb-4">
             <Col xs={12}>
-              <div className="proof-table-header">
-                <div>Image Preview</div> <div>Image Name</div>
-                <div>Image Size</div> <div>Proof Type</div>
-                <div> Status</div> <div>Options</div>
-              </div>
+              <h5 className="text-secondary" disabled>
+                Step 2: Proof Upload
+              </h5>
+
+              {bankAccount.length > 0 && recCanID !== ""
+                ? bankAccount.map((name, index) => {
+                    return (
+                      <UploadSection
+                        key={index}
+                        bankName={name}
+                        recCanID={recCanID}
+                      />
+                    );
+                  })
+                : ""}
             </Col>
           </Row>
-
-          {imagesList.length ? (
-            imagesList?.map((image, index) => {
-              return (
-                <Row key={index}>
-                  <Col xs={12} className="proof-table-row">
-                    <div>
-                      <img
-                        src={image.path}
-                        alt={image.name}
-                        style={{ width: "80px" }}
-                      />
-                    </div>
-
-                    <div>{image.name}</div>
-                    <div>{image.size}</div>
-                    <div>{image.type}</div>
-                    <div>{image.status}</div>
-                    <div>
-                      <Button
-                        variant="warning"
-                        size="sm"
-                        onClick={() => removeImgHandeler(image.id)}
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
-              );
-            })
-          ) : (
-            <Row>
+          {canNominee ? (
+            <Row className=" mb-4">
               <Col xs={12}>
-                <div className="no-image-found"> No image added</div>
+                <h5 className="text-secondary">step 3: Nominee Varification</h5>
+
+                {nomineeApi.length > 0 && recCanID !== ""
+                  ? nomineeApi.map((item, index) => {
+                      return (
+                        <a
+                          key={index}
+                          class="btn btn-outline-success btn-sm"
+                          role="button"
+                          href={item.nomineeVerificationLinks[index]}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          click to verify
+                        </a>
+                      );
+                    })
+                  : ""}
               </Col>
             </Row>
+          ) : (
+            ""
           )}
-
-          <Row className="mt-3">
-            <Col xs={12}>
-              <Alert variant="warning">
-                <p>
-                  Note: The allowed image file formats ( GIF, JPG | JPEG, PNG,
-                  BMP ). Recommended file size should not be more than 500 KB.
-                </p>
-                <ol>
-                  <li>
-                    The PAN proof MUST be SELF ATTESTED by respective PAN holder
-                  </li>
-                  <li>
-                    Bank document proof for each of the bank added :
-                    <ol type="a">
-                      <li>
-                        Bank statement must be latest (of the last 3 months)
-                        with Bank A/C type, MICR, IFSC Code & Bank Account
-                        number (without masking) OR
-                      </li>
-                      <li>
-                        Cheque image should have CAN Primary holder/MINOR name
-                        printed on it along with above details OR
-                      </li>
-                      <li>Bank letter with all the above details</li>
-                    </ol>
-                  </li>
-                  <li>
-                    For MINORs birth certificate should have
-                    <ol type="a">
-                      <li>
-                        MINOR Name & DOB along with Guardian Name printed on it
-                        OR
-                      </li>
-                      <li>Court Order for Appointed Guardian</li>
-                    </ol>
-                  </li>
-                  <li>
-                    Sole-Proprietor proof should have
-                    <ol type="a">
-                      <li>
-                        GST Certificate / Banker letter / Gumasta license where
-                        Sole-Proprietor Firm Name and PAN is appearing
-                      </li>
-                    </ol>
-                  </li>
-                </ol>
-              </Alert>
-            </Col>
-          </Row>
         </GridCustom>
       </Section>
+
       <FooterSection
-        backBtn={true}
+        backBtn={recCanID ? false : true}
         nextBtn={false}
-        submitBtn={true}
+        submitBtn={false}
         btnFun={btnFun}
+        cls="btn-right-align"
       />
-    </Form>
+    </>
   );
 }
 

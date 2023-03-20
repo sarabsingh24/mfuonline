@@ -19,7 +19,7 @@ import { validateForm } from "./BankAccountValidation";
 import { bankAccountForm } from "../../reducer/Reducer/account/accountSlice";
 
 const bankRecord = {
-  sequenceNo: "0",
+  sequenceNo: "1",
   defaultAccountFlag: true,
   accountNo: "",
   accountType: "",
@@ -32,7 +32,7 @@ const bankRecord = {
 
 function BankAccounts() {
   const [form, setForm] = useState([]);
-  const [number, setNumber] = useState("1");
+  const [number, setNumber] = useState("0");
   const [btnFun, setBtnFun] = useState({});
   const [errors, setErrors] = useState([]);
   const { stepsCount, bankAccountsObj, dispatch } = useCommonReducer();
@@ -55,7 +55,7 @@ function BankAccounts() {
     });
 
     let newError = errors.map((item, index) => {
-      if (index == count) {
+      if (index + 1 === +count) {
         if (!!item[name]) {
           return { ...item, [name]: null };
         }
@@ -76,17 +76,17 @@ function BankAccounts() {
       if (form.length > 2) {
         setForm([...form.slice(0, 2)]);
       } else {
-        setForm([...form, { ...bankRecord, sequenceNo: "1" }]);
+        setForm([...form, { ...bankRecord, sequenceNo: "2" }]);
       }
     }
     if (+number === 3) {
       if (form.length === 2) {
-        setForm([...form, { ...bankRecord, sequenceNo: "2" }]);
+        setForm([...form, { ...bankRecord, sequenceNo: "3" }]);
       } else {
         setForm([
           ...form,
-          { ...bankRecord, sequenceNo: "1" },
           { ...bankRecord, sequenceNo: "2" },
+          { ...bankRecord, sequenceNo: "3" },
         ]);
       }
     }
@@ -126,8 +126,16 @@ function BankAccounts() {
     }
   }, [bankAccountsObj]);
 
+  console.log(form);
+
   return (
     <React.Fragment>
+      <FooterSection
+        backBtn={true}
+        nextBtn={false}
+        btnFun={btnFun}
+        cls="btn-left-align"
+      />
       <Form onSubmit={formSubmitHandeler}>
         <Section heading="Number of bank account">
           <GridCustom>
@@ -159,7 +167,12 @@ function BankAccounts() {
           );
         })}
 
-        <FooterSection backBtn={true} nextBtn={true} btnFun={btnFun} />
+        <FooterSection
+          backBtn={true}
+          nextBtn={true}
+          btnFun={btnFun}
+          cls="btn-right-align"
+        />
       </Form>
     </React.Fragment>
   );

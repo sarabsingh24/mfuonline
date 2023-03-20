@@ -36,8 +36,8 @@ function SecondHolder() {
         secondHolderForm({
           ...secondHolderObj,
           holderType: "SC",
-
-          panExemptFlag: "string",
+          panExemptFlag: "Y",
+          residencePhoneNo: "",
           relationship: "01",
           relationshipProof: "01",
           ...form,

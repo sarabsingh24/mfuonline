@@ -104,6 +104,7 @@ function CanCriteria() {
         holderCount: 1,
       });
     } else if (form.holdingNature === "JO") {
+      console.log(form);
       setInvestorList(jointOptions);
       setTaxList(singleIndividualOptions);
       tabShoHideHandeler(tabsCreater, ["SEC", "NOMI"]);
@@ -111,7 +112,12 @@ function CanCriteria() {
         ...form,
         holdingNature: "JO",
         investorCategory: form.investorCategory || "",
-        holderCount: form.holderCount === 1 ? 2 : form.holderCount,
+        holderCount:
+          form.holderCount === ""
+            ? 2
+            : form.holderCount === 1
+            ? 2
+            : form.holderCount,
       });
     } else if (form.holdingNature === "AS") {
       setForm({ ...form, holdingNature: "AS", investorCategory: "I" });
@@ -315,7 +321,12 @@ function CanCriteria() {
           </GridCustom>
         </Section>
 
-        <FooterSection backBtn={false} nextBtn={true} btnFun={btnFun} />
+        <FooterSection
+          backBtn={false}
+          nextBtn={true}
+          btnFun={btnFun}
+          cls="btn-right-align"
+        />
       </Form>
     </React.Fragment>
   );

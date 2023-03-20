@@ -37,7 +37,8 @@ function ThirdHolder() {
         thirdHolderForm({
           ...thirdHolderObj,
           holderType: "TH",
-          panExemptFlag: "string",
+          panExemptFlag: "Y",
+          residencePhoneNo: "",
           relationship: "01",
           relationshipProof: "01",
           ...form,

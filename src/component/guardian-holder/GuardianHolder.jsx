@@ -36,7 +36,8 @@ function GuardianHolder() {
         guardianHolderForm({
           ...guardianHolderObj,
           holderType: "GU",
-          panExemptFlag: "string",
+          panExemptFlag: "Y",
+          residencePhoneNo: "",
           relationship: "01",
           relationshipProof: "01",
           ...form,

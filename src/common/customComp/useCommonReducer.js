@@ -21,6 +21,7 @@ function useCommonReducer() {
     isSuccess,
     isError,
     message,
+    canId,
   } = useSelector((state) => state.account);
 
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ function useCommonReducer() {
     isSuccess,
     isError,
     message,
+    canId,
     dispatch,
   };
 }

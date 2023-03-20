@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import Col from "react-bootstrap/Col";
@@ -9,6 +9,7 @@ import Section from "../section/Section";
 import InputText from "../form-elements/InputText";
 import GridCustom from "../grid-custom/GridCustom";
 import DatePicker from "../form-elements/DatePicker";
+import SelectSearchOption from "../form-elements/SelectSearchOption";
 import SelectOption from "../form-elements/SelectOption";
 import FooterSection from "../footerSection/FooterSection";
 import { btnHandeler } from "../helper/Helper";
@@ -34,24 +35,40 @@ function StakeHolder({
   setNetworthRadio,
   grossIncomeRadio,
   setGrossIncomeRadio,
-  
 }) {
   const [btnFun, setBtnFun] = useState({});
   const [isOtherSourceOfWealth, setIsOtherSourceOfWealth] = useState(true);
   const [isOtherOccupation, setIsOtherOccupation] = useState(true);
   const { stepsCount, dispatch } = useCommonReducer();
+  const [blanket, setBlanket] = useState(false);
+
+  const closeBlanketHandeler = () => {
+    setBlanket(false);
+  };
+
+
+  useEffect(() => {
+    if(blanket){
+      document.body.style.overflow = 'hidden'
+    }else{
+      document.body.style.overflow = "auto";
+    }
+  }, [blanket]);
 
   // on change handeler
   const formHandeler = (e) => {
     let name = e.target.name;
     let val = e.target.value;
-
+   
     if (name === "panPekrnNo" || name === "confirmpanPekrnNo") {
       let valueCase = val.toUpperCase();
       setForm({
         ...form,
         [name]: valueCase,
       });
+      if (!!errors[name]) {
+        setErrors({ ...errors, [name]: null });
+      }
     } else if (
       // name === "residenceIsd" ||
       // name === "residenceStd" ||
@@ -78,9 +95,9 @@ function StakeHolder({
             mobileIsdCode: val,
           },
         });
-         if (!!errors[name]) {
-           setErrors({ ...errors, [name]: null });
-         }
+        if (!!errors[name]) {
+          setErrors({ ...errors, [name]: null });
+        }
       }
     } else if (name === "primaryMobileNo") {
       if (!isNaN(val)) {
@@ -91,9 +108,9 @@ function StakeHolder({
             primaryMobileNo: val,
           },
         });
-         if (!!errors[name]) {
-           setErrors({ ...errors, [name]: null });
-         }
+        if (!!errors[name]) {
+          setErrors({ ...errors, [name]: null });
+        }
       }
     } else if (name === "grossIncome") {
       setForm({
@@ -144,11 +161,12 @@ function StakeHolder({
       }
     } else if (
       name === "taxResidencyFlag" ||
-      name === "birthCity" ||
-      name === "birthCountry" ||
-      name === "citizenshipCountry" ||
-      name === "nationalityCountry"
+      name === "birthCity"
+      // name === "birthCountry" ||
+      // name === "citizenshipCountry" ||
+      // name === "nationalityCountry"
     ) {
+     
       setForm({
         ...form,
         fatcaDetail: {
@@ -159,11 +177,26 @@ function StakeHolder({
       if (!!errors[name]) {
         setErrors({ ...errors, [name]: null });
       }
+    } else if (
+      // name === "countriesTaxResidency" ||
+      name === "taxReferenceNo"
+      // name === "taxIdentificationTypes"
+    ) {
+      setForm({
+        ...form,
+        fatcaDetail: {
+          ...form.fatcaDetail,
+          taxRecords: [{ ...form.fatcaDetail.taxRecords[0], [name]: val }],
+        },
+      });
+      if (!!errors[name]) {
+        setErrors({ ...errors, [name]: null });
+      }
     } else {
       setForm({ ...form, [name]: val });
-       if (!!errors[name]) {
-         setErrors({ ...errors, [name]: null });
-       }
+      if (!!errors[name]) {
+        setErrors({ ...errors, [name]: null });
+      }
     }
 
     if (name === "sourceOfWealth" && val === "08") {
@@ -223,8 +256,82 @@ function StakeHolder({
     setBtnFun(btnHandeler(dispatch, pageCount, stepsCount));
   }, [dispatch, stepsCount]);
 
+  useEffect(() => {
+    if (form?.fatcaDetail?.birthCountry) {
+      if (!!errors["birthCountry"]) {
+        setErrors({ ...errors, birthCountry: null });
+      }
+    }
+    if (form?.fatcaDetail?.citizenshipCountry) {
+      if (!!errors["citizenshipCountry"]) {
+        setErrors({ ...errors, citizenshipCountry: null });
+      }
+    }
+    if (form?.fatcaDetail?.nationalityCountry) {
+      if (!!errors["nationalityCountry"]) {
+        setErrors({ ...errors, nationalityCountry: null });
+      }
+    }
+      if (form?.fatcaDetail?.taxRecords[0]?.taxCountry) {
+        if (!!errors["taxCountry"]) {
+          setErrors({ ...errors, taxCountry: null });
+        }
+      }
+     
+      if (form?.fatcaDetail?.taxRecords[0]?.identityType) {
+        if (!!errors["identityType"]) {
+          setErrors({ ...errors, identityType: null });
+        }
+      }
+  }, [
+    errors,
+    form?.fatcaDetail?.birthCountry,
+    form?.fatcaDetail?.citizenshipCountry,
+    form?.fatcaDetail?.nationalityCountry,
+    form?.fatcaDetail?.taxRecords[0]?.identityType,
+    form?.fatcaDetail?.taxRecords[0]?.taxCountry,
+    setErrors,
+  ]);
+
+
+  useEffect(() => {
+    if (form?.fatcaDetail?.taxResidencyFlag === "N") {
+      setForm({
+        ...form,
+        fatcaDetail: {
+          ...form?.fatcaDetail,
+          birthCountry: "India",
+          citizenshipCountry: "India",
+          nationalityCountry: "India",
+        },
+      });
+    } else {
+      setForm({
+        ...form,
+        fatcaDetail: {
+          ...form?.fatcaDetail,
+          birthCountry: "",
+          citizenshipCountry: "",
+          nationalityCountry: "",
+        },
+      });
+    }
+  }, [form?.fatcaDetail?.taxResidencyFlag]);
+
+  
+
   return (
     <React.Fragment>
+      <FooterSection
+        backBtn={true}
+        nextBtn={false}
+        btnFun={btnFun}
+        cls="btn-left-align"
+      />
+      {blanket && (
+        <div onClick={closeBlanketHandeler} className="blanket-cover"></div>
+      )}
+
       <Section heading={`${holderType} Basic Details`}>
         <GridCustom>
           <Row>
@@ -246,6 +353,7 @@ function StakeHolder({
                 mandatory="*"
                 changeFun={formHandeler}
                 errors={errors}
+                dob={true}
               />
             </Col>
             <Col xs={12} md={4}>
@@ -272,39 +380,6 @@ function StakeHolder({
           </Row>
 
           <Row>
-            {/* <Col xs={12} md={4}>
-              <Form.Group className="mb-4">
-                <Form.Label>Res. (ISD-STD-Phone)</Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    name="residenceIsd"
-                    maxLength={2}
-                    value={
-                      form.contactDetail?.residenceIsd || residenceIsd
-                    }
-                    onChange={formHandeler}
-                  />
-                  <Form.Control
-                    name="residenceStd"
-                    style={{ flex: "2" }}
-                    maxLength={3}
-                    value={
-                      form.contactDetail?.residenceStd || residenceStd
-                    }
-                    onChange={formHandeler}
-                  />
-                  <Form.Control
-                    name="residencePhoneNo"
-                    style={{ flex: "8" }}
-                    value={
-                      form.contactDetail?.residencePhoneNo ||
-                      residencePhoneNo
-                    }
-                    onChange={formHandeler}
-                  />
-                </InputGroup>
-              </Form.Group>
-            </Col> */}
             <Col xs={12} md={4}>
               <Form.Group className="mb-4">
                 <Form.Label>
@@ -397,7 +472,7 @@ function StakeHolder({
                   : "none",
             }}
           >
-            <Col xs={12} md={3}>
+            <Col xs={12} md={4}>
               <SelectOption
                 name="grossIncome"
                 label="Gross Annual Income"
@@ -415,7 +490,7 @@ function StakeHolder({
                 form?.otherDetail?.netWorth || networthRadio ? "flex" : "none",
             }}
           >
-            <Col xs={12} md={3}>
+            <Col xs={12} md={4}>
               <InputText
                 name="netWorth"
                 label="Networth (in Rs.)"
@@ -425,7 +500,7 @@ function StakeHolder({
                 errors={errors}
               />
             </Col>
-            <Col xs={12} md={3}>
+            <Col xs={12} md={4}>
               <DatePicker
                 name="netWorthDate"
                 label="As on date"
@@ -437,7 +512,7 @@ function StakeHolder({
             </Col>
           </Row>
           <Row>
-            <Col xs={12} md={3}>
+            <Col xs={12} md={4}>
               <SelectOption
                 name="sourceOfWealth"
                 label="Source of Wealth"
@@ -446,7 +521,18 @@ function StakeHolder({
                 changeFun={formHandeler}
               />
             </Col>
-            <Col xs={12} md={3}>
+            <Col xs={12} md={4}>
+              <InputText
+                name="sourceOfWealthOthers"
+                label="Other"
+                value={form?.otherDetail?.sourceOfWealthOthers || ""}
+                disabled={isOtherSourceOfWealth}
+                changeFun={formHandeler}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={4}>
               <SelectOption
                 name="occupation"
                 label="Occupation"
@@ -457,7 +543,19 @@ function StakeHolder({
                 errors={errors}
               />
             </Col>
-            <Col xs={12} md={3}>
+            <Col xs={12} md={4}>
+              <InputText
+                name="occupationOthers"
+                label="Other"
+                value={form?.otherDetail?.occupationOthers || ""}
+                disabled={isOtherOccupation}
+                changeFun={formHandeler}
+                errors={errors}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={4}>
               <SelectOption
                 name="pep"
                 label="Political Exposure"
@@ -468,7 +566,7 @@ function StakeHolder({
                 errors={errors}
               />
             </Col>
-            <Col xs={12} md={3}>
+            <Col xs={12} md={4}>
               <SelectOption
                 name="kraAddressType"
                 label="KRA Address Type"
@@ -476,27 +574,6 @@ function StakeHolder({
                 options={addressTypeOptions}
                 changeFun={formHandeler}
                 mandatory="*"
-                errors={errors}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12} md={3}>
-              <InputText
-                name="sourceOfWealthOthers"
-                label="Other"
-                value={form?.otherDetail?.sourceOfWealthOthers || ""}
-                disabled={isOtherSourceOfWealth}
-                changeFun={formHandeler}
-              />
-            </Col>
-            <Col xs={12} md={3}>
-              <InputText
-                name="occupationOthers"
-                label="Other"
-                value={form?.otherDetail?.occupationOthers || ""}
-                disabled={isOtherOccupation}
-                changeFun={formHandeler}
                 errors={errors}
               />
             </Col>
@@ -531,9 +608,14 @@ function StakeHolder({
               />
             </Col>
             <Col xs={12} md={3}>
-              <SelectOption
+              <SelectSearchOption
                 name="birthCountry"
                 label="Country of Birth "
+                setBlanket={setBlanket}
+                blanket={blanket}
+                flag={form?.fatcaDetail?.taxResidencyFlag}
+                form={form}
+                setForm={setForm}
                 value={form?.fatcaDetail?.birthCountry || ""}
                 options={countryListOptions}
                 changeFun={formHandeler}
@@ -542,9 +624,14 @@ function StakeHolder({
               />
             </Col>
             <Col xs={12} md={3}>
-              <SelectOption
+              <SelectSearchOption
                 name="citizenshipCountry"
                 label="Country of Citizenship "
+                setBlanket={setBlanket}
+                blanket={blanket}
+                flag={form?.fatcaDetail?.taxResidencyFlag}
+                form={form}
+                setForm={setForm}
                 value={form?.fatcaDetail?.citizenshipCountry || ""}
                 options={countryListOptions}
                 changeFun={formHandeler}
@@ -553,10 +640,59 @@ function StakeHolder({
               />
             </Col>
             <Col xs={12} md={3}>
-              <SelectOption
+              <SelectSearchOption
                 name="nationalityCountry"
                 label="Country of Nationality"
+                setBlanket={setBlanket}
+                blanket={blanket}
+                flag={form?.fatcaDetail?.taxResidencyFlag}
+                form={form}
+                setForm={setForm}
                 value={form?.fatcaDetail?.nationalityCountry || ""}
+                options={countryListOptions}
+                changeFun={formHandeler}
+                mandatory="*"
+                errors={errors}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={3}>
+              <SelectSearchOption
+                name="taxCountry"
+                label="Countries of Tax Residency"
+                setBlanket={setBlanket}
+                blanket={blanket}
+                flag={form?.fatcaDetail?.taxResidencyFlag}
+                form={form}
+                setForm={setForm}
+                value={form?.fatcaDetail?.taxRecords[0]?.taxCountry || ""}
+                options={countryListOptions}
+                changeFun={formHandeler}
+                mandatory="*"
+                errors={errors}
+              />
+            </Col>
+            <Col xs={12} md={3}>
+              <InputText
+                name="taxReferenceNo"
+                label="Tax Identification Numbers"
+                value={form?.fatcaDetail?.taxRecords[0]?.taxReferenceNo || ""}
+                changeFun={formHandeler}
+                mandatory="*"
+                errors={errors}
+              />
+            </Col>
+            <Col xs={12} md={3}>
+              <SelectSearchOption
+                name="identityType"
+                label="Tax Identification Types"
+                setBlanket={setBlanket}
+                blanket={blanket}
+                flag={form?.fatcaDetail?.taxResidencyFlag}
+                form={form}
+                setForm={setForm}
+                value={form?.fatcaDetail?.taxRecords[0]?.identityType || ""}
                 options={countryListOptions}
                 changeFun={formHandeler}
                 mandatory="*"
@@ -566,7 +702,13 @@ function StakeHolder({
           </Row>
         </GridCustom>
       </Section>
-      <FooterSection backBtn={true} nextBtn={true} btnFun={btnFun} />
+      <br></br>
+      <FooterSection
+        backBtn={true}
+        nextBtn={true}
+        btnFun={btnFun}
+        cls="btn-right-align"
+      />
     </React.Fragment>
   );
 }

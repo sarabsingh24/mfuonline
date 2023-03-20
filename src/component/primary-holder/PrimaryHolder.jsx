@@ -43,7 +43,8 @@ function PrimaryHolder() {
         primeHolderForm({
           ...primeHolderObj,
           holderType: "PR",
-          panExemptFlag: "string",
+          panExemptFlag: "Y",
+          residencePhoneNo: "",
           relationship: "01",
           relationshipProof: "01",
           ...form,

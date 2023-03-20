@@ -5,9 +5,13 @@
 
 }
 
+
+
+
 .proof-table-header,.proof-table-row{
   display:grid; 
-grid-template-columns: 1fr 2fr 1fr 4fr 1fr 1fr ; 
+grid-template-columns: 1fr 2fr 1fr 4fr 1fr 2fr ; 
+align-items: center;
   
   
 }
@@ -19,7 +23,7 @@ grid-template-columns: 1fr 2fr 1fr 4fr 1fr 1fr ;
   box-shadow: 0 2px 2px 0 rgb(87 151 228 / 16%);
 }
 
-.proof-table-row *{
+.proof-table-row {
    font-size: 14px;
   padding:6px 8px;
   background: #f2dede;

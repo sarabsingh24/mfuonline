@@ -24,28 +24,29 @@ function CheckNavigate() {
 
   useEffect(() => {
     if (str === "CRI") {
-      navigate("/");
+      
+      navigate("/can-criteria");
     }
     if (str === "PRIM") {
-      navigate("primaryHolder");
+      navigate("primary-holder");
     }
     if (str === "SEC") {
-      navigate("secondHolder");
+      navigate("second-holder");
     }
     if (str === "THIR") {
       navigate("thirdHolder");
     }
     if (str === "GUAR") {
-      navigate("guardianHolder");
+      navigate("guardian-holder");
     }
     if (str === "BANK") {
-      navigate("bankAccounts");
+      navigate("bank-accounts");
     }
     if (str === "NOMI") {
       navigate("nominees");
     }
     if (str === "PROO") {
-      navigate("proofUpload");
+      navigate("proof-upload");
     }
   }, [str, navigate]);
 

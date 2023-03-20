@@ -25,14 +25,14 @@ function App() {
           <Tabs />
           <CheckNavigate />
           <Routes>
-            <Route path="/" element={<CanCriteria />} />
-            <Route path="/primaryHolder" element={<PrimaryHolder />} />
-            <Route path="/secondHolder" element={<SecondHolder />} />
-            <Route path="/thirdHolder" element={<ThirdHolder />} />
-            <Route path="/guardianHolder" element={<GuardianHolder />} />
-            <Route path="/bankAccounts" element={<BankAccounts />} />
+            <Route path="/can-criteria" element={<CanCriteria />} />
+            <Route path="/primary-holder" element={<PrimaryHolder />} />
+            <Route path="/second-holder" element={<SecondHolder />} />
+            <Route path="/third-holder" element={<ThirdHolder />} />
+            <Route path="/guardian-holder" element={<GuardianHolder />} />
+            <Route path="/bank-accounts" element={<BankAccounts />} />
             <Route path="/nominees" element={<Nominees />} />
-            <Route path="/proofUpload" element={<ProofUpload />} />
+            <Route path="/proof-upload" element={<ProofUpload />} />
           </Routes>
         </Router>
       </Container>

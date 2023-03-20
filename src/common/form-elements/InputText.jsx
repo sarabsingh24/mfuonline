@@ -12,6 +12,7 @@ function InputText({
   errors,
   name,
   count,
+  clickFun,
 }) {
   return (
     <Form.Group className="mb-3">
@@ -21,12 +22,13 @@ function InputText({
       </Form.Label>
       <Form.Control
         name={name}
-        // placeholder={placeholder ? placeholder : ""}
+        placeholder={placeholder ? placeholder : ""}
         disabled={disabled ? disabled : false}
         value={value}
         data-count={count && count}
         type={type ? type : "text"}
-        onChange={changeFun}
+        onClick={clickFun && clickFun}
+        onChange={changeFun && changeFun}
         className={!!errors?.[name] && "redBorder"}
         isInvalid={!!errors?.name}
         style={{ color: "#666", fontWeight: "500" }}

@@ -1,6 +1,9 @@
 export const validateForm = (form, grossIncomeRadio, networthRadio) => {
   const newErrors = {};
 
+  var email = form.contactDetail.primaryEmail;
+  let dot = email.lastIndexOf(".");
+
   if (!form.name || form.name === "") {
     newErrors.name = "Pleasse fill the  name";
   }
@@ -26,7 +29,8 @@ export const validateForm = (form, grossIncomeRadio, networthRadio) => {
     !form.contactDetail.primaryEmail ||
     form.contactDetail.primaryEmail === "" ||
     !form.contactDetail.primaryEmail.includes("@") ||
-    !form.contactDetail.primaryEmail.includes(".")
+    !form.contactDetail.primaryEmail.includes(".") ||
+    email.length < dot + 3
   ) {
     newErrors.primaryEmail = "Invalid email id";
   }
@@ -94,23 +98,47 @@ export const validateForm = (form, grossIncomeRadio, networthRadio) => {
   if (!form.fatcaDetail.birthCity || form.fatcaDetail.birthCity === "") {
     newErrors.birthCity = "Pleasse fill the  birthCity of city";
   }
+  if (form?.fatcaDetail?.taxResidencyFlag === "Y") {
+    if (
+      !form.fatcaDetail.birthCountry ||
+      form.fatcaDetail.birthCountry === ""
+    ) {
+      newErrors.birthCountry = "Pleasse fill the  birth of country";
+    }
 
-  if (!form.fatcaDetail.birthCountry || form.fatcaDetail.birthCountry === "") {
-    newErrors.birthCountry = "Pleasse fill the  birth of country";
-  }
+    if (
+      !form.fatcaDetail.citizenshipCountry ||
+      form.fatcaDetail.citizenshipCountry === ""
+    ) {
+      newErrors.citizenshipCountry = "Pleasse fill the  citizenship of country";
+    }
 
-  if (
-    !form.fatcaDetail.citizenshipCountry ||
-    form.fatcaDetail.citizenshipCountry === ""
-  ) {
-    newErrors.citizenshipCountry = "Pleasse fill the  citizenship of country";
-  }
+    if (
+      !form.fatcaDetail.nationalityCountry ||
+      form.fatcaDetail.nationalityCountry === ""
+    ) {
+      newErrors.nationalityCountry = "Pleasse fill the  nationality of country";
+    }
 
-  if (
-    !form.fatcaDetail.nationalityCountry ||
-    form.fatcaDetail.nationalityCountry === ""
-  ) {
-    newErrors.nationalityCountry = "Pleasse fill the  nationality of country";
+    console.log(form.fatcaDetail.taxRecords[0]);
+     if (
+       !form.fatcaDetail.taxRecords[0].taxCountry ||
+       form.fatcaDetail.taxRecords[0].taxCountry === ""
+     ) {
+       newErrors.taxCountry = "Pleasse fill the  tax residency country";
+     }
+     if (
+       !form.fatcaDetail.taxRecords[0].taxReferenceNo ||
+       form.fatcaDetail.taxRecords[0].taxReferenceNo === ""
+     ) {
+       newErrors.taxReferenceNo = "Pleasse fill the  tax identification number";
+     }
+     if (
+       !form.fatcaDetail.taxRecords[0].identityType ||
+       form.fatcaDetail.taxRecords[0].identityType === ""
+     ) {
+       newErrors.identityType = "Pleasse fill the  tax identification type";
+     }
   }
 
   return newErrors;

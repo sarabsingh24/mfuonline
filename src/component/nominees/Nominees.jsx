@@ -22,21 +22,21 @@ const nomineeOption = [
 ];
 
 const nomineeCompObj = {
-  sequenceNo: "0",
+  sequenceNo: "1",
   nomineeName: "",
   relation: "",
   percentage: "",
   dateOfBirth: "",
-  nomineeGuardianName: "",
-  nomineeGuardianRelation: "",
-  nomineeGuardianDob: "",
+  // nomineeGuardianName: "",
+  // nomineeGuardianRelation: "",
+  // nomineeGuardianDob: "",
 };
 
 export default function Nominees() {
   const [form, setForm] = useState([]);
   const [btnFun, setBtnFun] = useState({});
-  const [number, setNumber] = useState("1");
-  const [nomineeSelected, setNomineeSelected] = useState("N");
+  const [number, setNumber] = useState("0");
+  const [nomineeSelected, setNomineeSelected] = useState("");
 
   const [isNominee, setIsNominee] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -55,15 +55,16 @@ export default function Nominees() {
       setNomineeSelected("N");
       setIsNominee(false);
       dispatch(nomineesForm([]));
+      setForm([]);
+      // setNumber(0);
     }
   };
 
   const newFun = (name, count) => {
     let newError = errors.map((item, index) => {
-      console.log("index===", index, "count===", count);
-      if (index === +count) {
+      if (index + 1 === +count) {
         if (!!item[name]) {
-          console.log("ggg");
+          // console.log("ggg");
           return { ...item, [name]: null };
         }
       }
@@ -96,17 +97,17 @@ export default function Nominees() {
       if (form.length > 2) {
         setForm([...form.slice(0, 2)]);
       } else {
-        setForm([...form, { ...nomineeCompObj, sequenceNo: "1" }]);
+        setForm([...form, { ...nomineeCompObj, sequenceNo: "2" }]);
       }
     }
     if (+number === 3) {
       if (form.length === 2) {
-        setForm([...form, { ...nomineeCompObj, sequenceNo: "2" }]);
+        setForm([...form, { ...nomineeCompObj, sequenceNo: "3" }]);
       } else {
         setForm([
           ...form,
-          { ...nomineeCompObj, sequenceNo: "1" },
           { ...nomineeCompObj, sequenceNo: "2" },
+          { ...nomineeCompObj, sequenceNo: "3" },
         ]);
       }
     }
@@ -115,7 +116,7 @@ export default function Nominees() {
   const formSubmitHandeler = (e) => {
     e.preventDefault();
 
-    const formErrors = validateForm(form);
+    const formErrors = validateForm(form, nomineeSelected);
     const account = (e) => {
       if (!Object.keys(e).length) {
         return true;
@@ -146,74 +147,91 @@ export default function Nominees() {
   useEffect(() => {
     if (Object.keys(nomineeObj).length) {
       setNomineeSelected(nomineeObj.nomineeOptedFlag === "N" ? "N" : "Y");
-      setIsNominee(true);
+      setIsNominee(nomineeObj.nomineeOptedFlag === "N" ? false : true);
       setForm(nomineeObj.nomineeRecords);
     } else {
-      setForm([nomineeCompObj]);
+      setNomineeSelected("N");
+      setNumber("0");
+      setIsNominee(false);
+      setForm([]);
     }
   }, [nomineeObj]);
 
   return (
-    <Form onSubmit={formSubmitHandeler}>
-      <Section heading="Nominee details">
-        <GridCustom>
-          <Row>
-            <Col xs={12}>
-              <Alert variant="info">
-                Pursuant to SEBI circular(s) No. SEBI/HO/IMD/-II
-                DOF3/P/CIR/2022/82 dated 15-Jun-2022 on the nomination for
-                mutual fund investment, it is mandatory to either register
-                nominee/opt-out of nominee registration for every NEW folio
-                created effective 1st October 2022.
-              </Alert>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12} md={4}>
-              <SelectOption
-                name="nomineeOptedFlag"
-                label="Nomination Option"
-                value={nomineeSelected}
-                // option={form?.length ? nominee[1] : nominee}
-                options={nomineeOption}
-                changeFun={formHandeler}
-                mandatory="*"
-              />
-            </Col>
-            <Col xs={12} md={3}>
-              {isNominee && (
+    <React.Fragment>
+      <FooterSection
+        backBtn={true}
+        nextBtn={false}
+        btnFun={btnFun}
+        cls="btn-left-align"
+      />
+
+      <Form onSubmit={formSubmitHandeler}>
+        <Section heading="Nominee details">
+          <GridCustom>
+            <Row>
+              <Col xs={12}>
+                <Alert variant="info">
+                  Pursuant to SEBI circular(s) No. SEBI/HO/IMD/-II
+                  DOF3/P/CIR/2022/82 dated 15-Jun-2022 on the nomination for
+                  mutual fund investment, it is mandatory to either register
+                  nominee/opt-out of nominee registration for every NEW folio
+                  created effective 1st October 2022.
+                </Alert>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={4}>
                 <SelectOption
-                  name="nomineeCount"
-                  label="No. of Nominee"
-                  value={form?.length || number}
-                  options={[
-                    { value: "1", label: "1" },
-                    { value: "2", label: "2" },
-                    { value: "3", label: "3" },
-                  ]}
-                  changeFun={numberHandeler}
+                  name="nomineeOptedFlag"
+                  label="Nomination Option"
+                  value={nomineeSelected}
+                  // option={form?.length ? nominee[1] : nominee}
+                  options={nomineeOption}
+                  changeFun={formHandeler}
                   mandatory="*"
                 />
-              )}
-            </Col>
-          </Row>
-        </GridCustom>
-      </Section>
-      {isNominee &&
-        form?.map((detail, index) => {
-          return (
-            <AddNominee
-              key={index}
-              formObj={detail}
-              setForm={setForm}
-              count={index}
-              thisAccountHandeler={thisAccountHandeler}
-              errors={errors}
-            />
-          );
-        })}
+              </Col>
+              <Col xs={12} md={3}>
+                {isNominee && (
+                  <SelectOption
+                    name="nomineeCount"
+                    label="No. of Nominee"
+                    value={form?.length || number}
+                    options={[
+                      { value: "1", label: "1" },
+                      { value: "2", label: "2" },
+                      { value: "3", label: "3" },
+                    ]}
+                    changeFun={numberHandeler}
+                    mandatory="*"
+                  />
+                )}
+              </Col>
+            </Row>
+          </GridCustom>
+        </Section>
+        {isNominee &&
+          form?.map((detail, index) => {
+            return (
+              <AddNominee
+                key={index}
+                formObj={detail}
+                setForm={setForm}
+                count={index}
+                thisAccountHandeler={thisAccountHandeler}
+                errors={errors}
+              />
+            );
+          })}
 
-      <FooterSection backBtn={true} nextBtn={true} btnFun={btnFun} />
-    </Form>
+        <FooterSection
+          backBtn={true}
+          nextBtn={true}
+          btnFun={btnFun}
+          cls="btn-right-align"
+        />
+      </Form>
+    </React.Fragment>
   );
 }
