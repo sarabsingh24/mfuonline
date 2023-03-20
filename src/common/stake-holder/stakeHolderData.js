@@ -31,13 +31,13 @@ export const commonFormField = {
   },
   fatcaDetail: {
     taxResidencyFlag: "N",
-    // birthCity: "",
-    // birthCountry: "",
-    // citizenshipCountry: "",
-    // nationalityCountry: "",
-    // birthCountryOthers: "string",
-    // citizenshipCountryOthers: "string",
-    // nationalityCountryOthers: "string",
+    birthCity: "",
+    birthCountry: "",
+    citizenshipCountry: "",
+    nationalityCountry: "",
+    birthCountryOthers: "string",
+    citizenshipCountryOthers: "string",
+    nationalityCountryOthers: "string",
     taxRecords: [
       {
         sequenceNo: 0,
