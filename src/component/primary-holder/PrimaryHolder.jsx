@@ -15,7 +15,7 @@ function PrimaryHolder() {
 
   const [grossIncomeRadio, setGrossIncomeRadio] = useState(false);
   const [networthRadio, setNetworthRadio] = useState(false);
-
+ 
   const { stepsCount, primeHolderObj, dispatch } = useCommonReducer();
 
   useEffect(() => {
